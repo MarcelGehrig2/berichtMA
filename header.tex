@@ -1,0 +1,344 @@
+\documentclass[
+  10pt,               % 120% Schriftgrösse
+  oneside,            % einsitiger Druck
+  a4paper,            % A4
+  titlepage,          % inklusive Titelpage
+  pointlessnumbers,	  % Kein Punkt hinter der Kapitelnummerierung
+  halfparskip,        % Europäischer Satz mit abstand zwischen Absätzen
+  pdftex,             % Direkt ins Pdf übersetzen, keine Kapitel
+  liststotoc,         % Inhaltsverzeichnis inkl. Abbildungsverzeichnis
+  bibtotoc]{scrreprt} % Inhaltsverzeichnis inkl. Literaturverzeichnis
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Allgemeine Packete    %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Neue Rechtschreibung
+\usepackage[german, ngerman]{babel}
+
+% UTF 8
+\usepackage[utf8]{inputenc}
+\usepackage{nicefrac}
+\usepackage{multirow}
+
+% Ausgabefonts
+\usepackage[T1]{fontenc}
+
+% Euro Symbol (\texteuro}
+\usepackage{textcomp}
+
+% für die Gesamtseitenzahl
+\usepackage{totpages}
+
+% Paket für Farben
+\usepackage{color}
+
+% Bilder
+%\usepackage{graphicx}
+
+% Fliesstext um Bilder
+\usepackage{wrapfig}
+
+% Tabellen mit definierter Breite und zentriert
+\usepackage{array}
+
+\newcolumntype{x}[1]{%
+>{\centering\hspace{0pt}}p{#1}}%
+
+% Glossar alt
+%\usepackage[style=super, header=none, border=none, number=none, cols=2, toc=true]{glossary}
+%\makeglossary
+
+% Glossar neu
+\usepackage[xindy]{glossaries}
+%\usepackage{glossaries}
+%\makeglossaries
+%\printglossaries
+
+% mehrere Befehle für die Tabellen
+\usepackage{booktabs}
+
+%Packet für absolut Positionierte Textboxen
+\usepackage[absolute]{textpos} %showboxes zum besseren positionieren
+
+% Packet für Boxen
+%\usepackage{framed}
+
+% Initialen
+%\usepackage{lettrine}
+%\DeclareFixedFont{\Yinit}{U}{yinit}{m}{n}{16}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Seiteneinstellungen   %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+  portrait,
+%   twoside,
+  left=40mm,
+  top=20mm,
+  textwidth=145mm,
+  textheight=252mm,
+  %head=15mm,
+  head=15mm,
+  headsep=5mm,
+  foot=8mm
+]{geometry}
+
+% Text muss nicht umbedingt bis zur Fusszeile reichen
+\raggedbottom
+
+%\usepackage[cam,axes,a3,center]{crop}
+%\usepackage[frame,a4,center]{crop}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Schriftart            %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage{courier}  % Courier für Code verwenden
+%\usepackage{helvet}   % Helvetica
+% Helvetic als Font verwenden
+%\renewcommand{\familydefault}{\sfdefault}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mathematik Packete    %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Verbesserte Mathematik Satz
+\usepackage{amsmath}
+
+% Zahlenmenngen in der Mathematik
+\usepackage{amssymb}
+
+% Times New Roman für Mathematik
+\usepackage{mathptmx}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inhaltsverzeichnis    %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Punkte im Inhaltsverzeichnis bei Sections
+\usepackage{tocloft}
+\renewcommand{\cftsecdotsep}{4.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Literaturverzeichnis  %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage[ngerman,ref]{backref}
+%\renewcommand{\backrefpagesname}{Zitiert auf S.}
+%renewcommand{\refname}{Quellenverzeichnis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Anhang			    %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\anhang}[1]{
+	%\setsection{1}
+    \setcounter{page}{1}
+	\input{#1}
+	\newpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Source Code Packete   %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Codesegmente
+\usepackage{listings}
+\definecolor{darkblue}{rgb}{0,0,0.6}
+\definecolor{darkred}{rgb}{0.6,0,0}
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+\definecolor{red}{rgb}{0.98,0,0}
+\lstloadlanguages{C,C++} % entsprechende Sprachen werden hier schon mal geladen, damit das Übersetzen schneller geht
+\lstset{%
+  language=C,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{darkgreen},
+  keywordstyle=\bfseries\color{darkblue},
+  stringstyle=\color{darkred},
+  showspaces=false,
+  columns=fixed,
+  numbers=left,
+  frame=none,
+  numberstyle=\tiny,
+  breaklines=true,
+  showstringspaces=false,
+  xleftmargin=1cm,
+  tabsize=2
+}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Makros                %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Makros
+\newcommand{\redbox}[1]
+{\vspace*{2mm} \\ \fboxsep5mm \fboxrule0.5mm \fcolorbox{red}{white}{\parbox{1.5cm}{
+\includegraphics[width=1cm]{Achtung.pdf}}\parbox{13cm}{\textcolor{black}{#1}
+}}\vspace*{2mm}\\}
+
+\newcommand{\redboxtitle}[2]
+{\vspace*{2mm} \\ \textcolor{red}{\bfseries #1\smallskip} \\ \fboxsep5mm \fboxrule0.5mm \fcolorbox{red}{white}{\parbox{1.5cm}{
+\includegraphics[width=1cm]{Achtung.pdf}}\parbox{13cm}{\textcolor{black}{#2}
+}}\vspace*{2mm}\\}
+
+% Fuer die Minipage um eine Tabelle und Abbildung nebeneinander Setzen
+\makeatletter
+\newcommand{\setcaptype}[1]{\renewcommand{\@captype}{#1}}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Kopf und Fusszeile    %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 7. Kopf und Fusszeilen
+\usepackage{totpages}               % Paket für die Gesamtseitenzahl
+\usepackage{scrpage2}
+\pagestyle{scrheadings}
+\renewcommand*{\chapterpagestyle}{scrheadings}
+\clearscrheadfoot
+%\setkomafont{pagefoot}{\normalfont\sffamily}
+\automark[]{chapter}
+%\ihead{NTB-Robotersteuerung}
+\ihead{VT1: EEROS Sequencer}
+\ohead{\headmark}
+\setheadsepline{0.5pt}[\color{HeadBlue}] 
+%\ifoot{Benno Jung • Michael Krähenbühl • Martin Züger}
+\cfoot{- \thepage{} -}
+%\setfootsepline{0.5pt}
+%%Kopf- und Fusszeile
+\definecolor{HeadBlue}{rgb}{0,0.41,0.71}
+\definecolor{FootBlack}{rgb}{0,0,0}
+\addtokomafont{pagehead}{\color{HeadBlue}} 
+\addtokomafont{pagefoot}{\color{FootBlack}}
+%\usepackage{eso-pic}
+%\usepackage{scrpage2}
+%\usepackage{extramarks}
+\usepackage[final]{pdfpages}
+%%\pagestyle{scrheadings}
+%%\clearscrheadfoot
+%% Schriftart auf die Normale Schrift setzen
+%%\setkomafont{pagefoot}{\normalfont\sffamily}
+%%\automark[]{section} % \leftmark zeigt die aktuelle Section an, \rightmark bleibt leer
+%
+%%Kopfzeile
+%%\ihead{NTB}
+%%\ohead{\leftmark}
+%%\lehead{\hspace*{1cm}\begin{large}\leftmark\end{large} \AddToShipoutPicture*{%
+%%  \AtPageUpperLeft{\put(0,\LenToUnit{-9.4mm}){%
+%%    \colorbox{HeadBlue}{\parbox[t][6mm]{1.8cm}{\ }}%
+%%    \colorbox{black}{\parbox[t][6mm]{0.1cm}{\ }}}}}}
+%%\rohead{\begin{large}\leftmark\end{large}\hspace*{1cm} \AddToShipoutPicture*{%
+%%  \AtPageUpperLeft{\put(\LenToUnit{\paperwidth},\LenToUnit{-9.4mm}){\kern-2.3cm%
+%%    \colorbox{black}{\parbox[t][6mm]{0.1cm}{\ }}%
+%%    \colorbox{HeadBlue}{\parbox[t][6mm]{1.8cm}{\ }}}}}}
+%%\rehead{\begin{large}NTB\end{large}}
+%%\lohead{\begin{large}NTB\end{large}}
+%%\setheadsepline{1.2pt}
+%\usepackage{ifthen}
+%\newboolean{SectionOnPage}
+%\renewcommand{\sectionmark}[1]{\setboolean{SectionOnPage}{true}\markboth{#1}{#1}}
+%\newcommand{\headerblackbox}{\colorbox{black}{\parbox[c][6mm]{0.1cm}{\ }}}
+%\newcommand{\headerbluebox}[1]{\colorbox{HeadBlue}{\parbox[c][6mm]{1.8cm}{%
+%%       \ifnum\value{section}>0
+%%         \ifthenelse{true}{H}{#1\textbf{\begin{large}\color{white}{\sffamily{\arabic{section}}}\end{large}}}
+%%       \else
+%          #1 \textbf{\begin{large}\color{white}{\sffamily{\ }}\end{large}}
+%%       \fi
+%}}}
+%\newcommand{\headerbluetext}[1]{\textbf{\begin{large}\color{HeadBlue}{#1}\end{large}}}
+%%\newcommand{\headerNTB}{\headerbluetext{NTB}}
+%\newcommand{\headerNTB}{\includegraphics[height=1.2cm]{ntb}}
+%\newcommand{\headerleftmark}{\headerbluetext{\firstleftmark}}
+%
+%\lehead{\hspace*{5mm}\headerleftmark \AddToShipoutPicture*{%
+%  \AtPageUpperLeft{\put(0,\LenToUnit{-13.4mm})}}}
+%
+%\rohead{\headerleftmark \hspace*{5mm} \AddToShipoutPicture*{%
+%  \AtPageUpperLeft{\put(\LenToUnit{\paperwidth},\LenToUnit{-13.4mm})}}}
+%
+%
+%%\rehead{\headerNTB}
+%%\lohead{\headerNTB}
+%\rehead{Seite \thepage{}}
+%\setheadsepline{0.8pt}
+%\renewcommand*{\chapterpagestyle}{scrheadings}
+%%\setheadsepline{0.5pt}[\color{blue}]
+%
+%%Fusszeile
+%%\ifoot{Marcel Gehrig, Egemen Yesil}
+%%\cfoot{\today}
+%\cfoot{- \thepage{} -}
+%%\ofoot{\thepage{} / \ref{TotPages}}
+%%\setfootsepline{0.5pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informationen         %
+% über den Autor        %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{VT1: EEROS Sequencer 2017}
+\author{Marcel Gehrig}
+\date{Januar 2017}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pdf Einstellungen     %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Paket für Links innerhalb des PDF Dokuments und Pdf Informationen
+\definecolor{LinkColor}{rgb}{0,0,0}
+\usepackage[
+  pdftitle={VT1 EEROS Sequencer},
+  pdfauthor={Marcel Gehrig},
+  pdfcreator={Texmaker},
+%  pdfsubject={VT1 EEROS Sequencer},
+  pdfsubject=pdftitle,
+  pdfkeywords={Schlussbericht,Vertiefungsarbeit,EEROS,Sequencer,C++,Roboter Steuerung}]{hyperref}
+\hypersetup{colorlinks=true,
+  linkcolor=LinkColor,
+  citecolor=LinkColor,
+  filecolor=LinkColor,
+  menucolor=LinkColor,
+  urlcolor=LinkColor}
+
+% Packet um Dateien in das PDF einzubetten
+\usepackage{attachfile}
+\usepackage{pdfpages}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Farben                %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Green}{rgb}{0,1,0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ACHTUNG:              %%
+%% Informationen über    %%
+%% den Autor müssen in   %%
+%% folgenden Abschnitten %%
+%% angepasst werden:     %%
+%%                       %%
+%% - PDF EINSTELLUNGEN   %%
+%% - KOPF UND FUSSZEILE  %%
+%% - AUTOR               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Tiefe der nummerierten Ebene
+\setcounter{tocdepth}{4} %Anzeigetiefe im Inhaltsverzeichniss
+\setcounter{secnumdepth}{4} %Nummerierungstiefe
+\renewcommand*{\chapterpagestyle}{scrheadings} %Kopfzeile auch bei \chapter
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-\topskip}}  %Abstand korrigieren von Kopfzeile zu \chapter
+\setlength{\cftbeforetoctitleskip}{-2mm} 
+\setlength{\cftaftertoctitleskip}{0.5mm}
+\usepackage{placeins} %um floatbarrier zu benutzen
+%\usepackage{mathtext}
+
+%Pfad für die Bilder Festlegen
+%\graphicspath{{Bilder/},{Icons/},{Logo/},{Template/},{Ismages/},{}}
+\graphicspath{{images_P/},{}}

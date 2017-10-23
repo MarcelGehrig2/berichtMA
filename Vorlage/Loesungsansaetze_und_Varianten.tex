@@ -1,0 +1,81 @@
+\chapter{Lösungsansätze und Varianten}
+
+
+\section{Strategie}
+% möglichst einfach, sicher funktioniern
+Das ganze Projekt inklusive BBB und den diversen Zusatzfunktionen ist technisch sehr komplex. Deshalb wurde beim Variantenentscheid wie auch später in der Planung, besonders darauf geachtet, dass die gewählten Lösungen eine möglichst geringe Fehleranfälligkeit haben. Dies führte auch zu einigen Kompromissen, die im Folgenden erläutert werden.
+
+%TODO massenfertigung
+
+Verschiedene Lösungsansätze wurden bereits im Vorfeld zu dieser Arbeit im Fachmodul gesucht und bewertet. Der Bericht zu diesem Fachmodul befindet sich im Anhang unter dem Kapitel \ref{sec:anhang_pflichtenheft}. Im Fachmodulbericht wird ausführlich auf die verschiedenen Varianten für WLAN, GSM/GPRS und BLE eingegangen. Aus diesem Grund werden hier nur noch die Entscheidungen kurz zusammengefasst und um einige zusätzliche Informationen ergänzt.
+
+
+
+\section{Grundsätzlicher Aufbau}
+Für den grundsätzlichen Aufbau des ganzen Systems boten sich zwei verschiedene Varianten an. Bei der ersten Variante wird der BBB zusammen mit den Zusatzfunktionen auf einer Platine verwirklicht. Bei der zweiten Variante werden die Zusatzfunktionen auf einem zweiten PCB als Cape aufgebaut.
+
+\subsection{Variante 1: Eine grosse Platine}
+Das ganze System, also der BBB und die Bauteile für die Zusatzfunktionen, werden auf einer einzigen Platine platziert.
+
+Vorteile:
+\begin{itemize}
+\item Alles ist in einem einzigen, geschlossenen Projekt. Dies hat den Vorteil, dass nur ein grosses PCB bestellt und bestückt werden muss. Dies ist kostengünstiger und einfacher als zwei separate PCBs. So muss zum Beispiel die Pick-and-Place-Maschine nur einmal eingerichtet werden.
+\item Flexible Form des PCB. Je nachdem wie die Bauteile platziert werden, kann die Form des PCB beeinflusst werden.
+\item Die relativ teuren Steckverbindungen zwischen den Platinen fallen weg.
+\end{itemize}
+
+\subsection{Variante 2: Die Zusatzfunktionen als Cape}
+Das Konzept des originalen BBB wird beibehalten. Es werden zwei PCBs hergestellt. Das erste PCB ist von der Funktion her identisch wie das originale BBB. Auch die Steckverbindungen für die Capes werden beibehalten. Zusätzlich zu diesem BBB-Derivat wird eine zweite Platine entwickelt, die auch mit dem originalen BBB kompatibel ist und alle Bauteile für die Zusatzfunktionen enthält.
+
+Vorteile:
+\begin{itemize}
+\item Modularität. An beiden Teilen kann parallel gearbeitet werden, da die Schnittstelle zwischen dem BBB und dem Cape bereits elektrisch und mechanisch durch das Originalprodukt genau definiert sind. 
+\item Redundanz. Auch wenn das BBB-Derivat nicht lauffähig sein sollte, oder erst nach dem Cape fertiggestellt werden kann, kann das Cape bereits mit einem gekauften, originalen BBB getestet werden.
+\item Die Anforderungen für das PCB sind für den BBB viel höher als durch das Cape. Das Cape kann mit einem kostengünstigeren PCB gefertigt werden, und so kosten sparen.
+\item Kompakt. Da die beiden PCBs gestapelt werden, brauchen Sie weniger Fläche. So können sie beispielsweise besser hinter einem kleinen LCD verstaut werden.
+\item Kompatibilität. Das BBB-Derivat ist auch mit kommerziell erhältlichen Capes kompatibel. Und umgekehrt ist auch das Cape mit einem gekauften BBB kompatibel.
+\end{itemize}
+
+\subsection{Entscheid}
+Da beim ersten Prototypen damit gerechnet werden muss, dass das ganze Produkt, oder ein Teil davon, nicht von Anfang an funktioniert, ist die Redundanz der zweiten Variante sehr wertvoll. Auch der kompakte Aufbau dieser Variante hat für die zweite Variante gesprochen. Durch diesen Formfaktor kann das ganze System hinter einem kleinen LCD montiert werden. Aus diesem Grund wurde der zweiten Variante der Vorzug gegeben.
+
+Wenn später, etwa für die Massenfertigung, die erste Variante bevorzugt werden sollte, können die beiden PCBs auch nachträglich noch zusammengeführt werden.
+
+
+\section{WLAN}
+Die erste Wahl für die WLAN Funktionalität war das WL1835 Modul von Texas Instruments. Mit diesem Modul existiert bereits ein kommerziell erhältliches Cape für den BBB. Zusätzlich sind die Pläne für dieses Cape öffentlich erhältlich. Mit dem existierenden Cape konnte die Software bereits vorbereitet werden, bevor die Hardware fertiggestellt wurde.
+
+
+\section{GSM}
+Mehrere Gründe sprachen für das GE 910-QUAD Modul von Telit. Dank den vier unterstützen Frequenzbändern ist es in fast allen Ländern einsatzfähig. Des Weiteren existiert bereits ein Cape für den BBB mit einem GE864 Modul von Telit. Dies ist zwar ein anderer Typ, wird aber von der Software sehr ähnlich angesprochen. So konnte die Software vor Fertigstellung der Hardware mit dem gekauften Cape vorbereitet werden.
+
+Des Weiteren bietet dieses Modul noch eine Menge anderer Funktionen, die in dieser Arbeit nicht genutzt werden, später aber von Vorteil sein könnten. So kann das Modul auch über USB 2.0 angeschlossen werden. Ein integrierter Python-Skript-Interpreter erlaubt auch Python-Skripts, welche direkt auf dem Modul ausgeführt werden können.
+
+
+\section{LCD}
+Das LCD mit Touchscreen war schon von Anfang an von Variosystems vorgegeben. Es handelt sich dabei um ein 5-Zoll TFT-Display mit einem kapazitiven Multi-Touch-Sensor.
+
+
+\section{BLE}
+Ursprünglich wurde dem CSR1010 von CSR den Vorzug gegeben. Im Verlauf der Arbeit äusserte  Variosystems aber den Wunsch, dass der nRF51422-Chip von Nordic Semiconducters bevorzugt würde. Dieser Chip wurde folglich auch auf dem Cape verbaut.
+
+
+\section{Wahl des Betriebssystems}
+Der BeagleBone unterstützt mehrere auf Linux basierte Betriebssysteme, die in ihren Grundfunktionen auf die gleiche Art und Weise funktionieren. Trotzdem weisen sie Unterschiede in Bezug auf Bedienung, Funktionsvielfalt, Support oder Kompatibilität auf.
+Aber auch die Wahl des Betriebsystems, auf dem die Entwicklungsumgebung installiert wird und die eigentliche Entwicklung der Software stattfindet, ist wichtig. 
+
+
+\subsection{Betriebssystem für den BeagleBone Black}
+Der originale BBB wird mit dem Betriebssystem Debian ausgeliefert. Neben dem Betriebssystem, oder kurz BS, Debian werden auch andere BS, wie beispielsweise Ubuntu, Android oder Angstrom unterstützt. Da alle auf Linux basieren, gleichen sie sich in den Grundfunktionen, die der BBB bietet und zu Verfügung stellt. Die Unterschiede liegen in der Bedienung der Betriebssysteme und der Bereitstellung und Unterstützung von Funktionen und Treibern. Da Debian eine hohe Kompatibilität zu vielen Capes und somit eine grosse Funktionsvielfalt durch das BS an sich und durch andere Entwickler bietet, wurde bei dieser Arbeit auf Debian gesetzt. 
+
+Zusätzlich zum benutzten BS ist auch die Wahl des Linux-Kernels wichtig. Der BBB wird mit dem Kernel in der Version 3.8.13 ausgeliefert. Neuere Versionen des Kernels sind zwar verfügbar, jedoch wurden bei diesen Versionen nicht alle Funktionen und Treiber des BBBs auf Funktion und Stabilität getestet. Die Version 3.8.13 gilt als sehr stabil und bietet eine Kompatibilität zu vielen Capes, weshalb die Wahl auf diese Version fiel.
+
+
+
+\subsection{Betriebssystem für die Entwicklungsumgebung}
+Auch für die Entwicklungsumgebung bietet sich eine Vielfalt von Betriebssystemen an. Grundsätzlich ist die erste Entscheidung, die man treffen muss, ob Linux oder Windows gewählt werden sollte.
+In diesem Fall bietet ein Linux-Betriebssystem Vorteile gegenüber Windows, da der BBB ebenfalls auf Linux setzt. Dadurch ist eine hohe Kompatibilität und Übereinstimmung in der Bedienung und Ausführung von Funktionen von vornherein sichergestellt. Es müssen keine weiteren Treiber oder Anwendungen installiert oder andere Einstellungen vorgenommen werden.
+
+Daher wurde für die Entwicklungsumgebung auf das Betriebssystem Ubuntu 14.04 LTS (Long Term Support) gesetzt. Diese Version von Ubuntu bietet fast dieselbe Vielfalt an unterstützter Software wie Windows, womit ein Umstieg auf dieses Betriebssystem leichter fällt als bei anderen Linux-Systemen.
+
+Bei der Entwicklung wurde nicht komplett auf Windows verzichtet, da die Entwicklungsumgebung für das Bluetooth Modul, von Herstellerseite her vornehmlich auf die Windowsumgebung angepasst ist.
