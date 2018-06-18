@@ -1,0 +1,163 @@
+\chapter{Auswahl der Hardware}
+
+\section{Einleitung}
+Die Auswahl von Hardware mit ARM Prozessoren ist extrem gross.
+Ende September 2016 sind bereits über 86 Milliarden ARM basierte Prozessoren verkauft worden.\footnote{Elektronischer/Anhang/ARM-media-fact-sheet-2016.pdf}
+%TODO extrem weit verbreitet
+%TODO gorosse auswahl von verschiedener hw
+%TODO warum muss hw in dieser arbeit gewählt werden
+
+%TODO prozeossor und board muss ausgewählt werden
+%TODO ökosystem?
+
+\section{Soll- und Muss-Kriterien bei der Auswahl der Hardware}
+Um die richtige Hardware im riesigen Angebotsdschungel zu finden, wurden Soll- und Muss-Kriterien ermittelt.
+
+\textbf{Muss-Kriterien}
+\begin{itemize}
+\item Systemebene
+	\begin{itemize}
+	\item FPGA: Der Prozessor muss mit einem FPGA kommunizieren können
+	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} ein Hardware Debugger unterstützen 
+	\item Günstiger Programmierer: Wenn zusätzliche Hardware benötigt wird um die \textit{deep}-Applikation auf das Target zu schreiben, dann muss diese möglichst günstig sein
+	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende oder Nischenprodukte sind nicht akzeptabel
+	\item Als fertiges Modul erhältlich: Eigenes PCB Entwickeln und Herstellen ist keine Option
+	%TODO synonym einbettbar:
+	\item Einbettbar: Der Prozessor muss auch bei einem eigenen PCB eingelötet werden können
+	\item Noch lange erhältlich
+	\end{itemize}
+\item Prozessorebene
+	\begin{itemize}
+	\item ARMv7: Der Prozessor muss auf der ARMv7 ISA\footnote{Instruction Set Architecture} basieren
+	\item ARM Instruktionen: Der Prozessor muss ARM Instruktionen unterstützen. \textit{Thumb} Instruktionen sind nicht ausreichend
+	\item FPU: Für Gleitzahlenarithmetik
+	\item Netzwerkschnitstelle: RJ-45 inklusive MAC\footnote{Media Access Control} und \textit{Magnetics}
+	\item USB: USB Schnittstelle
+	\item Flash: Mehr als 50kByte Flash
+	\item RAM: Mehr als 100kByte RAM
+	\end{itemize}
+\end{itemize}
+
+
+\textbf{Soll-Kriterien}
+\begin{itemize}
+\item Systemebene
+	\begin{itemize}
+	%TODO synonym einbettbar:
+	\item Einfach einbettbar: Der Prozessor ist als Prozessormodul erhältlich, so dass das Design von einem PCB einfacher wird
+	\item Günstiger Hardwaredebugger: Der Hardwaredebugger kann auch für Applikationsentwicklung mit \textit{deep} eingesetzt werden
+	\item Möglichst schneller Download der Applikation
+%TODO	\item Überdimensionierte HW
+	\end{itemize}
+\item Prozessorebene
+	\begin{itemize}
+	\item Memory Mapped Bus für FPGA Schnittstelle
+	\item FPU unterstützt \textit{Double Precision}
+	\item Integerdivision
+	\item Prozessortakt über 500MHz
+	\end{itemize}
+\end{itemize}
+
+
+\subsection{Hardware Debugger}
+%TODO abatron ok
+
+
+
+\subsection{Übersicht über die ARM Mikroarchitekturen}
+\subsection{Cortex-A}
+Sehr gut geeignet für die Verwendung mit einem vollen Betriebssystem wie Windows, Linux oder Android.
+Cortex-A Prozessoren bieten dem umfangreichsten Support für externe Peripherie wie USB, Ethernet und RAM.
+Die leistungsstärksten ARM Cortex Prozessoren.
+
+\subsection{Cortex-R}
+Cortex-R werden entwickelt für Echtzeitanwendungen und Sicherheitskritische Applikationen wie Festplattenkontroller und medizinische Geräte.
+Sie sind normalerweise nicht mit einer MMU ausgerüstet.
+% und können deshalb nich mit einem Linux oder Windows verwendet werden.
+Mit einer Taktrate von über 1GHz und einem sehr schnellen Interruptverhalten eignen sich Prozessoren mit einem Cortex-R sehr gut um auf externe Stimuli schnell zu reagieren.
+
+\subsection{Cortex-M}
+Cortex-M sind mit einer Taktrate um 200Mhz relativ langsam.
+Sehr stromsparend und durch die kurze Pipeline haben sie eine deterministische und kurze Interrupt Verzögerung.
+Die Prozessoren aus der Cortex-M Reihe unterstützen nur die Thumb Instruktionen und nicht die standard Arm Instruktionen.
+
+
+\subsection{ARM Prozessoren ausserhalb der Cortex Reihe}
+Seit 2004 werden die meisten Kerne in eine der Cortex Gruppen eingeteilt.
+Ältere Kerne, sogenannte \textit{''Classic cores''}, haben Namen wie z.b. ARM7 oder ARM1156T2F-S.
+Da solche Designs meist aus einer Zeit vor 2004 stammen, gilt das Design als veraltet und wird bei dieser Arbeit nicht berücksichtigt.
+
+\subsection{Fazit Core-Designs}
+Prozessoren die auf der Cortex-A Mikroarchitektur basieren bieten die grösste Flexibilität.
+Zusätzlich ist auch das Angebot bei den Cortex-A Prozessoren am grössten.
+Die anderen Cortex Reihen bieten keine Vorteile, die für dieses Projekt von Nutzen sind.
+Aus diesen Gründen wird die Auswahl auf die Prozessoren aufs der Cortex-A Reihe begrenzt.
+
+\section{Bauform der Hardware}
+\subsection{Einleitung}
+
+
+\begin{table}[]
+\centering
+\caption{Bauformen}
+\label{t-Bauformen}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{}  & \textbf{Vorteile}                                                                                                                                                                                                                                    & \textbf{Nachteile}                                                                                                                                                                             \\ \hline
+\textbf{A} & \begin{tabular}[c]{@{}l@{}}* Sehr Leistungsstartk\\ * Support für vollwertige Betriebssysteme\\ * Grosse Variation erhältich (Energiesparend /\\  sehr Leistungsstark)\\ * Reichhaltiger Funktionsumfang\\ * NEON und FPU Unterstützung\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Langsamer Context-Switch\\ * Relativ hoher Stromverbrauch\\ * Relativ teuer\\ * Mit GPU erhältlich\\ * Keine DSP Unterstützung\\ * Keine HW-Division\end{tabular} \\ \hline
+\textbf{B} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux Unterstützung\end{tabular}                                                        \\ \hline
+\textbf{C} & \begin{tabular}[c]{@{}l@{}}* Sehr schneller Context-Switch\\ * Sehr energiesparend\\ * DSP Unterstützung\end{tabular}                                                                                                                                & \begin{tabular}[c]{@{}l@{}}* Geringe Rechenleistung\\ * Keine Linux Unterstützung\\ * Unterstützt nur Thumb-Instruktionen\end{tabular}                                                         \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+\subsection{Bauweise}
+\subsubsection{FPGA als Zusatzplatine zum Prozessorboard - Bauweise ''Modular''}
+
+\subsubsection{FPGA auf dem gleichen Board wie der Prozessor (System On Board) - Bauweise ''SOB''}
+
+\subsection{FPGA im gleichen Gehäuse wie der Prozessor (System On Chip - Bauweise ''SOC''}
+
+\subsection{ARM als Softcore in FPGA - Bauweise ''FPGA''}
+
+\subsubsection{Übersicht über die Bauweisen}
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Bauweise} & \textbf{Vorteile}                                                                                                                      & \textbf{Nachteile}                                                       \\ \hline
+\textbf{Modular}  & \begin{tabular}[c]{@{}l@{}}* Günstig wenn nur Prozessor verwendet wird\\ * Unterschiedliche FPGAs können verwendet werden\end{tabular} & * Datenbus evt. nicht Memory mapped                                      \\ \hline
+\textbf{SOB}      &                                                                                                                                        & * FPGA ist fix                                                           \\ \hline
+\textbf{SOC}      & \begin{tabular}[c]{@{}l@{}}* Potenziell sehr schnelle Datenverbindung\\ zwischen FPGA und Prozessor\end{tabular}                       & \begin{tabular}[c]{@{}l@{}}* FPGA ist fix\\ * Relativ teuer\end{tabular} \\ \hline
+\textbf{FPGA}     & * Flexibel                                                                                                                             & * Sehr teuer                                                             \\ \hline
+\end{tabular}
+\end{table}
+
+%\section{Cortex-M}
+%\textbf{Cortex-M0}
+%A very small processor (starting from 12K gates) for low cost, ultra low power microcontrollers and deeply embedded applications
+%
+%\textbf{Cortex-M0+}
+%The most energy-efficient processor for small embedded system. Similar size and programmer’s model to the Cortex-M0 processor, but with additional features like single cycle I/O interface and vector table relocations
+%
+%\textbf{Cortex-M1}
+%A small processor design optimized for FPGA designs and provides Tightly Coupled Memory (TCM) implementation using memory blocks on the FPGAs. Same instruction set as the Cortex-M0
+%
+%\textbf{Cortex-M3}
+%A small but powerful embedded processor for low-power microcontrollers that has a rich instruction set to enable it to handle complex tasks quicker. It has a hardware divider and Multiply-Accumulate (MAC) instructions. In addition, it also has comprehensive debug and trace features to enable software developers to develop their applications quicker
+%
+%\textbf{Cortex-M4}
+%It provides all the features on the Cortex-M3, with additional instructions target at Digital Signal Processing (DSP) tasks, such as Single Instruction Multiple Data (SIMD) and faster single cycle MAC operations. In addition, it also have an optional single precision floating point unit that support IEEE 754 floating point standard
+%
+%\textbf{Cortex-M7}
+%High-performance processor for high-end microcontrollers and processing intensive applications. It has all the ISA features available in Cortex-M4, with additional support for double-precision floating point, as well as additional memory features like cache and Tightly Coupled Memory (TCM)
+
+
+
+\subsubsection{STM23}
+STM

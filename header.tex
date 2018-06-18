@@ -43,7 +43,7 @@
 \usepackage{array}
 
 \newcolumntype{x}[1]{%
->{\centering\hspace{0pt}}p{#1}}%
+{\centering\hspace{0pt}}p{#1}}%
 
 % Glossar alt
 %\usepackage[style=super, header=none, border=none, number=none, cols=2, toc=true]{glossary}
@@ -189,6 +189,15 @@
 \makeatletter
 \newcommand{\setcaptype}[1]{\renewcommand{\@captype}{#1}}
 \makeatother
+
+% shell commandos
+\definecolor{codegray}{gray}{0.7}
+\newcommand{\shellcmd}[1]{\colorbox{codegray}{\texttt{\scriptsize\# #1}}}
+
+%\definecolor{codegray}{gray}{0.7}
+\newcommand{\shelloutput}[1]{\colorbox{black}{\texttt{\scriptsize \textcolor{white}{#1}}}}
+%\newcommand{\shelloutput}[1]{\colorbox{black}{\texttt{\scriptsize #1}}}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%

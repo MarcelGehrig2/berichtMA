@@ -1,0 +1,78 @@
+\chapter{Debugger}
+
+Es gibt diverse Debugger auf dem Markt.
+In dieser Arbeit beschränke ich mich aber auf den GNU-Debugger (\textit{gdb}).
+Der \textit{gdb} steht unter der PGL Lizenz und ist somit Open Source.
+Bei den meisten Linux Distributionen wird der \textit{gdb} direkt mitgeliefert und kann sofort verwendet werden.
+
+
+\section{Anwendungsbeispiel gdb auf einem Linux-System}
+Mit diesem Beispiel will ich zum einen ein kurzes Tutorial bieten um den Umgang mit dem \textit{gdb} zu lernen.
+Zum anderen will ich damit aber auch die verschiedenen Funktionen vom Debugger zeigen, damit die beschriebenen Probleme später im Kapitel besser in einen Kontext gestellt werden können.
+
+Für dieses Tutorial verwende ich ein Linux Mint 18.1 (basierend auf einem Ubuntu 16.01).
+Solange \textit{gdb} installiert ist, ist das verwendete Betriebssystem aber nicht relevant.
+
+\subsection{Grundlegende Funktionsweise}
+Auf Linux verwendet der \textit{gdb} den System Call \textit{ptrace} (Kurzform für "process trace").
+Dieser System Call erlaubt dem \textit{gdb} einen anderen Prozess zu inspizieren und zu manipulieren.
+Im Hardwaredebugger, den wir später bearbeiten, verwenden wir stattdessen JTAG in Verbindung mit der Debugginghardware im Prozessor.
+
+\subsection{Vorbereitung}
+Für dieses Tutorial verwenden wir folgendes Beispielprogramm:
+
+\lstset{language=c}
+\begin{lstlisting}
+#include <iostream>
+using namespace std;  
+
+int divint(int, int);  
+int main() 
+{ 
+   int x = 5, y = 2; 
+   cout << divint(x, y); 
+   
+   x =3; y = 0; 
+   cout << divint(x, y); 
+   
+   return 0; 
+}  
+
+int divint(int a, int b) 
+{ 
+   return a / b; 
+}  
+
+\end{lstlisting}
+
+Diese Applikation können wir jetzt Kompilieren und mit \textit{gdb} starten:\\
+\shellcmd{g++ gdbTest.cpp -o gdbTest}\\
+\shellcmd{gdb gdbTest}\\
+\shellcmd{run}        // startet die Applikation im \textit{gdb}
+
+\shelloutput{(gdb) run}\\
+\shelloutput{Starting program: /home/mgehrig2/projects/gdbTest/gdbTest}\\
+\\
+Program received signal SIGFPE, Arithmetic exception.\\
+0x00000000004007b5 in divint(int, int) ()\\
+
+
+
+Obwohl die Applikation nicht mit Debug-Symbolen kompiliert wurde, wird nicht nur die Adresse des Ursprungs der Floating Point Exception angezeigt, sondern auch der Name der Methode.
+
+
+
+
+\section{Unterschied zwischen einem Software- und Hardwaredebugger}
+Auf einem Linux-System ist es sehr einfach ein Debugger einzusetzen.
+
+
+\section{Funktionen eines Debuggers}
+Ein Debugger kann verschiedene Funktionen besitzen.
+Die grundlegenden Funktionen sind sehr einfach und brauchen keine grosse "Intelligenz" vom Debugger selber.
+
+Erweiterte Funktionen erwarten vom
+
+\section{Erstellen einer Dummy-Applikation mit Debug-Informationen}
+\subsection{Vorgehen}
+Das Ziel von diesem Kapitel ist es, eine Deep-Applikation zu erzeugen, die mit \textit{gdb} und \textit{OpenOCD} %TODO
