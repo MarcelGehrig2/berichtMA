@@ -18,6 +18,8 @@
 	\addtocontents{toc}{\protect\thispagestyle{scrheadings}}
 	\renewcommand{\tableofcontents}{\section*{\contentsname} \pagestyle{scrheadings} \@starttoc{toc}}
 	\makeatother
+	\setcounter{secnumdepth}{2}		% Numerierungstiefe bei den Titel / Untertitel
+	\setcounter{tocdepth}{1}		% Numerierungstiefe im Inhaltsverzeichnis
 	\tableofcontents
 	\newpage
 	\renewcommand{\thepage}{\arabic{page}}
