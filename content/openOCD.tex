@@ -108,11 +108,18 @@ ftdi_layout_signal LED -data 0x0010
 #ftdi_layout_signal LED -data 0x1000
 
 reset_config srst_pulls_trst
-}
+
 \end{lstlisting}
 
 
+% TODO änderungen für reset
 
 
 \section{OpenOCD Konfiguration - Board}
+Da beim Zybo der Adapter direkt auf dem Board ist, ist die Bordkonfiguration bereits im Konfigurationsscript für das Interface enthalten.
+
 \section{OpenOCD Konfiguration - Target}
+Für das Target, in diesem Fall der Zynq 7000 SOC, ist bereits ein Script unter \textit{openocd-0.10.0/scripts/target/zynq\_7000.cfg} enthalten.
+In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP\footnote{Test Access Port} für den FPGA Teil.
+Es ist also auch möglich, den FPGA mit dieser Toolchain zu laden.
+% zynq_7000.cfg
