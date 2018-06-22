@@ -1,5 +1,8 @@
 \chapter{OpenOCD}
 \section{Einleitung}
+% TODO: referenz openocd doku
+% \ref{bib:OpenOCDDoku}
+% TODO: CLI beschreiben / putty
 % OpenOCD ist ein ''On-Chip Debugger''.\cite{bib:OpenOCDHome}
 % Diese Bezeichnung ist allerdings etwas irreführend.
 OpenOCD\cite{bib:OpenOCDHome} bildet den Software Teil von einem Debugger.
@@ -63,6 +66,7 @@ Dieser Treiber darf \textbf{nicht} ersetzt werden.
 
 
 \section{OpenOCD Konfiguration}
+% TODO: zum starten siehe kapitel ...
 % TODO: Files anhängen
 % nicht einfach
 % spezielle sprache jim-tcl
@@ -110,6 +114,47 @@ ftdi_layout_signal LED -data 0x0010
 reset_config srst_pulls_trst
 
 \end{lstlisting}
+
+Zeile 5 bis 7 konfigurieren das Interface als ein standard-FTDI Interface.
+Von OpenOCD werden neben dem FT2232 auch noch andere Chips unterstützt.
+Zeile 7 definiert die Vendor und Device-ID des USB Devices.
+
+\subsection{Resetverhalten}
+Liest man aus einer unerlaubten Speicheradresse (\texttt{CLI: mdw 0x40000000}), dann hängt sich die Debug-Peripherie im Zynq auf.
+Nach so einem unerlaubten Speicherzugriff können auch keine erlaubten Speicherstellen mehr gelesen werden.
+Beim Versuch erscheint die Fehlermeldung:\\
+ \texttt{Timeout waiting for cortex\_a\_exec\_optcode}.\\
+Mit einem manuellen Powercycle vom Zybo kann die Hardware wieder zurückgesetzt werden.
+
+Mit OpenOCD ist es grundsätzlich auch möglich, einen Reset automatisch durchzuführen.
+Dabei wird zwischen einen \textit{System Reset} (SRST) und dem \textit{TAP Reset} (TRST) unterschieden.
+Der SRST führt dabei einen Powercycle vom ganzen System durch, der TRST setzt nur den TAP zurück
+
+% TODO: warum memory location nicht erlaubt
+Beim obigen Script ist aber das Resetverhalten nicht sauber definiert.
+Mit dem Befehl \texttt{''CLI: reset halt''} im CLI sollte ein Reset vom FT2232 durchgeführt werden.
+Der Befehl führt aber zur Fehlermeldung:\\
+\texttt{... zynq.cpu0: how to reset? ...}
+
+In der OpenOCD Dokumentation\cite{bib:OpenOCDDoku} im Kapitel \textit{9 Reset Configuration} ist beschrieben, wie das Resetverhalten konfiguriert werden kann.
+Mit dem Script-Befehl \texttt{''reset\_config srst\_only''} wird der TAP Reset ignoriert.
+So kann das Problem auf den System Reset begrenzt werden.
+
+Wenn OpenOCD mit der neuen Konfiguration neu gestartet wird, dann scheint der Befehl \texttt{''CLI: reset halt''} zu funktionieren.
+Greift man vorher aber wieder auf eine ungültige Speicherstelle zu, dann erscheint beim Reset die Fehlermeldung\\
+\texttt{... Timeout waiting for dpm prepare ...}.\\
+Das legt die Vermutung nahe, dass der Zynq nicht ordentlich zurück gesetzt wurde.
+
+Zeile 12 (\texttt{ftdi\_layout\_signal nSRST -data 0x3000 -oe 0x1000}) konfiguriert die I/O Pins des FT2232 welche für den System Reset verwendet werden.
+Auf dem elektrischen Schema vom Zybo\ref{anhang:schemaZybo} könnte man überprüfen, welche I/Os vom FT2232 effektiv für den Reset verwendet werden.
+Die Seite mit dem Schema für den FT2232, Seite 7, ist aber als einzige Seite im Schema nicht veröffentlicht worden.
+Die korrekten I/O Pins lassen sich also nicht mit dem Schema ermitteln.
+
+% ftdi_layout_signal nSRST -data 0x3000 -oe 0x1000
+
+% \ref{bib:OpenOCDDoku}
+
+% 
 
 
 % TODO änderungen für reset
