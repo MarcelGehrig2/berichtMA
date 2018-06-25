@@ -10,7 +10,7 @@ Zusammen mit einem Hardware Adapter bildet OpenOCD einen vollständigen Debugger
 
 Der Adapter bildet dabei das elektrische Interface zum Prozessor und muss auch auf den Prozessor abgestimmt sein.
 Relevant sind dabei unter anderem der Transport Layer (JTAG/SWD) das elektrische Potential und natürlich auch der Physikalischer Stecker.
-In den meisten Fällen basieren solche Adapter, wenn sie zusammen mit OpenOCD verwendet werden, auf dem FT2232 Chip von FTDI.
+In den vielen Fällen basieren solche Adapter, wenn sie zusammen mit OpenOCD verwendet werden, auf dem FT2232 Chip von FTDI.
 Solch ein generischer Adapter ist in der Abbildung \ref{fig:GenerischerFT2232Adapter} zu sehen.
 
 \begin{figure}[htbp]
@@ -24,7 +24,7 @@ Solch ein generischer Adapter ist in der Abbildung \ref{fig:GenerischerFT2232Ada
 Bei Experimentierboards ist der FT2232 oft auch direkt auf das Board aufgelötet.
 So kann eine einfache USB Verbindung genutzt werden, um den Prozessor zu debuggen.
 Beim Zybo wurde ebenfalls dieser Ansatz verfolgt.
-Aus diesem Grund reicht ein einfaches USB Kabel um den Prozessor auf dem Zybo auf einer Hardware-Ebene debuggen zu können.
+Aus diesem Grund reicht ein einfaches USB Kabel um den Prozessor des Zybos auf einer Hardware-Ebene debuggen zu können.
 
 \section{Installation}
 \subsection{Installation - OpenOCD}
@@ -35,12 +35,12 @@ Für diese Arbeit wurde das vorkompilierte Windows Binary für ARM Cores Version
 Das eigentliche Binary befindet sich im Ordner:\\
 \texttt{/openocd-0.10.0/bin-x64/} 
 
-Das User Manual befindet sich im Ordner:\\
+Das Open OCD User Manual\cite{bib:OpenOCDDoku} befindet sich im Ordner:\\
 \texttt{/openocd-0.10.0/} 
 
 
 \subsection{Installation - USB Driver WinUSB}
-Damit OpenOCD mit dem FT2232 Chip kommunizieren kann, werden noch die richtigen USB Treiber benötigt.
+Damit OpenOCD mit dem FT2232 Chip kommunizieren kann, werden die richtigen USB Treiber benötigt.
 Die Installation der Treiber ist am einfachsten mit den \textit{USB Driver Tool}, welches man unter folgender Adresse findet:\\
 \textit{http://visualgdb.com/UsbDriverTool/}
 
@@ -65,7 +65,14 @@ Dieser Treiber darf \textbf{nicht} ersetzt werden.
 \end{figure}
 
 
-\section{OpenOCD Konfiguration}
+\section{OpenOCD CLI - Command Line Interface}
+Das CLI\footnote{Command Line Interface} ist eine einfache Methode um mit dem Debugger zu kommunizieren
+
+In den folgenden Kapitel wird folgende Notation verwendet, um ein Befehl zu beschreiben, der das CLI verwendet:\\
+(\texttt{CLI: Befehl})
+
+
+\section{OpenOCD Konfiguration - Einleitung}
 % TODO: zum starten siehe kapitel ...
 % TODO: Files anhängen
 % nicht einfach
@@ -77,7 +84,7 @@ Die Konfiguration erfolgt mit Konfigurationsscripts (*.cfg) in der Scriptsprache
 
 Normalerweise werden die Scripts in die drei Gruppen \textit{interface, board} und \textit{target} aufgeteilt.
 So kann einfach ein Script ausgewechselt werden, wenn man den gleichen Adapter aber einen anderen Prozessor verwenden will.
-Im Pfad \textit{openocd-0.10.0/scripts} befinden sich eine Sammlung von Konfigurationsscripts für Standardhardware.
+Im Pfad \texttt{openocd-0.10.0/scripts} befinden sich eine Sammlung von Konfigurationsscripts für Standardhardware.
 
 Mit folgendem Befehl kann OpenOCD mit Konfigurationsscripten nach Wahl gestartet werden:\\
 \texttt{openocd -f script1.cfg -f script2.cfg -f script3.cfg}
@@ -90,7 +97,7 @@ Da beim Zybo kein Adapter verwendet wird, sondern der aufgelötete FT2232, wird 
 Da ein FTDI-Chip als Interface verwendet wird, sollte ein passender Script unter \textit{openocd-0.10.0/scripts/interface/ftdi/} zu finden sein.
 Keiner der Scripts passt von Namen her auf \textit{Zynq, Zybo} oder \textit{FT2232}.
 Eine Google Suche nach einem passenden Script war erfolgreicher.
-Ein Github User mit dem Namen \textit{emard} hat folgenden Script in einem von seinen Repositories gespeichert:
+Ein Github User mit dem Namen \textit{emard} hat folgenden Script in einem von seinen Repositories\footnote{https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram\_bram\_hdmi\_ise/zybo.ocd} gespeichert:
 
 % TODO neutrale text-farben
 \textit{ftdi-zybo.ocd:}
@@ -117,17 +124,17 @@ reset_config srst_pulls_trst
 
 Zeile 5 bis 7 konfigurieren das Interface als ein standard-FTDI Interface.
 Von OpenOCD werden neben dem FT2232 auch noch andere Chips unterstützt.
-Zeile 7 definiert die Vendor und Device-ID des USB Devices.
+Zeile 7 definiert die \textit{Vendor} und \textit{Device-ID} des USB Devices.
 
 \subsection{Resetverhalten}
-Liest man aus einer unerlaubten Speicheradresse (\texttt{CLI: mdw 0x40000000}), dann hängt sich die Debug-Peripherie im Zynq auf.
+Liest man aus einer unerlaubten Speicheradresse (\texttt{CLI: mdw 0x40000000}), dann hängt sich die Debug-Peripherie des Zynq auf.
 Nach so einem unerlaubten Speicherzugriff können auch keine erlaubten Speicherstellen mehr gelesen werden.
 Beim Versuch erscheint die Fehlermeldung:\\
  \texttt{Timeout waiting for cortex\_a\_exec\_optcode}.\\
 Mit einem manuellen Powercycle vom Zybo kann die Hardware wieder zurückgesetzt werden.
 
-Mit OpenOCD ist es grundsätzlich auch möglich, einen Reset automatisch durchzuführen.
-Dabei wird zwischen einen \textit{System Reset} (SRST) und dem \textit{TAP Reset} (TRST) unterschieden.
+Mit OpenOCD ist es grundsätzlich möglich, einen Reset automatisch durchzuführen.
+Dabei wird zwischen einen \textit{System Reset} (SRST) und dem \textit{TAP\footnote{Test Access Port} Reset} (TRST) unterschieden.
 Der SRST führt dabei einen Powercycle vom ganzen System durch, der TRST setzt nur den TAP zurück
 
 % TODO: warum memory location nicht erlaubt
@@ -136,16 +143,16 @@ Mit dem Befehl \texttt{''CLI: reset halt''} im CLI sollte ein Reset vom FT2232 d
 Der Befehl führt aber zur Fehlermeldung:\\
 \texttt{... zynq.cpu0: how to reset? ...}
 
-In der OpenOCD Dokumentation\cite{bib:OpenOCDDoku} im Kapitel \textit{9 Reset Configuration} ist beschrieben, wie das Resetverhalten konfiguriert werden kann.
+Im OpenOCD User Manual\cite{bib:OpenOCDDoku} im Kapitel \textit{9 Reset Configuration} ist beschrieben, wie das Resetverhalten konfiguriert werden kann.
 Mit dem Script-Befehl \texttt{''reset\_config srst\_only''} wird der TAP Reset ignoriert.
 So kann das Problem auf den System Reset begrenzt werden.
 
 Wenn OpenOCD mit der neuen Konfiguration neu gestartet wird, dann scheint der Befehl \texttt{''CLI: reset halt''} zu funktionieren.
 Greift man vorher aber wieder auf eine ungültige Speicherstelle zu, dann erscheint beim Reset die Fehlermeldung\\
 \texttt{... Timeout waiting for dpm prepare ...}.\\
-Das legt die Vermutung nahe, dass der Zynq nicht ordentlich zurück gesetzt wurde.
+Der erneute Timeout legt die Vermutung nahe, dass der Zynq nicht ordentlich zurück gesetzt wurde.
 
-Zeile 12 (\texttt{ftdi\_layout\_signal nSRST -data 0x3000 -oe 0x1000}) konfiguriert die I/O Pins des FT2232 welche für den System Reset verwendet werden.
+Zeile 12 \texttt{''ftdi\_layout\_signal nSRST -data 0x3000 -oe 0x1000''} konfiguriert die I/O Pins des FT2232 welche für den System Reset verwendet werden.
 Auf dem elektrischen Schema vom Zybo\ref{anhang:schemaZybo} könnte man überprüfen, welche I/Os vom FT2232 effektiv für den Reset verwendet werden.
 Die Seite mit dem Schema für den FT2232, Seite 7, ist aber als einzige Seite im Schema nicht veröffentlicht worden.
 Die korrekten I/O Pins lassen sich also nicht mit dem Schema ermitteln.
@@ -165,6 +172,6 @@ Da beim Zybo der Adapter direkt auf dem Board ist, ist die Bordkonfiguration ber
 
 \section{OpenOCD Konfiguration - Target}
 Für das Target, in diesem Fall der Zynq 7000 SOC, ist bereits ein Script unter \textit{openocd-0.10.0/scripts/target/zynq\_7000.cfg} enthalten.
-In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP\footnote{Test Access Port} für den FPGA Teil.
+In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP\footnote{Test Access Port} für das FPGA.
 Es ist also auch möglich, den FPGA mit dieser Toolchain zu laden.
 % zynq_7000.cfg
