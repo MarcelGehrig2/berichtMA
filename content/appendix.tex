@@ -3,7 +3,53 @@
 % \section{Schema Zybo}
 \label{anhang:schemaZybo}
 
-\label{anhang:zybo-ftdi.cfg}
+% \label{anhang:zybo-ftdi.cfg-orig}
+% % TODO neutrale text-farben
+% \textit{zybo-ftdi.ocd original:}
+% \begin{lstlisting}
+% #
+% # ZYBO ft2232hq usbserial jtag
+% #
 
+% interface ftdi
+% ftdi_device_desc "Digilent Adept USB Device"
+% ftdi_vid_pid 0x0403 0x6010
+
+% ftdi_layout_init 0x3088 0x1f8b
+% #ftdi_layout_signal nTRST -data 0x1000 -oe 0x1000
+% # 0x2000 is reset
+% ftdi_layout_signal nSRST -data 0x3000 -oe 0x1000
+% # green MIO7 LED
+% ftdi_layout_signal LED -data 0x0010
+% #ftdi_layout_signal LED -data 0x1000
+
+% reset_config srst_pulls_trst
+% \end{lstlisting}
+
+
+\label{anhang:zybo-ftdi.cfg}
+% TODO neutrale text-farben
+\textit{zybo-ftdi.ocd angepasst:}
+\begin{lstlisting}
+#
+# FTDI2232 on Zybo
+#
+#  https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram_bram_hdmi_ise/ftdi-zybo.ocd 
+
+interface ftdi
+ftdi_device_desc "Digilent Adept USB Device"
+ftdi_vid_pid 0x0403 0x6010
+
+#ftdi_layout_init data direction
+ftdi_layout_init 0x3088 0x1f8b
+
+ftdi_layout_signal nSRST -data 0x3000 -oe 0x3000
+
+# green MIO7 LED
+ftdi_layout_signal LED -data 0x0010
+
+reset_config srst_only
+adapter_nsrst_delay 40
+\end{lstlisting}
 
 \label{anhang:zynq_7000.cfg}

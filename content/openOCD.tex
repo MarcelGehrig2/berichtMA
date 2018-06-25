@@ -66,7 +66,9 @@ Dieser Treiber darf \textbf{nicht} ersetzt werden.
 
 
 \section{OpenOCD CLI - Command Line Interface}
-Das CLI\footnote{Command Line Interface} ist eine einfache Methode um mit dem Debugger zu kommunizieren
+Das CLI\footnote{Command Line Interface} ist eine einfache Methode um mit dem Debugger zu kommunizieren.
+Über den Port 4444 kann, z.B. mit Putty, auf dem \textit{Localhost} eine Telnet-Verbindung aufgebaut werden, sobald OpenOCD gestartet wurde.
+Der Befehl \texttt{''help''} listet alle zulässigen Befehle auf.
 
 In den folgenden Kapitel wird folgende Notation verwendet, um ein Befehl zu beschreiben, der das CLI verwendet:\\
 (\texttt{CLI: Befehl})
@@ -87,20 +89,20 @@ So kann einfach ein Script ausgewechselt werden, wenn man den gleichen Adapter a
 Im Pfad \texttt{openocd-0.10.0/scripts} befinden sich eine Sammlung von Konfigurationsscripts für Standardhardware.
 
 Mit folgendem Befehl kann OpenOCD mit Konfigurationsscripten nach Wahl gestartet werden:\\
-\texttt{openocd -f script1.cfg -f script2.cfg -f script3.cfg}
+\texttt{openocd -f zybo-ftdi.cfg -f zybo.cfg}
 
 
 \section{OpenOCD Konfiguration - Interface}
 Die Interface Konfiguration beschreibt hauptsächlich den verwendeten Adapter.
 Da beim Zybo kein Adapter verwendet wird, sondern der aufgelötete FT2232, wird mit diesem Script der FTDI Chip und dessen Anbindung an den Zynq konfiguriert.
 
-Da ein FTDI-Chip als Interface verwendet wird, sollte ein passender Script unter \textit{openocd-0.10.0/scripts/interface/ftdi/} zu finden sein.
+Da ein FTDI-Chip als Interface verwendet wird, sollte ein passender Script unter \textit{openocd-0.10.0/scripts/ interface/ftdi/} zu finden sein.
 Keiner der Scripts passt von Namen her auf \textit{Zynq, Zybo} oder \textit{FT2232}.
 Eine Google Suche nach einem passenden Script war erfolgreicher.
 Ein Github User mit dem Namen \textit{emard} hat folgenden Script in einem von seinen Repositories\footnote{https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram\_bram\_hdmi\_ise/zybo.ocd} gespeichert:
 
 % TODO neutrale text-farben
-\textit{ftdi-zybo.ocd:}
+\textit{zybo-ftdi.ocd:}
 \begin{lstlisting}
 #
 # ZYBO ft2232hq usbserial jtag
@@ -157,21 +159,25 @@ Auf dem elektrischen Schema vom Zybo\ref{anhang:schemaZybo} könnte man überpr�
 Die Seite mit dem Schema für den FT2232, Seite 7, ist aber als einzige Seite im Schema nicht veröffentlicht worden.
 Die korrekten I/O Pins lassen sich also nicht mit dem Schema ermitteln.
 
-% ftdi_layout_signal nSRST -data 0x3000 -oe 0x1000
+Im OpenOCD User Manual\cite{bib:OpenOCDDoku} wird der für \texttt{''ftdi\_layout\_signal nSRST} genauer beschrieben.
+Der Switch \textit{-data 0x3000} definiert alle relevanten Pins für den SRST und \textit{-oe 0x1000} konfiguriert alle Ausgänge.
+In einem Versuch wurden diverse Kombinationen für die beiden Switches ausprobiert.
+Keine Kombination mit nur einem Pin (z.B. \textit{-data 0x2000} mit \textit{-oe 0x2000}) hat funktioniert.
+Es hat sich herausgestellt, dass die Kombination \textit{-data 0x3000} mit \textit{-oe 0x3000} tatsächlich einen System Reset ermöglicht.
 
-% \ref{bib:OpenOCDDoku}
+Weil der Debugger direkt nach dem SRST versuch mit dem Zynq zu kommunizieren, tritt folgende Fehlermeldung auf:\\
+\texttt{Invalid ACK (7) in DAP response\\
+JTAG-DP STICKY ERROR}\\
+Mit dem Kommando \texttt{''adapter\_nsrst\_delay 40''} wartet der Debugger nach dem SRST zusätzliche 40 Millisekunden.
+Diese Wartezeit genügt, damit die Debug Peripherie wieder aufgestartet ist, wenn der Debugger versucht zu kommunizieren.
 
-% 
-
-
-% TODO änderungen für reset
 
 
 \section{OpenOCD Konfiguration - Board}
 Da beim Zybo der Adapter direkt auf dem Board ist, ist die Bordkonfiguration bereits im Konfigurationsscript für das Interface enthalten.
 
 \section{OpenOCD Konfiguration - Target}
-Für das Target, in diesem Fall der Zynq 7000 SOC, ist bereits ein Script unter \textit{openocd-0.10.0/scripts/target/zynq\_7000.cfg} enthalten.
+Für das Target, in diesem Fall der Zynq 7000 SOC, ist bereits ein Script unter \textit{openocd-0.10.0/scripts/ target/zynq\_7000.cfg} enthalten.
 In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP\footnote{Test Access Port} für das FPGA.
 Es ist also auch möglich, den FPGA mit dieser Toolchain zu laden.
 % zynq_7000.cfg
