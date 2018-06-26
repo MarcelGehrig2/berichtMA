@@ -4,3 +4,6 @@ stm32_portfolio0_detailed.png			http://www.emcu.it/STM32.html
 
 
 coresight.png 		http://www2.keil.com/coresight/
+
+
+zynqBlockDiagram.png		https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html

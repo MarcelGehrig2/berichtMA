@@ -40,6 +40,7 @@ Das Open OCD User Manual\cite{bib:OpenOCDDoku} befindet sich im Ordner:\\
 
 
 \subsection{Installation - USB Driver WinUSB}
+\label{kapitel:usbTreiber}
 Damit OpenOCD mit dem FT2232 Chip kommunizieren kann, werden die richtigen USB Treiber benötigt.
 Die Installation der Treiber ist am einfachsten mit den \textit{USB Driver Tool}, welches man unter folgender Adresse findet:\\
 \textit{http://visualgdb.com/UsbDriverTool/}
@@ -51,6 +52,7 @@ Wenn der Jumper '\textit{J15}' auf USB gesetzt ist, dann wird keine zusätzliche
 Das Device mit der \textit{Vendor ID=0403, Device ID=6010} und \textit{Interface 0} ist das JTAG Interface vom FT2232.
 Mit einem Rechtsklick darauf kann man den \textit{Install WinUSB} Treiber auswählen und installieren.
 Abbildung \ref{fig:InstallWinUSBDriver} zeigt die Liste mit allen USB Devices und das Kontextmenü für die Installation des richtigen Treibers.
+Um den Standardtreiber wieder zu installieren, kann einfach \textit{''Restore default driver''} ausgewählt werden.
 Nachdem das Zybo einmal aus- und wieder einschaltet wird, ist der Treiber einsatzbereit.
 
 Das Device mit der \textit{Vendor ID=0403, Device ID=6010} und \textit{Interface \textbf{1}} ist die UART Verbindung zum Prozessor.
@@ -178,6 +180,6 @@ Da beim Zybo der Adapter direkt auf dem Board ist, ist die Bordkonfiguration ber
 
 \section{OpenOCD Konfiguration - Target}
 Für das Target, in diesem Fall der Zynq 7000 SOC, ist bereits ein Script unter \textit{openocd-0.10.0/scripts/ target/zynq\_7000.cfg} enthalten.
-In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP\footnote{Test Access Port} für das FPGA.
+In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP für das FPGA.
 Es ist also auch möglich, den FPGA mit dieser Toolchain zu laden.
 % zynq_7000.cfg

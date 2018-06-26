@@ -1,5 +1,15 @@
 \chapter{Anhang}
 
+
+% Zybo
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+% openOCD
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % \section{Schema Zybo}
 \label{anhang:schemaZybo}
 
@@ -53,3 +63,57 @@ adapter_nsrst_delay 40
 \end{lstlisting}
 
 \label{anhang:zynq_7000.cfg}
+
+
+
+
+\label{anhang:SDKLog}
+% TODO neutrale text-farben
+\textit{Xilinx SDK Log:}
+\begin{lstlisting}
+14:26:34 INFO	: Disconnected from the channel tcfchan#2.
+14:26:36 INFO	: 'targets -set -filter {jtag_cable_name =~ "Digilent Zybo 210279573773A" && level==0} -index 1' command is executed.
+14:26:36 INFO	: 'fpga -state' command is executed.
+14:26:36 INFO	: Connected to target on host '127.0.0.1' and port '3121'.
+14:26:36 INFO	: Jtag cable 'Digilent Zybo 210279573773A' is selected.
+14:26:36 INFO	: 'jtag frequency' command is executed.
+14:26:36 INFO	: Sourcing of 'D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/ps7_init.tcl' is done.
+14:26:36 INFO	: Context for 'APU' is selected.
+14:26:38 INFO	: Hardware design information is loaded from 'D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/system.hdf'.
+14:26:38 INFO	: 'configparams force-mem-access 1' command is executed.
+14:26:38 INFO	: Context for 'APU' is selected.
+14:26:38 INFO	: 'stop' command is executed.
+14:26:38 INFO	: 'ps7_init' command is executed.
+14:26:38 INFO	: 'ps7_post_config' command is executed.
+14:26:38 INFO	: Context for processor 'ps7_cortexa9_0' is selected.
+14:26:38 INFO	: Processor reset is completed for 'ps7_cortexa9_0'.
+14:26:38 INFO	: Context for processor 'ps7_cortexa9_0' is selected.
+14:26:39 INFO	: The application 'D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/01_gettingStarted_ApplicationProject/Debug/01_gettingStarted_ApplicationProject.elf' is downloaded to processor 'ps7_cortexa9_0'.
+14:26:39 INFO	: 'configparams force-mem-access 0' command is executed.
+14:26:39 INFO	: ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+loadhw -hw D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+stop
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+rst -processor
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+dow D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/01_gettingStarted_ApplicationProject/Debug/01_gettingStarted_ApplicationProject.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+14:26:39 INFO	: Memory regions updated for context APU
+14:26:39 INFO	: Context for processor 'ps7_cortexa9_0' is selected.
+14:26:39 INFO	: 'con' command is executed.
+14:26:39 INFO	: ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+con
+----------------End of Script----------------
+
+14:26:39 INFO	: Launch script is exported to file 'D:\Vivado\01_gettingStarted\01_gettingStarted.sdk\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_using_debug_01_gettingstarted_applicationproject.elf_on_local.tcl'
+\end{lstlisting}
