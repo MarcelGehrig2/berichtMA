@@ -1,4 +1,4 @@
-\chapter{Anhang}
+% \chapter{Anhang}
 
 
 % Zybo
@@ -11,11 +11,11 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \section{Schema Zybo}
-\label{anhang:schemaZybo}
+% \label{anhang:schemaZybo}
 
 % \label{anhang:zybo-ftdi.cfg-orig}
-% % TODO neutrale text-farben
 % \textit{zybo-ftdi.ocd original:}
+% \lstset{language=tcl}
 % \begin{lstlisting}
 % #
 % # ZYBO ft2232hq usbserial jtag
@@ -37,9 +37,9 @@
 % \end{lstlisting}
 
 
+\section{zybo-ftdi.ocd angepasst:}
 \label{anhang:zybo-ftdi.cfg}
-% TODO neutrale text-farben
-\textit{zybo-ftdi.ocd angepasst:}
+\lstset{language=tcl}
 \begin{lstlisting}
 #
 # FTDI2232 on Zybo
@@ -67,9 +67,10 @@ adapter_nsrst_delay 40
 
 
 
+\section{Xilinx SDK Log:}
 \label{anhang:SDKLog}
 % TODO neutrale text-farben
-\textit{Xilinx SDK Log:}
+\lstset{language=tcl}
 \begin{lstlisting}
 14:26:34 INFO	: Disconnected from the channel tcfchan#2.
 14:26:36 INFO	: 'targets -set -filter {jtag_cable_name =~ "Digilent Zybo 210279573773A" && level==0} -index 1' command is executed.
@@ -117,3 +118,30 @@ con
 
 14:26:39 INFO	: Launch script is exported to file 'D:\Vivado\01_gettingStarted\01_gettingStarted.sdk\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_using_debug_01_gettingstarted_applicationproject.elf_on_local.tcl'
 \end{lstlisting}
+
+
+\section{system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl:}
+\label{anhang:elf_on_local.tcl}
+% TODO neutrale text-farben
+\lstset{language=tcl}
+\begin{lstlisting}
+connect -url tcp:127.0.0.1:3121
+source D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/ps7_init.tcl
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+loadhw -hw D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/system.hdf -mem-ranges [list {0x40000000 0xbfffffff}]
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+stop
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+rst -processor
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+dow D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/01_gettingStarted_ApplicationProject/Debug/01_gettingStarted_ApplicationProject.elf
+configparams force-mem-access 0
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+con
+\end{lstlisting}
+
+
+

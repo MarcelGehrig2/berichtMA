@@ -44,4 +44,48 @@ Das XDSK kann interaktiv, oder mit Scripts verwendet werden.
 % Die Scriptsprache basiert, wie auch Jim-TCL, auf der Sprache TCL.
 Wie auch Jim-TCL basiert die verwendete Scriptsprache auf der Sprache TCL.
 Wird das ''Hello World'' Programm im XSDK gestartet, erhält man im \textit{SDK Log} Fenster ein detailliertes Log des ausgeführten Script.
-In diesem Log kann man nachvollziehen, was beim Download und Start des Programmes alles ausgeführt wird.
+In diesem Log kann man nachvollziehen, was das Script beim Download und Start des Programmes alles ausgeführt.
+
+% TODO was auch immer
+Im Anhang \ref{anhang:SDKLog} ist eine Kopie eines solchen Logs zu finden.
+% langesWort
+\textit{D:/Vivado/01\_gettingStarted/01\_gettingStarted.sdk/.sdk/launch\_scripts/xilinx\_c-c++\_application\_(system\_debugger)/system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
+% \textit{D:/Vivado\01\_gettingStarted\01\_gettingStarted.sdk\.sdk\launch\_scripts\xilinx\_c-c++\_application\_(system\_debugger)\system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
+
+Das Script \textit{ps7\_init.tcl} definiert unter anderem die fünf Initialisierungs-Methoden:
+\begin{itemize}
+%\begin{itemize}
+\item \textit{ps7\_mio\_init\_data\_3\_0}
+\item \textit{ps7\_pll\_init\_data\_3\_0}
+\item \textit{ps7\_clock\_init\_data\_3\_0}
+\item \textit{ps7\_ddr\_init\_data\_3\_0}
+\item \textit{ps7\_peripherals\_init\_data\_3\_0}
+\end{itemize}
+Die Initialisierungs-Methoden werden in der Methode \textit{ps7\_init} aufgerufen.
+\textit{ps7\_init} wiederum wird in Zeile 8 des \textit{...elf\_on\_local.tcl} Scripts aufgerufen, welches beim Start des ''Hello World'' Programm im XSDK ausgeführt wird.
+In Zeile 9 vom \textit{...elf\_on\_local.tcl} wird auch noch die Methode \textit{ps7\_post\_config} von \textit{ps7\_init.tcl} auf, welche im Anschluss \textit{ps7\_post\_config\_3\_0} aufruft.
+
+Alle Methoden sind auf den folgenden vier Grundbefehlen aufgebaut:\\
+% \begin{itemize}
+% \item \textit{mwr -force <address> <value>: }         Schreibt den Wert <value> in die Adresse <address>.
+% \item \textit{mask\_write <address> <mask> <value>: } Schreibt die Bits der Maske <mask> von <value> in die Addresse <address>.
+% \item \textit{mask\_poll <address> <mask>:  }         Wartet bis die maskierten Bits <mask> des Speicherinhalt von der Speicheradresse <mask> gleich 0 sind.
+% \item \textit{mask\_dellay <address> <value>:}        Wartet <value> Millisekunden.
+% \end{itemize}
+
+
+\textbf{mwr -force <address> <value>: }\\
+Schreibt den Wert <value> in die Adresse <address>.
+
+\textbf{mask\_write <address> <mask> <value>: }\\
+Schreibt die Bits der Maske <mask> von <value> in die Addresse <address>.
+
+\textbf{mask\_poll <address> <mask>:  }\\
+Wartet bis die maskierten Bits <mask> des Speicherinhalt von der Speicheradresse <mask> gleich 0 sind.
+
+\textbf{mask\_dellay <address> <value>:}\\
+Wartet <value> Millisekunden.
+
+
+
+% TODO silikon version überprüfen ps7_init.tcl.745
