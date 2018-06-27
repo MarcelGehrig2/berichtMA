@@ -86,6 +86,101 @@ Wartet bis die maskierten Bits <mask> des Speicherinhalt von der Speicheradresse
 \textbf{mask\_dellay <address> <value>:}\\
 Wartet <value> Millisekunden.
 
-
-
 % TODO silikon version überprüfen ps7_init.tcl.745
+
+
+\textbf{ps7\_mio\_init\_data\_3\_0:}\\
+Diese Methode initialisiert die MIOs.
+Es wird der Multiplexer für die IO Pins konfiguriert.
+Dadurch wird definiert, welcher Pin von welcher Peripherie, wie UART und auch RAM, verwendet wird.
+Zusätzlich werden auch, falls vorhanden, folgende elektrischen Charakteristiken definiert:
+\begin{itemize}
+\item \textbf{PULLUP:} Pullup Widerstand aktivieren / deaktivieren.
+\item \textbf{IO\_Type:} Buffer Type: LVCMOS 1.8V, LVCMOS 2.5V, LVCMOS 3.3V,  oder HSTL.
+\item \textbf{SPEED:} Slow oder Fast CMOS edge.
+\item \textbf{Tristate:} Enalbe / disable Tristate.
+\end{itemize} 
+
+
+\textbf{ps7\_pll\_init\_data\_3\_0}\\
+Initialisiert die drei PLLs\footnote{Phase Locked Loop} ARM, DDR und IO.
+Bei jeder PLL-Initialisierung wird darauf gewartet, bis der PLL betriebsbereit (locked) ist.
+Die Dauer dieser Wartezeit ist unbekannt.
+
+\textbf{ps7\_clock\_init\_data\_3\_0}\\
+Konfiguriert diverse Clocks, die im Prozessor gebraucht werden.
+
+\textbf{ps7\_ddr\_init\_data\_3\_0}\\
+Konfiguriert den DDR Bus.
+Für die Konfiguration werden insgesamt 79 verschiedene Register geschrieben und die DCI (Digital Controlled Impedance) kalibriert.
+
+\textbf{ps7\_peripherals\_init\_data\_3\_0}\\
+Konfiguriert folgende Peripherie:
+\begin{itemize}
+\item UART1
+\item QSPI (für Flash Speicher auf Zybo)
+\item POR timer
+\item High-Low-Wait(1msec)-High Sequenz für MIO46 (USB-OTG Ping)
+\end{itemize} 
+
+
+
+
+Die oben genannten Initialisierungsfunktionen werden vom Xilinx Debugger jedes mal ausgeführt, wenn die Applikation im XSDK mit \textit{''Launch on Hardware (System Debuger)''} gestartet wird.
+Es ist aber auch möglich, die Initialisierung direkt mit der C-Applikation und nicht mit dem Debugger durchzuführen.
+Wird die Initialisierung in der Applikation durchgeführt, und die Applikation auf dem Flash Speicher des Zynq gespeichert, dann Initialisiert sich der Zynq bei jedem Start selber.
+Im Beispielprogramm \textit{''helloworld.c''} ist die Methode \textit{''init\_platform()''} enthalten, welche in \textit{''platform.c''} deklariert ist.
+Standardmässig ist sie aber auskommentiert.
+\textit{''platform.c''} befindet sich im \textit{''design\_wrapper\_hw\_platform''} welcher in Vivado erzeugt wurde.
+\textit{''ps7\_init()''}
+
+
+\textit{helloworld.c:}
+\lstset{language=c}
+\begin{lstlisting}[frame=single]
+...
+#include "platform.h"
+..
+int main ()
+{
+...
+init_platform();
+
+while(1){
+...
+\end{lstlisting}
+
+
+
+\textit{platform.c:}
+\lstset{language=c}
+\begin{lstlisting}[frame=single]
+...
+/*#include "ps7_init.h"*/
+/*#include "psu_init.h"*/
+...
+void
+init_platform()
+{
+    /*
+     * If you want to run this example outside of SDK,
+     * uncomment one of the following two lines and also #include "ps7_init.h"
+     * or #include "ps7_init.h" at the top, depending on the target.
+     * Make sure that the ps7/psu_init.c and ps7/psu_init.h files are included
+     * along with this example source files for compilation.
+     */
+    /* ps7_init();*/
+    /* psu_init();*/
+    enable_caches();
+    init_uart();
+}
+...
+
+\end{lstlisting}
+
+
+
+
+% Script anpassen
+
+% 
