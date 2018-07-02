@@ -219,6 +219,11 @@ proc initPS {} {
 	ps7_init
 	ps7_post_config
 }
+
+proc initFPU {} {
+	arm mcr 15 0 1 1 2 0x0c00
+	arm mcr 15 0 1 0 2 0x00f00000
+}
 \end{lstlisting}
 
 \item Jeder \texttt{''mwr -force <address> <value>''} Befehl wurde mit \texttt{''\textbf{mww} <address> <value>''} ersetzt.
