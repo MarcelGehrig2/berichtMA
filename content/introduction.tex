@@ -3,17 +3,17 @@
 
 \section{Stand der Technik}
 % deep
-Das Projekt \textit{deep} \cite{bib:DeepHome} ist eine Cross Development Plattform, die es erlaubt, ein Java Programm direkt auf einem Prozessor auszuführen.
-Das \textit{deep} Projekt ermöglicht es einem Entwickler eine Java Programm zu schreiben, welches direkt auf einem Prozessor läuft und Echtzeit-Fähigkeiten hat.
+Das Projekt \textit{deep}\footnote{http://www.deepjava.org/start} ist eine Cross Development Plattform, die es erlaubt, ein Java Programm direkt auf einem Prozessor auszuführen.
+Es ermöglicht einem Entwickler eine Java Programm zu schreiben, welches direkt auf einem Prozessor läuft und Echtzeit-Fähigkeiten hat.
 Zur Zeit wird dieses Projekt in der NTB für die Ausbildung Von Systemtechnik Studenten verwendet.
 Es erlaubt einfach und schnell Robotersteuerungen und Regelungen zu implementieren, ohne dass man sich mit den Eigenarten von C und C++ Programmen auseinandersetzen muss.
 
 % debuging
 \textit{deep} unterstützt einige grundlegende Debuging-Funktionalitäten.
 Mit einer mehreren tausend Franken teuren Abatronsonde kann der Speicher und die Register des Prozessors ausgelesen und auch geschrieben werden.
-Auch werden keine \textit{Breakpoints} oder \textit{Source Code Navigation} unterstützt, so wie man es aus bekannten Debuggern wie dem \textit{gdb}\footnote{https://www.gnu.org/software/gdb/} kennt.
+Der aktuelle Debugger unterstützt keine \textit{Breakpoints} oder \textit{Source Code Navigation}, wie man es aus bekannten Debuggern wie dem \textit{gdb}\footnote{https://www.gnu.org/software/gdb/} kennt.
 
-% JTAG
+% TODO: JTAG
 
 
 \section{Motivation}
@@ -22,19 +22,20 @@ Aktuell ist \textit{deep} nur mit der PowerPC Architektur kompatibel.
 PowerPC Prozessoren sind aber nicht mehr weit verbreitet und sehr teuer.
 Die an der NTB verwendeten PowerPC-Prozessoren sind zwar leistungsstark, aber teuer und veraltet.
 
-Aus diesem Grund wird \textit{deep} für ARM-Prozessoren erweitert.
+Aus diesem Grund wird \textit{deep} für die ARM-Architektur erweitert.
 Da die ARM-Architektur bei eingebetteten Prozessoren am weitesten verbreitet ist, ist auch die Auswahl an günstiger und leistungsstarker Hardware sehr gross.
-Mit grosse Flexibilität bei der Auswahl von ARM-Prozessoren kann wahlweise sehr günstige oder auch sehr leistungsstarke Prozessoren verwendet werden.
+Mit grosse Flexibilität bei der Auswahl von ARM-Prozessoren können sehr günstige oder auch sehr leistungsstarke Prozessoren verwendet werden.
 
 % debugging
 \textit{deep} ist ein Open-Source-Projekt welches auch für den Unterricht verwendet wird.
 Damit nicht für jeden Student teure Debugging-Hardware gekauft werden muss, ist eine kostengünstige Alternative wünschenswert.
 
+% TODO: ersatz für zielorientiert
 Java ist im Gegensatz zu C und C++ eine sehr zielorientierte Sprache.
 Bei Java muss man sich nicht so detailliert um Ressourcen wie Speicher und Hardwareschnittstellen kümmern wie in C-orientierten Sprachen.
 Dieser Aspekt soll auch beim Debugger beibehalten werden.
 Zusätzlich zum direkten Speicher Auslesen sollen auch Variablen gelesen und geschrieben werden können.
-Eine native \textit{Source Code Navigation} in Eclipse vereinfacht die Entwicklung einer deep-Applikation sehr.
+Eine native \textit{Source Code Navigation} in Eclipse vereinfacht die Entwicklung einer \textit{deep}x-Applikation sehr.
 
 
 
@@ -45,7 +46,7 @@ Bei dieser Arbeit werden mehrere Ziele verfolgt, die aufeinander aufbauen.
 
 \begin{enumerate}
 \item Passende Hardware (Experimentierboard) finden, welche auch im Unterricht verwendet werden kann.
-\item Grundlegendes Debug-Interfeace, welches bereits für PowerPC existiert, für die ausgewählte Hardware anpassen.
+\item Grundlegendes Debug-Interfeace, welches bereits für PowerPC existiert, für die ausgewählte Hardware anpassen. Dieses Interface soll für die Entwicklung von deep möglichst bald einsatzbereit sein.
 \item Den GNU-Debugger (gdb) mit einem Programm verwenden, dass vom deep-Compiler übersetzt wurde. Dazu soll vorerst das Command-Line-Interface (CLI) des gdb genutzt werden.
 \item Den gdb in das Eclipse Plug-In von deep integrieren, damit der Debugger direkt aus Eclipse verwendet werden kann.
 \end{enumerate}

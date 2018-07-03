@@ -1,0 +1,10 @@
+
+
+
+
+
+Kapitelnamen im Fliesstext: "Kursiv"
+
+
+das XDSK		// Xylinx Standard Development Kit
+das XSCT		// Xilinx Software Command-Line Tool
