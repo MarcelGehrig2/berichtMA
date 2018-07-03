@@ -57,9 +57,17 @@ Der folgende Ablauf ermöglicht es aber trotzdem, diese Register auszulesen:
 \end{enumerate}
 
 
+\subsection{Unterstützte Features der FPU}
+Die Register MVFR0 und MVFR1 enthalten Informationen über die unterstützten Features der FPU.
+% TODO Seite XXX
+Auf der Seite XXX des ARMv7-A ARM\cite{bib:ARMv7ArchitectureReferenceManual} (\textit{Architecture Reference Manual}) ist beschrieben, wie die unterstützten Features aus den Register gelesen  werden können.
+
+Der Zynq 7000 des Zybo unterstützt:
+\begin{itemize}
+\item 
+\end{itemize}
+
 MVFR0:	0x1011\_0222
 MVFR1:	0x0111\_1111
 
 
-	arm mcr 15 0 1 1 2 0x0c00
-	arm mcr 15 0 1 0 2 0x00f00000
