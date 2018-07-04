@@ -5,7 +5,7 @@ Die Auswahl von Hardware mit ARM Prozessoren ist extrem gross.
 Ende September 2016 sind bereits über 86 Milliarden ARM basierte Prozessoren verkauft worden.\footnote{Elektronischer/Anhang/ARM-media-fact-sheet-2016.pdf}
 Diese Zahl reflektiert zwar nicht direkt die Diversität von den verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM Prozessoren verbreitet sind.
 
-In diesem Kapitel soll in dem riesigen Angebotsdschungel die richtige Hardware zu finden, auf der diese Arbeit aufbauen kann.
+In diesem Kapitel soll in dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
 % Die ausgewählte Hardware soll ein Experimentierboard mit einem ARM-Prozessor gefunden werden, dass im Robotik Unterricht verwendet werden kann.
 Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern auch für den Robotik Unterricht.
 Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sein, um ihn in anspruchsvollen Robotikprojekten verwenden zu können.
@@ -17,9 +17,9 @@ Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sei
 %TODO ökosystem?
 
 \section{Soll- und Muss-Kriterien bei der Auswahl der Hardware}
-Um die richtige Hardware im riesigen Angebotsdschungel zu finden, sind Soll- und Muss-Kriterien ermittelt worden.
+Für die Hardware sind folgende Soll- und Muss-Kriterien ermittelt worden.
 
-\textbf{Muss-Kriterien}
+\subsection{Muss-Kriterien}
 \begin{itemize}
 \item Systemebene
 	\begin{itemize}
@@ -29,14 +29,14 @@ Um die richtige Hardware im riesigen Angebotsdschungel zu finden, sind Soll- und
 	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende Produkte oder Nischenprodukte sind nicht akzeptabel.
 	\item Als fertiges Modul erhältlich: Eigenes PCB entwickeln und herstellen ist keine Option.
 	%TODO synonym einbettbar:
-	\item Einbettbar: Der Prozessor muss auch bei einem selbst entwickelten PCB verwendet werden können. Wahlweise als Modul oder direkt als Prozessor in eigenem Package.
+	\item Einbettbar: Der Prozessor muss auch bei einem selbst entwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor in eigenem Package.
 	\item Noch lange erhältlich.
 	\end{itemize}
 \item Prozessorebene
 	\begin{itemize}
-	\item ARMv7: Der Prozessor muss auf der ARMv7 ISA\footnote{Instruction Set Architecture} basieren.
+	\item ARMv7: Der Prozessor muss auf einer ARMv7 ISA (\textit{Instruction Set Architecture}) basieren.
 	\item ARM Instruktionen: Der Prozessor muss ARM Instruktionen unterstützen. \textit{Thumb} Instruktionen sind nicht ausreichend.
-	\item FPU: Für Gleitzahlenarithmetik.
+	\item FPU (\textit{Floating Point Unit}): Für Gleitzahlenarithmetik.
 	\item Netzwerkschnitstelle: RJ-45 inklusive MAC\footnote{Media Access Control} und \textit{Magnetics}.
 	\item USB: USB Schnittstelle als Host und als Slave.
 	\item Flash: Mehr als 50kByte Flash.
@@ -45,7 +45,7 @@ Um die richtige Hardware im riesigen Angebotsdschungel zu finden, sind Soll- und
 \end{itemize}
 
 
-\textbf{Soll-Kriterien}
+\subsection{Soll-Kriterien}
 \begin{itemize}
 \item Systemebene
 	\begin{itemize}
@@ -69,13 +69,13 @@ Um die richtige Hardware im riesigen Angebotsdschungel zu finden, sind Soll- und
 Der Begriff \textit{Hardware Debugger} ist nicht eindeutig definiert.
 Im einfachsten Fall kann ein Hardware Debugger nur ein \textit{Boundary Scan} durchführen wie es ursprünglich für JTAG vorgesehen war.
 Bei \textit{Boundary Scan} können die I/O Pins von einem Prozessor gelesen und auch gesetzt werden.
-Mit so einem Scan kann bei der Produktion des Bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und keine Kurzschlüsse bilden.
+Mit so einem Scan kann in der Produktion bei der Bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und dabei keine Kurzschlüsse bilden.
 Für diesen Scan wird der Prozessor Kern nicht verwendet, sondern separate Peripherie im Prozessor.
-Über das JTAG Interface kann der Scan ausgeführt werden, ohne dass eine Software auf dem Prozessor laufen muss.
+Über das JTAG Interface kann der Scan ausgeführt werden, ohne dass eine Software auf dem Prozessor ausgeführt werden muss.
 
 Moderne Prozessoren erweitern diese grundlegende Funktionen mit einigen sehr hilfreichen Features.
 % Moderne Prozessoren haben noch viel mehr Funktionen.
-So bieten ARM Prozessoren mit der CoreSight Technologie noch viel mehr als nur einen \textit{Boundary Scan}.
+So bieten ARM Prozessoren mit der \textit{CoreSight} Technologie noch viel mehr als nur einen \textit{Boundary Scan}.
 % TODO besserer Satz
 Die untenstehende Liste zeigt einige Funktionen von dieser Technologie, aber nicht alle.
 Die für diese Arbeit relevanten Funktionen sind \textbf{fett} geschrieben.
@@ -83,14 +83,14 @@ Die für diese Arbeit relevanten Funktionen sind \textbf{fett} geschrieben.
 \begin{itemize}
 	\item \textbf{Prozessor Register lesen und schreiben}
 	\item \textbf{RAM lesen und schreiben}
-	\item \textbf{Flash Speicher lesen und schreiben} 
+	\item \textbf{Externer Flash Speicher lesen und schreiben} 
 	\item \textbf{Hardware Breakpoint auf den Program Counter} 
 	\item \textbf{Hardwaer Breakpoint auf einer Speicherstelle (Watchpoint)} 
 	\item Debug Trace (ETM Program Trace) 
 	\item Debug Trace Buffer
 \end{itemize}
 
-Da ein Hardware Debugger keine installierte Software auf dem Prozessor benötigt, kann er auch gut verwendet werden, um die grundlegendsten Funktionen vom \textit{deep} Laufzeit System zu entwickeln.
+Da ein Hardware Debugger keine funktionsfähige Software auf dem Prozessor benötigt, kann er auch gut verwendet werden, um die grundlegendsten Funktionen, wie beispielsweise der Bootvorgang, vom \textit{deep} Laufzeit System zu entwickeln.
 
 
 
@@ -99,18 +99,18 @@ Da ein Hardware Debugger keine installierte Software auf dem Prozessor benötigt
 \subsection{Cortex-A}
 Sehr gut geeignet für die Verwendung mit einem vollen Betriebssystem wie Windows, Linux oder Android.
 Cortex-A Prozessoren bieten dem umfangreichsten Support für externe Peripherie wie USB, Ethernet und RAM.
-Die leistungsstärksten ARM Cortex Prozessoren.
+Sie sind auch leistungsstärksten ARM Cortex Prozessoren.
 
 \subsection{Cortex-R}
 Cortex-R werden entwickelt für Echtzeitanwendungen und Sicherheitskritische Applikationen wie Festplattenkontrolle und medizinische Geräte.
-Sie sind normalerweise nicht mit einer MMU ausgerüstet.
+Sie sind normalerweise nicht mit einer MMU \textit{Memory Management Unit} ausgerüstet.
 % und können deshalb nich mit einem Linux oder Windows verwendet werden.
 Mit einer Taktrate von über 1GHz und einem sehr schnellen Interruptverhalten eignen sich Prozessoren mit einem Cortex-R sehr gut um auf externe Stimuli schnell zu reagieren.
 
 \subsection{Cortex-M}
 Cortex-M sind mit einer Taktrate um 200Mhz relativ langsam.
 Sehr stromsparend und durch die kurze Pipeline haben sie eine deterministische und kurze Interrupt Verzögerung.
-Die Prozessoren aus der Cortex-M Reihe unterstützen nur die Thumb Instruktionen und nicht die standard-ARM Instruktionen.
+Die Prozessoren aus der Cortex-M Reihe unterstützen nur die Thumb-Instruktionen und kommen deshalb nicht in Frage.
 
 
 \subsection{ARM Prozessoren ausserhalb der Cortex Reihe}
@@ -121,7 +121,7 @@ Da solche Designs meist aus einer Zeit vor 2004 stammen, gilt das Design als ver
 \subsection{Fazit über die ARM Mikroarchitekturen}
 Prozessoren die auf der Cortex-A Mikroarchitektur basieren bieten die grösste Flexibilität.
 Zusätzlich ist auch das Angebot bei den Cortex-A Prozessoren am grössten.
-Die anderen Cortex Reihen bieten keine Vorteile die für dieses Projekt von Nutzen sind.
+Die anderen Cortex Reihen bieten keine Vorteile, die für dieses Projekt von Nutzen sind.
 Aus diesen Gründen wird die Auswahl auf die Prozessoren aufs der Cortex-A Reihe begrenzt.
 
 % TODO tabellen titel und referenz?
@@ -201,8 +201,8 @@ Wenn es auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert es den ARM
 \hline
 \textbf{Bauweise} & \textbf{Vorteile}                                                                                                                      & \textbf{Nachteile}                                                       \\ \hline
 \textbf{Modular}  & \begin{tabular}[c]{@{}l@{}}* Günstig wenn nur Prozessor verwendet wird\\ * Unterschiedliche FPGAs können verwendet werden\end{tabular} & * Datenbus evt. nicht Memory mapped                                      \\ \hline
-\textbf{SOB}      &                                                                                                                                        & * FPGA ist fix                                                           \\ \hline
-\textbf{SOC}      & \begin{tabular}[c]{@{}l@{}}* Potenziell sehr schnelle Datenverbindung\\ zwischen FPGA und Prozessor\end{tabular}                       & \begin{tabular}[c]{@{}l@{}}* FPGA ist fix\\ * Relativ teuer\end{tabular} \\ \hline
+\textbf{SOB}      & \begin{tabular}[c]{@{}l@{}}* Sauberes, abgeschlossenes System\end{tabular} & * FPGA ist fix                                                           \\ \hline
+\textbf{SOC}      & \begin{tabular}[c]{@{}l@{}}* Potenziell sehr schnelle Datenverbindung\\ \ \ \ zwischen FPGA und Prozessor\\ * Sauberes, abgeschlossenes System\end{tabular}                       & \begin{tabular}[c]{@{}l@{}}* FPGA ist fix\\ * Relativ teuer\end{tabular} \\ \hline
 \textbf{FPGA}     & * Flexibel                                                                                                                             & * Sehr teuer                                                             \\ \hline
 \end{tabular}
 \end{table}

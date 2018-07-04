@@ -1,7 +1,6 @@
 % TODO: Kapitel unterkapitel
 
 \chapter{Zynq}
-\subsection{Übersicht}
 Der Zynq-7000 ist ein SoC\footnote{System on Chip} der einen 667 MHz Dual-Core ARM Cortex-A9 Prozessor und einem programmierbare Logik enthält, die einem Artix-7 FPGA entspricht.
 Der Prozessor und dessen Peripherie befindet sich im \textit{Processing System} oder kurz PS.
 Der FPGA-Teil des Zynq wird oft PL oder \textit{Programmable Logic} genannt.
@@ -29,7 +28,7 @@ Im TRM\footnote{Technical Reference Manual} des Zynq\cite{bib:ZynqTechnicalRefer
 \section{Standard Zybo Workflow}
 Im \textit{Getting Started with Zynq\footnote{https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1}} Tutorial von Digilent ist beschrieben, wie man ein einfaches Design für die PL und ein einfaches Programm für das PS erstellt.
 Das Tutorial deckt den ganzen Workflow ab.
-Dabei werden, z.B. für LED1 bis LED3, auch die EMIOs verwendet.
+Dabei werden, z.B. für LED1, LED2 und LED3, auch die EMIOs verwendet.
 In Schritt 1 bis 7 wird mit Vivado das Design für die PL erstellt und exportiert.
 
 \textit{Hinweis1:} Die Zybo Toolchain benötigt den standard USB Treiber. Im Kapitel \ref{kapitel:usbTreiber} ist beschrieben, wie der standard USB Treiber wieder installiert werden kann.
@@ -48,7 +47,7 @@ In diesem Log kann nachvollzogen werden, was das Script beim Download und Start 
 
 % TODO was auch immer
 Im Anhang \ref{anhang:SDKLog} ist eine Kopie eines solchen Logs zu finden.
-% langesWort
+% TODO: langesWort
 \textit{D:/Vivado/01\_gettingStarted/01\_gettingStarted.sdk/.sdk/launch\_scripts/xilinx\_c-c++\_application\_(system\_debugger)/system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
 % \textit{D:/Vivado\01\_gettingStarted\01\_gettingStarted.sdk\.sdk\launch\_scripts\xilinx\_c-c++\_application\_(system\_debugger)\system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
 
@@ -65,9 +64,11 @@ Die Initialisierungs-Methoden werden in der Methode \textit{ps7\_init} aufgerufe
 \textit{ps7\_init} wiederum wird in Zeile 8 des \textit{...elf\_on\_local.tcl} Scripts aufgerufen, welches beim Start des ''Hello World'' Programm im XSDK ausgeführt wird.
 In Zeile 9 vom \textit{...elf\_on\_local.tcl} wird auch noch die Methode \textit{ps7\_post\_config} von \textit{ps7\_init.tcl} auf, welche im Anschluss \textit{ps7\_post\_config\_3\_0} aufruft.
 
-Alle Konfigurationsregister sind im Anhang B vom \textit{Zynq TRM}\ref{bib:ZynqTechnicalReferenceManual} beschrieben.
+Alle Konfigurationsregister sind im Anhang B vom \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} beschrieben.
 Bevor die Register aber verändert werden können, müssen sie \textit{''unlocked''} werden, in dem der Wert \textit{0x0000DF0D} in die Adresse \textit{0xF8000008} geschrieben wird.
 
+
+\subsection{Grundlegende Methoden}
 Alle Methoden sind auf den folgenden vier Grundbefehlen aufgebaut:\\
 \textbf{mwr -force <address> <value>: }\\
 Schreibt den Wert <value> in die Adresse <address>.
@@ -83,6 +84,9 @@ Wartet <value> Millisekunden.
 
 % TODO silikon version überprüfen ps7_init.tcl.745
 
+
+\subsection{Initialisierungsmethoden}
+Im Folgenden werden alle Methoden beschrieben, welche zur Initialisierung des Zynq auf dem Zybo verwendet werden.
 
 \textbf{ps7\_mio\_init\_data\_3\_0:}\\
 Diese Methode initialisiert die MIOs.
@@ -107,7 +111,7 @@ Konfiguriert diverse Clocks, die im Prozessor gebraucht werden.
 
 \textbf{ps7\_ddr\_init\_data\_3\_0}\\
 Konfiguriert den DDR Bus.
-Für die Konfiguration werden insgesamt 79 verschiedene Register geschrieben und die DCI (Digital Controlled Impedance) kalibriert.
+Für die Konfiguration werden insgesamt 79 verschiedene Register geschrieben und die DCI (\textit{Digital Controlled Impedance}) kalibriert.
 
 \textbf{ps7\_peripherals\_init\_data\_3\_0}\\
 Konfiguriert folgende Peripherie:
@@ -125,9 +129,9 @@ Die oben genannten Initialisierungsfunktionen werden vom Xilinx Debugger jedes m
 Es ist aber auch möglich, die Initialisierung direkt mit der C-Applikation und nicht mit dem Debugger durchzuführen.
 Wird die Initialisierung in der Applikation durchgeführt, und die Applikation auf dem Flash Speicher des Zynq gespeichert, dann Initialisiert sich der Zynq bei jedem Start selber.
 Im Beispielprogramm \textit{''helloworld.c''} ist die Methode \textit{''init\_platform()''} enthalten, welche in \textit{''platform.c''} deklariert ist.
-Standardmässig ist die darin enthaltene Funktion \textit{''ps7\_init()''} aber auskommentiert.
+Standardmässig ist die darin enthaltene Methode \textit{''ps7\_init()''} aber auskommentiert.
 \textit{''platform.c''} befindet sich im \textit{''design\_wrapper\_hw\_platform''} welcher in Vivado erzeugt wurde.
-Vergleicht man \textit{''ps7\_init()''} mit \textit{ps7\_init.tcl}  dann sieht man schnell, dass das Script und auch die C-Funktion genau die gleichen Register schreiben und lesen.
+Vergleicht man \textit{''ps7\_init()''} mit \textit{ps7\_init.tcl}  dann sieht man schnell, dass das Script und auch die C-Methode genau die gleichen Register schreiben und lesen.
 
 \textit{''psu\_init()''} ist für ein \textit{''Zynq UltraScale+™ MPSoC''} Chip.
 
@@ -220,11 +224,6 @@ proc initPS {} {
 	ps7_init
 	ps7_post_config
 }
-
-proc initFPU {} {
-	arm mcr 15 0 1 1 2 0x0c00
-	arm mcr 15 0 1 0 2 0x00f00000
-}
 \end{lstlisting}
 
 \item Jeder \texttt{''mwr -force <address> <value>''} Befehl wurde mit \texttt{''\textbf{mww} <address> <value>''} ersetzt.
@@ -295,13 +294,17 @@ proc get_number_of_cycles_for_delay { delay } {
 \subsection{Address Mapping}
 Im Kapitel 4.1 des \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} ist der Aufbau des Speichers beschrieben.
 Die Abbildung \ref{fig:AddressMapZynq} zeigt einen guten Überblick über die ganzen 4 GB des Adressraumes.
-Bei der Map fällt auf, dass nur ca. 1 GB für DDR verwendet werden kann.
+Bei der Map fällt auf, dass nur ca. 1 GB für DDR RAM verwendet werden kann.
 
-Der OCM {On Chip Memory} ist ein kleiner Speicher im Zynq der direkt ohne Initialisierung verwendet werden kann. 
+Der OCM (\textit{On Chip Memory}) ist ein kleiner Speicher im Zynq der direkt ohne Initialisierung verwendet werden kann. 
 Ideal für ein Bootloader.
 Für den OCM stehen ganz am Anfang des Speicherbereichs (\textit{0x0000\_0000}) und ganz am Ende (\textit{0xFFFC\_0000}) 256 kB zur Verfügung.
 Der OCM besteht aus 4 x 64 kB grossen Teilbereichen, die mit dem Register \textit{0xF8000910} wahlweise im oberen oder im unteren Bereich zugewiesen werden können.
-Beim Booten werden die ersten drei Teile in den unteren Bereich (\textit{0x0000\_0000 - 0x0002\_FFFF}) und der vierte Teil in den obersten Bereich (\textit{0xFFFF\_0000 - 0xFFFF\_FFFF}) gemapt.
+Beim Bootvorgang werden die ersten drei Teile in den unteren Bereich (\textit{0x0000\_0000 - 0x0002\_FFFF}) und der vierte Teil in den obersten Bereich (\textit{0xFFFF\_0000 - 0xFFFF\_FFFF}) gemapt.
+Das geschieht noch bevor die erste Instruktion aus dem User-Code, also auch vor dem selbst geschriebenen Bootloader, ausgeführt wird.
+Der oben beschriebene Bootvorgang kann nicht geändert werden.
+Mit Pull-Up-Widerständen kann aber beeinflusst werden, ob der ARM im \textit{Secure-Mode} oder im \textit{Non-Secure-Mode} booten soll und wo der Bootloader gesucht werden soll.
+Mehr dazu im Zynq TRM\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''Kapitel 4.4: Boot and Configuration''}.
 
 \begin{figure}[htbp]
 	\centering

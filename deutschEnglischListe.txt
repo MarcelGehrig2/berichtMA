@@ -1,10 +1,32 @@
 
 
 
+% Generelle Regeln
+Keine zwei Titel/Untertitel direkt aufeinander folgend. Besser ein kurzer Satz zwischen Titel und Untertitel
+
+Kapitelnamen im Fliesstext: "Kursiv":
+\textit{''Kapitel 4.4: Einführung''}
+
+Abkürzungen inline, kursiv und in Klammern:
+SOM (\textit{System On Module})
+
+Aufzählungen wenn möglich, ausser bei einzelnen Wörtern, mit ganzen Sätzen und mit . am Schluss
+\begin{enumerate}
+\item Passende Hardware (Experimentierboard) finden, welche auch im Unterricht verwendet werden kann.
+\end{enumerate}
+
+Webaddressen in Footnote.
+Wenn Referenz auf PDF dann ins Literaturverzeichnis
 
 
-Kapitelnamen im Fliesstext: "Kursiv"
+% Diverse Eigennamen
+\textit{deep}-Applikation
+
+Zynq-7000
 
 
+
+% Abkürzungen und Präpositionen
 das XDSK		// Xylinx Standard Development Kit
 das XSCT		// Xilinx Software Command-Line Tool
+das Zybo
