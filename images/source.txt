@@ -7,3 +7,11 @@ coresight.png 		http://www2.keil.com/coresight/
 
 
 zynqBlockDiagram.png		https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html
+
+
+ELFStructure.jpg 		https://slideplayer.com/slide/6444592/
+
+
+
+
+

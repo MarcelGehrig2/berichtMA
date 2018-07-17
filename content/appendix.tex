@@ -69,8 +69,7 @@ adapter_nsrst_delay 40
 
 \section{Xilinx SDK Log:}
 \label{anhang:SDKLog}
-% TODO neutrale text-farben
-\lstset{language=tcl}
+\lstset{language=plain}
 \begin{lstlisting}
 14:26:34 INFO	: Disconnected from the channel tcfchan#2.
 14:26:36 INFO	: 'targets -set -filter {jtag_cable_name =~ "Digilent Zybo 210279573773A" && level==0} -index 1' command is executed.
@@ -122,8 +121,7 @@ con
 
 \section{system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl:}
 \label{anhang:elf_on_local.tcl}
-% TODO neutrale text-farben
-\lstset{language=tcl}
+\lstset{language=plain}
 \begin{lstlisting}
 connect -url tcp:127.0.0.1:3121
 source D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/ps7_init.tcl
@@ -145,3 +143,79 @@ con
 
 
 
+
+
+
+
+\section{stabs.include:}
+\label{anhang:stabs.include}
+\lstset{language={[x86masm]Assembler}}
+\begin{lstlisting}
+# non-stab symbol types
+.set N_UNDF,		0x0
+.set N_EXT,			0x1
+.set N_ABS,			0x2
+.set N_TEXT,		0x4
+.set N_DATA,		0x6
+.set N_BSS,			0x8
+.set N_FN_SEQ,		0x0c
+.set N_INDR,		0x0a
+.set N_COMM,		0x12
+.set N_SETA,		0x14
+.set N_SETT,		0x16
+.set N_SETD,		0x18
+.set N_SETB,		0x1a
+.set N_SETV,		0x1c
+.set N_WARNING,		0x1e
+.set N_FN,			0x1f
+
+# stab symbol types
+.set N_GSYM,		0x20
+.set N_FNAME,		0x22
+.set N_FUN,			0x24
+.set N_STSYM,		0x26
+.set N_LCSYM,		0x28
+.set N_MAIN,		0x2a
+.set N_ROSYM,		0x2c
+.set N_PC,			0x30
+.set N_NSYMS,		0x32
+.set N_NOMAP,		0x34
+.set N_MAC_DEFINE,	0x36
+.set N_OBJ,			0x38
+.set N_MAC_UNDEF,	0x3a
+.set N_OPT,			0x3c
+.set N_RSYM,		0x40
+.set N_M2C,			0x42
+.set N_SLINE,		0x44
+.set N_DSLINE,		0x46
+.set N_BSLINE,		0x48
+.set N_BROWS,		0x48
+.set N_DEFD,		0x4a
+.set N_FLINE,		0x4c
+.set N_EHDECL,		0x50
+.set N_MOD2,		0x50
+.set N_CATCH,		0x54
+.set N_SSYM,		0x60
+.set N_ENDM,		0x62
+#.set N_SO,			0x100
+.set N_SO,			0x64
+.set N_LSYM,		0x80
+.set N_BINCL,		0x82
+.set N_SOL,			0x84
+.set N_PSYM,		0xa0
+.set N_EINCL,		0xa2
+.set N_ENTRY,		0xa4
+.set N_LBRAC,		0xc0
+.set N_EXCL,		0xc2
+.set N_SCOPE,		0xc4
+.set N_RBRAC,		0xe0
+.set N_BCOMM,		0xe2
+.set N_ECOMM,		0xe4
+.set N_ECOML,		0xe8
+.set N_WITH,		0xea
+.set N_NBTEXT,		0xf0
+.set N_NBDATA,		0xf2
+.set N_NBBSS,		0xf4
+.set N_NBSTS,		0xf6
+.set N_NBLCS,		0xf8
+\end{lstlisting}

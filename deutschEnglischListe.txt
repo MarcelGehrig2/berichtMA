@@ -1,4 +1,7 @@
 
+\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.sourceware.org/gdb/onlinedocs/stabs.html\\ Archivierter Link:\  \ \ \ https://web.archive.org/web/20180717131349/https://www.sourceware.org/gdb/onlinedocs/stabs.html}
+
+
 
 
 % Generelle Regeln
@@ -22,7 +25,11 @@ Wenn Referenz auf PDF dann ins Literaturverzeichnis
 % Diverse Eigennamen
 \textit{deep}-Applikation
 
+\textit{gdb}
+
 Zynq-7000
+
+\textit{stabs}
 
 
 
