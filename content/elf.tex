@@ -1,6 +1,6 @@
 \chapter{ELF Dateiformat}
 ELF (\textit{Executable and Linking Format}) ist das Standard-Binärformat unter vielen UNIX-ähnlichen Betriebssystemen.
-Es wird für normale ausführbare Dateien und auch für Libraries verwendet.
+Es wird für ausführbare Dateien und auch für Libraries verwendet.
 Es können auch notwendige Informationen für den Debugger in dieses Format gepackt werden.
 In diesem Kapitel wird der grundlegende Aufbau des Formates erklärt.
 Zusätzlich wird auf einige Details genauer eingegangen, die für einen Debugger relevant sind.
@@ -43,7 +43,7 @@ Zusätzlich wird auch definiert, zur welchen Speicheraddresse (im RAM) die Segme
 Wird, z.B. wegen einem nicht initialisierten Pointer, in einer Speicherstelle im Memory gelesen, das kein \textit{''read flag''} hat, dann wird ein \textit{Segmentation Fault} ausgelöst.
 % TODO: welches segment wird beim gdb geschrieben?
 % TODO: check if load_img korrekt
-Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binäre Daten mit dem Befehl \texttt{''load\_img''} an welchen Speicherort geschrieben werden soll.
+Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binäre Daten mit dem Befehl \texttt{''load\_img''} an welchen Speicherort kopiert werden soll.
 Ein Segment beinhaltet ein oder mehrere \textit{Sections}.
 % TODO: satz sollte klarer sein
 Die Segmente sind beim Ausführen der Datei relevant.
@@ -84,7 +84,7 @@ Bei moderneren Systemen wurde das STABS Format durch das neuere DWARF-Format abg
 
 \subsection{Zielsetzung}
 Es soll getestet werden, ob es möglich ist, eine \textit{deep}-Applikation mit dem \textit{gdb} zu debuggen.
-Dazu benötigt der \textit{gdb} zusätzliche Debug-Informationen in der Form von STABS oder im DWARF-Format.
+Dazu benötigt der \textit{gdb} neben dem ausführbaren Maschinencode zusätzliche Debug-Informationen in der Form von STABS oder im DWARF-Format.
 In beiden Fällen werden die Informationen im ELF-Format eingebettet.
 
 In dieser Arbeit wird ein Demo-Programm mit STABS implementiert, da STABS-Informationen einfacher manuell zu implementieren sind als DWARF-Informationen.
@@ -104,10 +104,9 @@ Zusätzlich ist jede \textit{''directive''} von einem bestimmten \textit{type}.
 Der \textit{type} definiert, was die einzelnen \textit{''directives''} genau beschreiben.
 Um die Leserlichkeit zu verbessern sind alle \textit{types} in der Datei \textit{''stabs.include''} (Siehe Anhang \ref{anhang:stabs.include}) definiert.
 Im Kapitel 12 der Dokumentation der \textit{''University of Utha''} sind die einzelnen Typen genau beschreiben.
+% TODO grafische übersicht stabs-stabstring-typ
 
-
-
-
+Die STABS werden mit folgender Syntax im Assembler-Code definiert:\\
 \lstset{language=plain}
 \begin{lstlisting}
 .stabs ''string'',type,other,desc,value
@@ -117,7 +116,59 @@ Im Kapitel 12 der Dokumentation der \textit{''University of Utha''} sind die ein
 
 
 
-
-
 \subsection{DWARF}
 % TODO: DWARF erklären
+
+
+\section{Demoprogramm mit STABS}
+In diesem Kapitel wird beschrieben, wie ein Demoprogramm mit STABS Informationen erstellt werden kann.
+Das Demoprogramm soll dann mit dem \textit{gdb} direkt auf den Zynq geladen werden.
+Zusätzlich sollen folgende \textit{gdb}-Features getestet werden:\\
+\begin{itemize}
+	\item \textbf{Breakpoint}: Das Programm stoppt bei einer gewünschten Zeile im Java-Sourcecode.
+	\item \textbf{Source lookup}: Wenn das Programm gestoppt wird, kann die entsprechende Zeile im Java-Sourcecode angezeigt werden.
+	\item \textbf{Single-Stepping}: Nur eine Zeile im Java-Sourcecode ausführen und dann pausieren.
+	\item \textbf{Variable auslesen}: Eine Java-Variable, z.B. ein Integer, auslesen.
+	\item \textbf{Variable manipulieren}: Eine Java-Variable verändern.
+	\item \textbf{Prozessor-Register auslesen}: Ein Register der CPU auslesen.
+\end{itemize}
+
+\subsection{Vorgehen}
+Um ein Demoprogramm zu erstellen, werden untenstehende Schritte durchgeführt.
+Alle Schritte werden weiter unten im Detail erklärt.
+Das Programm \textit{''loop''} soll für den \textit{gdb}-Test verwendet werden.
+\textit{''loopExample''} ist ein Hilfsprogramm, das vom \textit{gdb} automatische generierte STABS enthält.
+Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzufügen zu können.
+
+% Das Demoprogramm 
+\begin{enumerate}
+	\item \textbf{loop.java}: Demoprogramm als Java-Code Schreiben.
+	% deep: java -> maschine
+	\item Example-Programm mit automatisch generierten STABS erstellen:
+	\begin{enumerate}
+		\item \textbf{loopExample.c}: Das Java-Programm manuell in C-Code übersetzen.
+		\item \textbf{loopExample.o}: Das Programm mit STABS Informationen kompilieren.
+		\item \textbf{loopExample.Sd}: Das kompilierte Programm disassemblieren um die STABS in einer leserlichen Form zu erhalten.
+	\end{enumerate}
+	\item Lauffähiges Programm mit manuell ergänzten STABS erstellen:
+	\begin{enumerate}
+		\item \textbf{Reset.Java}: Das Java-Programm in die Reset-Methode des \textit{deep}-Kernel kopieren.
+		\item \textbf{loopExample.o}: Das Programm mit STABS Informationen kompilieren.
+		\item \textbf{loopExample.Sd}: Das kompilierte Programm disassemblieren um die STABS in einer leserlichen Form zu erhalten.
+	\end{enumerate}
+	% \item \textbf{
+	% \item \textbf{
+	% \item 
+	% \item 
+	% \item 
+	% \item 
+	% \item 
+\end{enumerate}
+
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/MaschineCode_ClassTreeView_Deep.PNG}
+	\caption[]{ClassTreeView mit Maschinencode der Reset-Methode in \textit{deep}}
+	\label{fig:MaschineCode_ClassTreeView_Deep}
+\end{figure}
