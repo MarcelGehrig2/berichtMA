@@ -22,6 +22,10 @@ Webaddressen in Footnote.
 Wenn Referenz auf PDF dann ins Literaturverzeichnis
 
 
+Script
+
+
+
 % Diverse Eigennamen
 \textit{deep}-Applikation
 
