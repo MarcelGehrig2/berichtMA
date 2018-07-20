@@ -224,7 +224,7 @@ Das disassemblierte Object-File wird als \textit{''loopExample.Sd''} gespeichert
 Im disassemblierten Object-File sind alle STABS-Informationen und auch der ausführbare Code als Assembler enthalten.
 Der Assembler-Code und auch die STABS-Informationen können direkt \textit{''human readable''} gelesen werden, aber sie können nicht direkt in einem kompilierbaren Programm verwendet werden, da die Syntax nicht übereinstimmt.
 
-Beispiel mit disassemblierter Syntax:\\
+Beispiel mit disassemblierter Syntax:
 \lstset{language=plain}
 \begin{lstlisting}
 ...
@@ -235,7 +235,7 @@ Beispiel mit disassemblierter Syntax:\\
 \end{lstlisting}
 
 
-Kompilierbare Assembler Syntax:\\
+Kompilierbare Assembler Syntax:
 \lstset{language=plain}
 \begin{lstlisting}
 ...
@@ -324,6 +324,8 @@ Die LSYM Direktiven ab Nr. 72 definieren Variablen, welche auf dem Stack gespeic
 Mit \textit{n\_value} wird die Adresse der Variable im Speicher definiert.
 Der \textit{String} definiert den Variablenname ''x00'' und den Typ ''(0,1)''.
 Der Typ ''(0,1)'' wird mit der Direktive 2 als Integer definiert.
+
+Die Direktive 75 definiert eine Variable die nicht auf dem Stack gespeichert wird.
 
 
 % TODO nur hw breakpoints funktionieren
