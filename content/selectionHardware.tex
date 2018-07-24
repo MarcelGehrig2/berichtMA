@@ -186,9 +186,26 @@ Wenn es auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert es den ARM
 %  - nur ein prozessortyp fpga
 %  - custom pcb muss nachgebaut werden
 
-\subsection{FPGA auf dem gleichen Board wie der Prozessor (System On Board) - Bauweise ''SOB''}
+\subsection{FPGA auf dem gleichen Modul wie der Prozessor (System On Module) - Bauweise ''SOM''}
+Bei einem SOM (System On Module) ist die CPU und auch der FPGA auf dem gleichen PCB-Modul verbaut verbaut.
+Dadurch ist eine sehr hohe Bandbreite bei der Kommunikation zwischen der CPU und dem FGPA möglich.
+Das Modul benötigt ein zusätzliches PCB, ein Basisboard, in dem es eingebettet werden kann.
+Oft existieren Experimentierboards mit einer grossen Zahl an unterschiedlichen I/O-Möglichkeiten die gebrauchsfertig gekauft werden können.
+Für eine spezifische Anwendung muss so ein Basisboard für das SOM selbst designed werden, da ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
+Da neben dem FPGA auch High-Speed-Peripherie wie z.B. RAM auf dem Modul verbaut ist, kann beim Basisboard oft auf die aufwändige Entwicklung von High-Speed-PCB-Traces verzichtet werden.
+
+Es hat sich gezeigt, dass nur eine Firma ein SOM mit FPGA produziert.
+Die Firma XXX verkauft ein Module mit einem XXX Prozessor und einem XXX FPGA.
+
+% TODO link für SOM
+
+Da die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter verfolgt.
+
  
 \subsection{FPGA im gleichen Gehäuse wie der Prozessor (System On Chip - Bauweise ''SOC''}
+Seit einigen Jahren werden Produkte verkauft, die eine programmierbare Logik (FPGA) und auch eine dedizierte CPU in einem Chip-Gehäuse verbaut haben.
+Da der FPGA und auch die CPU im selben Gehäuse verbaut sind, ist eine sehr schnelle, integrierte Kommunikation zwischen CPU und FPGA möglich.
+
 
 \subsection{ARM als Softcore in FPGA - Bauweise ''FPGA''}
 
