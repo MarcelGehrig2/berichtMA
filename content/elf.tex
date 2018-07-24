@@ -204,7 +204,7 @@ static void reset() {
 
 In diesem Beispiel wird die \texttt{reset()}-Methode genutzt, da sie bei \textit{deep} als erstes beim Booten ausgeführt wird.
 \texttt{''US.PUTGPR''} in Zeile 5 ist natürlich keine Java Methode.
-Da Low-Level-Operationen, wie die Initialisierung des Stack-Pointers, mit Java normalerweise nicht möglich sind, wird hier die entsprechende \textit{deep}-Instruktion verwendet.
+Da Low-Level-Operationen, wie die Initialisierung des Stackpointers, mit Java normalerweise nicht möglich sind, wird hier die entsprechende \textit{deep}-Instruktion verwendet.
 
 
 \subsection{Beispiel-Programm ''loopExample''}
@@ -357,10 +357,58 @@ Mit der \textit{ClassTreeView} (siehe Abbildung \ref{fig:MaschineCode.ClassTreeV
 	\label{fig:MaschineCode.ClassTreeView.Deep}
 \end{figure}
 
+
+\FloatBarrier
+
+loop.S:
+\lstset{language={[x86masm]Assembler}}
+\begin{lstlisting}
+.global _start
+
+.org 0x000000
+.text
+Ltext0:
+
+_start:
+_reset:
+c_entry:
+movw R13, #1024
+
+movw R0, #0
+movw R1, #10
+movw R2, #20
+add R3, R0, #1
+add R0, R1, #1
+add R0, R2, #1
+movw R0, #100
+movw R1, #0
+b CHECK_LOOP_EXIT	
+START_LOOP_BODY:
+add R0, R0, #10
+add R1, R1, #1
+CHECK_LOOP_EXIT:
+cmp R1, #10
+blt START_LOOP_BODY
+add R1, R0, #1
+add R0, R1, #1
+add R1, R0, #1
+add R0, R1, #1
+add R1, R0, #1
+b 0
+\end{lstlisting}
+
 % TODO aufgeräumt gut?
 \textit{''loop.S''} im Anhang \ref{anhang:loop.S} enthält den ''aufgeräumten'' Assemblercode.
 Der Code wurde mit zusätzlichen Assembler-Direktiven ergänzt.
 \texttt{''c\_entry''} beschreibt den Punkt, an dem das Programm anfängt.
+\texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} sind Punkte, welche für die \textit{While-Loop} benötigt werden.
+
+In Zeile 10 wird der Stackpointer direkt mit einer Konstante gesetzt und nicht mehr mit \textit{deep}-Konstanten ausgerechnet.
+Zusätzlich kann so auch sichergestellt werden, dass der Stack in einem erlaubten Speicherbereich im OCM angelegt wird.
+
+Die beiden Branch-Instruktionen wurden mit der korrekten Syntax ersetzt.
+Als Ziel für diese Instruktionen wurden die beiden Assembler-Direktiven \texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} verwendet.
+
 
 
 % TODO nur hw breakpoints funktionieren
