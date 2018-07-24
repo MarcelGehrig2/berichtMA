@@ -24,12 +24,15 @@ Wenn Referenz auf PDF dann ins Literaturverzeichnis
 
 Script
 
+\texittt{''main()''}
 
 
 % Diverse Eigennamen
 \textit{deep}-Applikation
 
 \textit{gdb}
+
+\textit{gcc}
 
 Zynq-7000
 

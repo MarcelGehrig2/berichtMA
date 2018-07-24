@@ -167,13 +167,6 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 \end{enumerate}
 
 
-\begin{figure}[htbp]
-	\centering
-		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/MaschineCode_ClassTreeView_Deep.PNG}
-	\caption[]{ClassTreeView mit Maschinencode der Reset-Methode in \textit{deep}}
-	\label{fig:MaschineCode_ClassTreeView_Deep}
-\end{figure}
-
 
 \subsection{Java Demoprogramm}
 Das unten stehende Programm ist das Testprogramm, dass von \textit{deep} in Maschinen-Code übersetzt werden soll und anschliessend manuell mit STABS ergänzt werden soll.
@@ -327,6 +320,44 @@ Der \textit{String} definiert den Variablenname ''x00'' und den Typ ''(0,1)''.
 Der Typ ''(0,1)'' wird mit der Direktive 2 als Integer definiert.
 
 Die Direktive 75 definiert eine Variable die nicht auf dem Stack gespeichert wird.
+Dieser Typ wird verwendet, wenn die Variable nur in einem Prozessor-Register gespeichert und nicht auf dem Stack abgelegt wird.
+Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack wenn sie erzeugt oder verändert werden und lädt sie jedes mal neu vom Stack, wenn sie wieder gelesen werden.
+Wird beim Kompilieren eine Code-Optimierung verwendet, dann kann dieses Verhalten ändern.
+Mit der Zeile \texttt{{''register int s=1;''}} im C-Code wird der Compiler gezwungen, die Variable nur in den Registern zu behalten und nicht auf dem Stack abzulegen.
+Aus diesem Grund wird für die Variable \textit{''s''} eine Direktive vom Typ RSYM verwendet, die nur den Namen der Variable und die Registernummer beschreibt, in der die Variable gespeichert wird.
 
+Mit STABs können auch lexikalische Blöcke abgegrenzt werden, ähnlich wie mit geschwungenen Klammern ({}) in C-Code.
+Zusätzlich werden so auch die Lebensdauer von Variablen begrenzt.
+Die Direktiven 78 und 80 (LBRAC) markieren einen Start und die Direktiven 81 und 82 (RBRAC) markieren jeweils das Ende von so einem Block.
+
+
+\subsection{Assemblerprogramm mit \textit{deep} erzeugen}
+Um das Java-Programm möglichst einfach mit \textit{deep} übersetzen zu können, wird die \texttt{''reset()''}-Methode des Objekts \textit{''Reset.java''} aus dem Package \textit{''zynq7000''} überschrieben.
+% TODO satzbau:
+Diese Methode wird beim Starten einer \textit{deep}-Applikation immer als erstes ausgeführt und ist somit mit einem Debugger gleich ab der ersten Instruktion der Applikation kontrollierbar.
+Das vollständige Programm ist im Anhang \ref{anhang:reset.java/} Angehängt.
+
+Die unten stehenden Zeilen entsprechen den Zeilen 39-42 von \textit{''Reset.java} aus dem Anhang \ref{anhang:reset.java/}.
+In diesen Zeilen wird die Position des Stacks ausgerechnet und im Stackpointer gespeichert:
+\lstset{language=java}
+\begin{lstlisting}
+int stackOffset = US.GET4(sysTabBaseAddr + stStackOffset);
+int stackBase = US.GET4(sysTabBaseAddr + stackOffset + 4);
+int stackSize = US.GET4(sysTabBaseAddr + stackOffset + 8);
+US.PUTGPR(SP, stackBase + stackSize - 4);	// set stack pointer
+\end{lstlisting}
+
+Wird ein Dummy-Programm mit dem \textit{deep}-Compiler und dem modifiziertem Kernel kompiliert, dann wird auch der Kernel kompiliert.
+Mit der \textit{ClassTreeView} (siehe Abbildung \ref{fig:MaschineCode.ClassTreeView.Deep}) von \textit{deep} kann der Assemblercode der \texttt{''reset()''}-Methode kopiert werden welcher im Anhang \ref{anhang:loopMachineCode.txt} angehängt ist.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/MaschineCode_ClassTreeView_Deep.PNG}
+	\caption[]{ClassTreeView mit Maschinencode der Reset-Methode in \textit{deep}}
+	\label{fig:MaschineCode.ClassTreeView.Deep}
+\end{figure}
+
+% TODO aufgeräumt gut?
+\textit{''loop.S''} im Anhang \ref{anhang:loop.S} enthält den ''aufgeräumten'' Assemblercode.
 
 % TODO nur hw breakpoints funktionieren

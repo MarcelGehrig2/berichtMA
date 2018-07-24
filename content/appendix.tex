@@ -224,3 +224,153 @@ con
 .set N_NBLCS,		0xf8
 \end{lstlisting}
 
+
+\subsection{Reset.Java:}
+\label{anhang:reset.java}
+\lstset{language=java}
+\begin{lstlisting}
+/*
+ * Copyright 2011 - 2013 NTB University of Applied Sciences in Technology
+ * Buchs, Switzerland, http://www.ntb.ch/inf
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *   
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
+
+package ch.ntb.inf.deep.runtime.zynq7000;
+import ch.ntb.inf.deep.runtime.IdeepCompilerConstants;
+import ch.ntb.inf.deep.runtime.arm32.Iarm32;
+import ch.ntb.inf.deep.runtime.arm32.ARMException;
+import ch.ntb.inf.deep.unsafe.US;
+
+/* changes:
+ * 13.05.16	NTB/Urs Graf	creation
+ */
+/**
+ * The class for the ARM reset exception.
+ * The stack pointer will be initialized and the program counter will be
+ * set to the beginning of the class initializer of the kernel.
+ * 
+ * @author Urs Graf
+ */
+class Reset extends ARMException implements Iarm32, Izybo7000, IdeepCompilerConstants {
+//	static int g = 5555;
+	
+	static void reset() {
+		int stackOffset = US.GET4(sysTabBaseAddr + stStackOffset);
+		int stackBase = US.GET4(sysTabBaseAddr + stackOffset + 4);
+		int stackSize = US.GET4(sysTabBaseAddr + stackOffset + 8);
+		US.PUTGPR(SP, stackBase + stackSize - 4);	// set stack pointer
+		
+		int x00 = 0;
+		int x01 = 10;
+		int x02 = 20;
+		x00++;
+		x01++;
+		x02++;
+		
+		int x100 = 100;
+		for(int i=0; i<10; i++){
+            x100 += 10;
+       }
+		
+		x100++;
+		x100++;
+		x100++;
+		x100++;
+		x100++;
+
+		US.ASM("b -8"); // stop here
+
+	}	
+}
+\end{lstlisting}
+
+
+
+
+\subsection{loopMachineCode.txt:}
+\label{anhang:loopMachineCode.txt}
+\lstset{language=plain}
+\begin{lstlisting}
+Code for Method: ch/ntb/inf/deep/runtime/zynq7000/Reset.reset()V
+	E3010004	[0x0]	movw R0, #4100
+	E4101000	[0x4]	ldr R1, [R0], #-0
+	E2810D40	[0x8]	add R0, R1, #4096
+	E2802004	[0xc]	add R2, R0, #4
+	E4120000	[0x10]	ldr R0, [R2], #-0
+	E2812D40	[0x14]	add R2, R1, #4096
+	E2821008	[0x18]	add R1, R2, #8
+	E4112000	[0x1c]	ldr R2, [R1], #-0
+	E0801002	[0x20]	add R1, R0, R2, 0
+	E2410004	[0x24]	sub R0, R1, #4
+	E1A0D000	[0x28]	mov R13, R0
+	E3000000	[0x2c]	movw R0, #0
+	E300100A	[0x30]	movw R1, #10
+	E3002014	[0x34]	movw R2, #20
+	E2803001	[0x38]	add R3, R0, #1
+	E2810001	[0x3c]	add R0, R1, #1
+	E2820001	[0x40]	add R0, R2, #1
+	E3000064	[0x44]	movw R0, #100
+	E3001000	[0x48]	movw R1, #0
+	EA000001	[0x4c]	b 12, [0x58]	
+	E280000A	[0x50]	add R0, R0, #10
+	E2811001	[0x54]	add R1, R1, #1
+	E351000A	[0x58]	cmp R1, #10
+	BAFFFFFB	[0x5c]	b if less -12, [0x50]	
+	E2801001	[0x60]	add R1, R0, #1
+	E2810001	[0x64]	add R0, R1, #1
+	E2801001	[0x68]	add R1, R0, #1
+	E2810001	[0x6c]	add R0, R1, #1
+	E2801001	[0x70]	add R1, R0, #1
+	EAFFFFFE	[0x74]	b 0, [0x74]	
+\end{lstlisting}
+
+
+\subsection{loop.S:}
+\label{anhang:loop.S}
+\lstset{language={[x86masm]Assembler}}
+\begin{lstlisting}
+.global _start
+
+.org 0x000000
+.text
+Ltext0:
+
+_start:
+_reset:
+c_entry:
+movw R0, #1024
+
+movw R0, #0
+movw R1, #10
+movw R2, #20
+add R3, R0, #1
+add R0, R1, #1
+add R0, R2, #1
+movw R0, #100
+movw R1, #0
+b CHECK_LOOP_EXIT	
+START_LOOP_BODY:
+add R0, R0, #10
+add R1, R1, #1
+CHECK_LOOP_EXIT:
+cmp R1, #10
+blt START_LOOP_BODY
+add R1, R0, #1
+add R0, R1, #1
+add R1, R0, #1
+add R0, R1, #1
+add R1, R0, #1
+b 0
+\end{lstlisting}
