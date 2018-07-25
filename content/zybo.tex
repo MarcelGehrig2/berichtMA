@@ -61,20 +61,36 @@ Der folgende Ablauf ermöglicht es aber trotzdem, diese Register auszulesen:
 
 Die Inhalte der Register sind:
 \begin{itemize}
-\item MVFR0:	0x1011\_0222
-\item MVFR1:	0x0111\_1111
+	\item MVFR0:	0x1011\_0222
+	\item MVFR1:	0x0111\_1111
 \end{itemize}
 
 
 
 \subsection{Unterstützte Features der FPU}
 Die Register MVFR0 und MVFR1 enthalten Informationen über die unterstützten Features der FPU.
-% TODO Seite XXX
-Auf der Seite XXX des ARMv7-A ARM\cite{bib:ARMv7ArchitectureReferenceManual} (\textit{Architecture Reference Manual}) ist beschrieben, wie die unterstützten Features aus den Registern gelesen werden können.
+Auf der Seite B5-36 des ARMv7-A ARM\cite{bib:ARMv7ArchitectureReferenceManual} (\textit{Architecture Reference Manual}) ist beschrieben, wie die unterstützten Features aus den Registern gelesen werden können.
 
 Der Zynq 7000 des Zybo unterstützt:
 \begin{itemize}
-\item 
+	\item All rounding modes
+	\item VFP squarde root operations
+	\item VFP divide operations
+	\item Full VFP douple-precision v3 (VFPv3)
+	\item VFPv3 single-precision
+	\item Advanced SIMD register bank: 32 x 64-bit registers
+	\item All VFP instructions (\texttt{LDC, STC, MCR,} and \texttt{MRC})
+	\item Half-precision floating-point conversion operations (VFP and advanced SIMD)
+	\item Single-precision floating-point operations (advanced SIMD)
+	\item Integer operations (advanced SIMD)
+	\item Load/store operations (advanced SIMD)
+	\item Propagation of NaN values
+\end{itemize}
+
+Nicht unterstützt wird:
+\begin{itemize}
+	\item VFP short vectors
+	\item VFP exception trapping
 \end{itemize}
 
 
