@@ -1,13 +1,13 @@
 \chapter{Auswahl der Hardware}
 
 \section{Einleitung}
-Die Auswahl von Hardware mit ARM Prozessoren ist extrem gross.
+Die Auswahl von Hardware mit ARM-Prozessoren ist extrem gross.
 Ende September 2016 sind bereits über 86 Milliarden ARM basierte Prozessoren verkauft worden.\footnote{Elektronischer/Anhang/ARM-media-fact-sheet-2016.pdf}
-Diese Zahl reflektiert zwar nicht direkt die Diversität von den verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM Prozessoren verbreitet sind.
+Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM Prozessoren verbreitet sind.
 
-In diesem Kapitel soll in dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
+In diesem Kapitel soll aus dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
 % Die ausgewählte Hardware soll ein Experimentierboard mit einem ARM-Prozessor gefunden werden, dass im Robotik Unterricht verwendet werden kann.
-Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern auch für den Robotik Unterricht.
+Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern auch für den Robotik-Unterricht.
 Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sein, um ihn in anspruchsvollen Robotikprojekten verwenden zu können.
 %TODO extrem weit verbreitet
 %TODO gorosse auswahl von verschiedener hw
@@ -16,21 +16,21 @@ Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sei
 %TODO prozeossor und board muss ausgewählt werden
 %TODO ökosystem?
 
-\section{Soll- und Muss-Kriterien bei der Auswahl der Hardware}
-Für die Hardware sind folgende Soll- und Muss-Kriterien ermittelt worden.
+\section{Soll-Kriterien und Muss-Kriterien bei der Auswahl der Hardware}
+Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt worden.
 
 \subsection{Muss-Kriterien}
 \begin{itemize}
 \item Systemebene
 	\begin{itemize}
 	\item FPGA: Der Prozessor muss mit einem FPGA kommunizieren können.
-	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger wie beispielsweise das JTAG Interface BDI3000\footnote{http://www.abatron.ch/fileadmin/user\_upload/news/BDI3000-Brochure.pdf} von Abatron unterstützen. 
+	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger, wie beispielsweise das JTAG Interface BDI3000\footnote{http://www.abatron.ch/fileadmin/user\_upload/news/BDI3000-Brochure.pdf}, von Abatron unterstützen. 
 	\item Günstiger Programmierer: Wenn zusätzliche Hardware benötigt wird um die \textit{deep}-Applikation auf das Target zu schreiben, dann muss diese möglichst günstig sein.
 	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende Produkte oder Nischenprodukte sind nicht akzeptabel.
-	\item Als fertiges Modul erhältlich: Eigenes PCB entwickeln und herstellen ist keine Option.
+	\item Als fertiges Modul erhältlich: Ein eigenes PCB entwickeln und herstellen ist keine Option.
 	%TODO synonym einbettbar:
-	\item Einbettbar: Der Prozessor muss auch bei einem selbst entwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor in eigenem Package.
-	\item Noch lange erhältlich.
+	\item Einbettbar: Der Prozessor muss auch bei einem selbstentwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
+	\item Die Hardware muss noch lange erhältlich bleiben.
 	\end{itemize}
 \item Prozessorebene
 	\begin{itemize}
@@ -77,7 +77,7 @@ Moderne Prozessoren erweitern diese grundlegende Funktionen mit einigen sehr hil
 % Moderne Prozessoren haben noch viel mehr Funktionen.
 So bieten ARM Prozessoren mit der \textit{CoreSight} Technologie noch viel mehr als nur einen \textit{Boundary Scan}.
 % TODO besserer Satz
-Die untenstehende Liste zeigt einige Funktionen von dieser Technologie, aber nicht alle.
+Die untenstehende Liste zeigt einige Funktionen dieser Technologie, aber nicht alle.
 Die für diese Arbeit relevanten Funktionen sind \textbf{fett} geschrieben.
 
 \begin{itemize}
@@ -85,44 +85,44 @@ Die für diese Arbeit relevanten Funktionen sind \textbf{fett} geschrieben.
 	\item \textbf{RAM lesen und schreiben}
 	\item \textbf{Externer Flash Speicher lesen und schreiben} 
 	\item \textbf{Hardware Breakpoint auf den Program Counter} 
-	\item \textbf{Hardwaer Breakpoint auf einer Speicherstelle (Watchpoint)} 
+	\item \textbf{Hardware Breakpoint auf einer Speicherstelle (Watchpoint)} 
 	\item Debug Trace (ETM Program Trace) 
 	\item Debug Trace Buffer
 \end{itemize}
 
-Da ein Hardware Debugger keine funktionsfähige Software auf dem Prozessor benötigt, kann er auch gut verwendet werden, um die grundlegendsten Funktionen, wie beispielsweise der Bootvorgang, vom \textit{deep} Laufzeit System zu entwickeln.
+Da ein Hardware Debugger keine funktionsfähige Software auf dem Prozessor benötigt, kann er auch gut verwendet werden, um die grundlegendsten Funktionen, wie beispielsweise den Bootvorgang, vom \textit{deep} Laufzeit System zu entwickeln.
 
 
 
 
 \section{Übersicht über die ARM Mikroarchitekturen}
 \subsection{Cortex-A}
-Sehr gut geeignet für die Verwendung mit einem vollen Betriebssystem wie Windows, Linux oder Android.
-Cortex-A Prozessoren bieten dem umfangreichsten Support für externe Peripherie wie USB, Ethernet und RAM.
-Sie sind auch leistungsstärksten ARM Cortex Prozessoren.
+Prozessoren der Cortex-A Familie sind gut geeignet für die Verwendung mit einem vollen Betriebssystem, wie Windows, Linux oder Android.
+Cortex-A Prozessoren bieten den umfangreichsten Support für externe Peripherien, wie USB, Ethernet und RAM.
+Sie sind auch die leistungsstärksten ARM-Cortex Prozessoren.
 
 \subsection{Cortex-R}
-Cortex-R werden entwickelt für Echtzeitanwendungen und Sicherheitskritische Applikationen wie Festplattenkontrolle und medizinische Geräte.
+Cortex-R Prozessoren werden entwickelt für Echtzeitanwendungen und sicherheitskritische Applikationen, wie Festplattenkontrolle und medizinische Geräte.
 Sie sind normalerweise nicht mit einer MMU \textit{Memory Management Unit} ausgerüstet.
 % und können deshalb nich mit einem Linux oder Windows verwendet werden.
-Mit einer Taktrate von über 1GHz und einem sehr schnellen Interruptverhalten eignen sich Prozessoren mit einem Cortex-R sehr gut um auf externe Stimuli schnell zu reagieren.
+Mit einer Taktrate von über 1GHz und einem sehr schnellen Interruptverhalten eignen sich Prozessoren mit einem Cortex-R sehr gut, um auf externe Stimuli schnell zu reagieren.
 
 \subsection{Cortex-M}
-Cortex-M sind mit einer Taktrate um 200Mhz relativ langsam.
-Sehr stromsparend und durch die kurze Pipeline haben sie eine deterministische und kurze Interrupt Verzögerung.
-Die Prozessoren aus der Cortex-M Reihe unterstützen nur die Thumb-Instruktionen und kommen deshalb nicht in Frage.
+Die Prozessoren aus der Cortex-M Familien sind mit einer Taktrate um 200Mhz relativ langsam.
+Sie sind sehr stromsparend und durch die kurze Pipeline haben sie eine deterministische und kurze Interruptverzögerung.
+Die Prozessoren aus der Cortex-M Reihe unterstützen aber nur die Thumb-Instruktionen und kommen deshalb nicht in Frage.
 
 
-\subsection{ARM Prozessoren ausserhalb der Cortex Reihe}
-Seit 2004 werden die meisten Kerne in eine der Cortex Gruppen eingeteilt.
+\subsection{ARM-Prozessoren ausserhalb der Cortex Reihe}
+Seit 2004 werden die meisten Kerne in eine der Cortex-Familien eingeteilt.
 Ältere Kerne, sogenannte \textit{''Classic cores''}, haben Namen wie z.b. ARM7 oder ARM1156T2F-S.
 Da solche Designs meist aus einer Zeit vor 2004 stammen, gilt das Design als veraltet und wird bei dieser Arbeit nicht berücksichtigt.
 
-\subsection{Fazit über die ARM Mikroarchitekturen}
-Prozessoren die auf der Cortex-A Mikroarchitektur basieren bieten die grösste Flexibilität.
-Zusätzlich ist auch das Angebot bei den Cortex-A Prozessoren am grössten.
-Die anderen Cortex Reihen bieten keine Vorteile, die für dieses Projekt von Nutzen sind.
-Aus diesen Gründen wird die Auswahl auf die Prozessoren aufs der Cortex-A Reihe begrenzt.
+\subsection{Fazit über die ARM-Mikroarchitekturen}
+Die Prozessoren, die auf der Cortex-A Mikroarchitektur basieren, bieten die grösste Flexibilität.
+Zusätzlich ist das Angebot bei den Cortex-A-Prozessoren am grössten.
+Die anderen Cortex-Reihen bieten keine Vorteile, die für dieses Projekt von Nutzen sind.
+Aus diesen Gründen wird die Auswahl auf die Prozessoren aus der Cortex-A-Reihe begrenzt.
 
 % TODO tabellen titel und referenz?
 \begin{table}[]
@@ -132,9 +132,9 @@ Aus diesen Gründen wird die Auswahl auf die Prozessoren aufs der Cortex-A Reihe
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{}  & \textbf{Vorteile}                                                                                                                                                                                                                                    & \textbf{Nachteile}                                                                                                                                                                             \\ \hline
-\textbf{A} & \begin{tabular}[c]{@{}l@{}}* Sehr Leistungsstark\\ * Support für vollwertige Betriebssysteme\\ * Grosse Variation erhältlich (Energiesparend /\\  sehr Leistungsstark)\\ * Reichhaltiger Funktionsumfang\\ * NEON und FPU Unterstützung\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Langsamer Context-Switch\\ * Relativ hoher Stromverbrauch\\ * Relativ teuer\\ * Mit GPU erhältlich\\ * Keine DSP Unterstützung\\ * Keine HW-Division\end{tabular} \\ \hline
-\textbf{B} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geeignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux Unterstützung\end{tabular}                                                        \\ \hline
-\textbf{C} & \begin{tabular}[c]{@{}l@{}}* Sehr schneller Context-Switch\\ * Sehr energiesparend\\ * DSP Unterstützung\end{tabular}                                                                                                                                & \begin{tabular}[c]{@{}l@{}}* Geringe Rechenleistung\\ * Keine Linux Unterstützung\\ * Unterstützt nur Thumb-Instruktionen\end{tabular}                                                         \\ \hline
+\textbf{A} & \begin{tabular}[c]{@{}l@{}}* Sehr leistungsstark\\ * Support für vollwertige Betriebssysteme\\ * Grosse Variation erhältlich (energiesparend /\\  sehr leistungsstark)\\ * Reichhaltiger Funktionsumfang\\ * NEON und FPU Unterstützung\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Langsamer Context-Switch\\ * Relativ hoher Stromverbrauch\\ * Relativ teuer\\ * Mit GPU erhältlich\\ * Keine DSP Unterstützung\\ * Keine HW-Division\end{tabular} \\ \hline
+\textbf{B} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geeignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux-Unterstützung\end{tabular}                                                        \\ \hline
+\textbf{C} & \begin{tabular}[c]{@{}l@{}}* Sehr schneller Context-Switch\\ * Sehr energiesparend\\ * DSP-Unterstützung\end{tabular}                                                                                                                                & \begin{tabular}[c]{@{}l@{}}* Geringe Rechenleistung\\ * Keine Linux-Unterstützung\\ * Unterstützt nur Thumb-Instruktionen\end{tabular}                                                         \\ \hline
 \end{tabular}
 \end{table}
 
@@ -171,8 +171,8 @@ Die Vor- und Nachteile der verschiedenen Bauarten werden in diesem Kapitel abgew
 
 
 \subsection{FPGA als Zusatzplatine zum Prozessorboard - Bauweise ''Modular''}
-Das \textit{FPGA Development Board CAPE for the BEAGLEBONE}\footnote{https://www.element14.com/community/docs/DOC-69215/l/fpga-development-board-cape-for-the-beaglebone} ist eine Aufsteckplatine für den \textit{Beaglebone Black}.
-Wenn es auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert es den ARM basierten Linux PC um \textit{Spatran 6 LX9} FPGA inklusive einiger I/O-Peripherie und SDRAM.
+Das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}\footnote{https://www.element14.com/community/docs/DOC-69215/l/fpga-development-board-cape-for-the-beaglebone} ist eine Aufsteckplatine für den \textit{Beaglebone Black}.
+Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den ARM basierten Linux PC um einen \textit{''Spatran 6 LX9''} FPGA, inklusive einiger I/O-Peripherien und SDRAM.
 
 \textit{Vorteile:}
 \begin{itemize}

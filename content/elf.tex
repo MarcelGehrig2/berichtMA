@@ -11,7 +11,7 @@ In der Spezifikation für das ELF Format\cite{bib:ELFSpecification} ist der Aufb
 
 \section{Nützliche Tools}
 \textit{readelf} ist ein nützliches Linux-Tool um Informationen einer ELF-Datei anzeigen zu lassen.
-Unter Windows kann dieses Software ebenfalls in der Shell verwendet werden, wenn \textit{mingw}\footnote{http://www.mingw.org/} installiert ist.
+Unter Windows kann diese Software ebenfalls in der Shell verwendet werden, wenn \textit{mingw}\footnote{http://www.mingw.org/} installiert ist.
 % mingw
 
 \section{Grundlegender Aufbau}
@@ -36,13 +36,14 @@ Unter Windows kann dieses Software ebenfalls in der Shell verwendet werden, wenn
 % \footnotetext{https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html}
 
 Der \textit{File Header} beinhaltet Metainformationen über die Datei selbst.
-Mit \texttt{''readelf filename -Wh''} lässt sich der \textit{File Header} von einer Datei anzeigen.
+Mit \texttt{''readelf filename -Wh''} lässt sich der \textit{File Header} einer Datei anzeigen.
 
-Der \textit{Program Header} kann mit \texttt{''readelf filename -Wl''} ausgegeben werden. Darin ist enthalten, welcher Offset innerhalb der Datei die einzelnen Segmente haben.
-Zusätzlich wird auch definiert, zur welchen Speicheraddresse (im RAM) die Segmente kopiert werden wenn das Programm gestartet wird und was für Rechte (ausführbar, lesen und schreiben) jedes Speichersegment hat.
-Wird, z.B. wegen einem nicht initialisierten Pointer, in einer Speicherstelle im Memory gelesen, das kein \textit{''read flag''} hat, dann wird ein \textit{Segmentation Fault} ausgelöst.
+Der \textit{Program Header} kann mit \texttt{''readelf filename -Wl''} ausgegeben werden.
+Darin ist enthalten, welchen Offset die einzelnen Segmente innerhalb der Datei haben.
+Zusätzlich ist auch definiert, zu welcher Speicheraddresse (im RAM) die Segmente kopiert werden, wenn das Programm gestartet wird und was für Rechte (ausführbar, lesen und schreiben) jedes Speichersegment hat.
+Wird, z.B. wegen eines nicht initialisierten Pointers, in einer Speicherstelle im Memory gelesen, die kein \textit{''read flag''} hat, wird ein \textit{Segmentation Fault} ausgelöst.
 % TODO: welches segment wird beim gdb geschrieben?
-Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binäre Daten mit dem Befehl \texttt{''load''} an welchen Speicherort kopiert werden soll.
+Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binären Daten mit dem Befehl \texttt{''load''} an welchen Speicherort kopiert werden sollen.
 Ein Segment beinhaltet ein oder mehrere \textit{Sections}.
 % TODO: satz sollte klarer sein
 % Die Segmente sind beim Ausführen der Datei relevant.
@@ -55,25 +56,25 @@ Die folgende Liste gibt eine kleine, nicht vollständige Übersicht über die ei
 	\item \texttt{.text}\ \ \ \ \ \ \ \ \ Der ausführbare Teil des Programms.
 	\item \texttt{.data}\ \ \ \ \ \ \ \ \ Enthält die globalen Variablen.
 	\item \texttt{.rodata}\ \ \ \ \ Enthält alle Strings.
-	\item \texttt{.stab}\ \ \ \ \ \ \ \ \ Enthält die Stabs Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
-	\item \texttt{.stabstr}\ \ \ Enthält die Stabs Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
+	\item \texttt{.stab}\ \ \ \ \ \ \ \ \ Enthält die STABS Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
+	\item \texttt{.stabstr}\ \ \ Enthält die STABS Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
 \end{itemize}
 Der Compiler nutzt die \textit{Secitons} um das Programm in logische Einheiten zu unterteilen.
 % Eine \textit{Seciton} ist eine Logische Einheit eines Programms, deren Einteilung besonders für den Compiler Vorteile bringt.
 
 
 \subsection{Informationen für den Debugger}
-Zusätzliche Informationen für den Debugger werden ebenfalls in dem ELF Format gespeichert.
-Moderne Compiler verwenden hauptsächlich das DWARF Format und nicht das veraltete STABS-Format.
+Zusätzliche Informationen für den Debugger werden ebenfalls im ELF Format gespeichert.
+Moderne Compiler verwenden hauptsächlich das DWARF-Format und nicht das veraltete STABS-Format.
 Trotzdem wird von aktuellen Compilern und auch Debuggern das veraltete STABS-Format immer noch unterstützt.
 
-DWARF ist flexibler und hat einen besseren funktionaler Umfang wie das STABS-Format, aber die manuelle Implementation ist aufwändiger.
+DWARF ist flexibler und hat einen besseren funktionalen Umfang als das STABS-Format, aber die manuelle Implementation ist aufwändiger.
 
 
 
 
 
-\section{Stabs}
+\section{STABS}
 \label{label:stabs}
 % TODO: Debugging-Informationen oder Debugginginformationen.
 STABS ist ein Datenformat für Debug-Informationen.
@@ -89,18 +90,18 @@ In beiden Fällen werden die Informationen im ELF-Format eingebettet.
 In dieser Arbeit wird ein Demo-Programm mit STABS implementiert, da STABS-Informationen einfacher manuell zu implementieren sind als DWARF-Informationen.
 
 
-\subsection{Aufbau des STABS Format}
+\subsection{Aufbau des STABS Formats}
 Eine einheitliche Dokumentation für STABS gibt es nicht.
-Es ist nicht einmal sicher bekannt, wer der ursprüngliche Erfinder von diesem Format ist.
+Es ist nicht einmal sicher bekannt, wer der ursprüngliche Erfinder von dieses Formats ist.
 In der Dokumentation von \textit{Sourceware}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.sourceware.org/gdb/onlinedocs/stabs.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717131349/https://www.sourceware.org/gdb/onlinedocs/stabs.html} wird aber Peter Kessler als Erfinder genannt.
 
-Der Aufbau von diesem Format wird in der oben genannten Dokumentation von \textit{Sourceware} und in der Dokumentation von der \textit{''University of Utha''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ http://www.math.utah.edu/docs/info/stabs\_toc.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717132825/http://www.math.utah.edu/docs/info/stabs\_toc.html} beschrieben.
-Obwohl diese Dokumentationen zum teil sehr detailliert sind, sind sie nicht lückenlos.
+Der Aufbau dieses Formats wird in der oben genannten Dokumentation von \textit{Sourceware} und in der Dokumentation von der \textit{''University of Utha''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ http://www.math.utah.edu/docs/info/stabs\_toc.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717132825/http://www.math.utah.edu/docs/info/stabs\_toc.html} beschrieben.
+Obwohl diese Dokumentationen zum Teil sehr detailliert sind, sind sie nicht lückenlos.
 Im Folgenden wird nur auf die Grundlagen eingegangen, die für das Beispielprogramm relevant sind.
 
 STABS-Informationen sind in einzelne Informations-Elemente, so genannte \textit{directives}, unterteilt.
 Jede Direktive ist entweder ein \textit{''.stabs''} (String), ein \textit{''.stabn''} (Integer) oder ein \textit{''.stabd''} (Dot).
-Zusätzlich ist jede Direktive von einem bestimmten Typ.
+Zusätzlich hat jede Direktive einen bestimmten Typ.
 Der Typ definiert, was die einzelnen Direktiven genau beschreiben.
 Um die Leserlichkeit zu verbessern sind alle Typen in der Datei \textit{''stabs.include''} (Siehe Anhang \ref{anhang:stabs.include}) definiert.
 Im Kapitel 12 der Dokumentation der \textit{''University of Utha''} sind die einzelnen Typen genau beschreiben.
@@ -122,7 +123,7 @@ Die STABS werden mit folgender Syntax im Assembler-Code definiert:\\
 
 \section{Demoprogramm mit STABS}
 % TODO alle files im Anhang
-In diesem Kapitel wird beschrieben, wie ein Demoprogramm mit STABS Informationen erstellt werden kann.
+In diesem Kapitel wird beschrieben wie ein Demoprogramm mit STABS-Informationen erstellt werden kann.
 Das Demoprogramm soll dann mit dem \textit{gdb} direkt auf den Zynq geladen werden.
 Zusätzlich sollen folgende \textit{gdb}-Features getestet werden:\\
 \begin{enumerate}
@@ -148,9 +149,9 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 	\item Beispiel-Programm mit automatisch generierten STABS erstellen:
 	\begin{enumerate}
 		\item \textbf{loopExample.c}: Das Java-Programm manuell in C-Code übersetzen.
-		\item \textbf{loopExample.o}: Das Programm mit STABS Informationen kompilieren.
-		\item \textbf{loopExample.Sd}: Das kompilierte Programm disassembliert, um die STABS in einer leserlichen Form zu erhalten.
-		\item \textbf{loopExample.host.c}: Leicht abgeändertes \textit{''loopExample.c''} um ein ausführbares Programm für den Host-PC zu erhalten.
+		\item \textbf{loopExample.o}: Das Programm mit STABS-Informationen kompilieren.
+		\item \textbf{loopExample.Sd}: Das disassembliert Programm, um die STABS in einer leserlichen Form zu erhalten.
+		\item \textbf{loopExample.host.c}: Leicht abgeändertes \textit{''loopExample.c''}, um ein ausführbares Programm für den Host-PC zu erhalten.
 		\item \textbf{loopExample.host.a}: Ausführbares Programm für den Host-PC.
 	\end{enumerate}
 	\item Lauffähiges Programm für den Zynq mit manuell ergänzten STABS erstellen:
@@ -158,11 +159,11 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 		\item \textbf{Reset.Java}: Den Source-Code des Java-Programms in die Reset-Methode des \textit{deep}-Kernel kopieren.
 		\item Den modifizierten Kernel mit \textit{deep} übersetzen.
 		\item \textbf{loopMachineCode.txt}: Enthält den Maschinen-Code aus der \textit{ClassTreeView} von \textit{deep}.
-		\item \textbf{loop.S}: Der Assembler-Code abgeleitet aus \textit{''loopMachineCode.txt''}.
+		\item \textbf{loop.S}: Der aus \textit{''loopMachineCode.txt''} abgeleitete Assembler-Code.
 		\item \textbf{loopWithSTABS.S}: Der Assembler-Code inklusive den manuell ergänzten STABS.
 		\item \textbf{loopWithSTABS.o}: Kompiliertes Objekt aus dem Assembler-Code.
 		\item \textbf{loopWithSTABS}: Gelinktes Objekt aus dem kompilierten Objekt.
-		\item \textbf{loopWithSTABS.Sd}: Das kompilierte Programm disassembliert, um die STABS in einer leserlichen Form zu erhalten.
+		\item \textbf{loopWithSTABS.Sd}: Das disassemblierte Programm, um die STABS in einer leserlichen Form zu erhalten.
 	\end{enumerate}
 \end{enumerate}
 
@@ -191,7 +192,7 @@ static void reset() {
 	for(int i=0; i<10; i++){
 		x100 += 10;
    }
-//		
+		
 	x100++;
 	x100++;
 	x100++;
@@ -208,8 +209,8 @@ Da Low-Level-Operationen, wie die Initialisierung des Stackpointers, mit Java no
 
 
 \subsection{Beispiel-Programm ''loopExample''}
-Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:stabs} ist fast identisch wie der Code des Java Demoprogramms.
-Es wurden nur einige Änderungen gemacht, damit es als C-Programm kompiliert werden kann.
+Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:stabs} ist fast identisch mit dem Code des Java Demoprogramms.
+Es wurden nur einige Änderungen gemacht, damit der Code als C-Programm kompiliert werden kann.
 \texttt{c\_entry()} ist der Eintrittspunkt des Programms und erfüllt im embedded Bereich eine ähnliche Aufgabe wie die  \texttt{main()}-Methode in einem generischen C-Programm.
 
 Mit dem PowerShell-Script \textit{''make\_loopExample.ps1''} im Anhang \ref{anhang:stabs} kann das C-Programm kompiliert werden.
@@ -243,7 +244,7 @@ push {r4, fp}
 \subsection{Analyse der disassemblierten STABS}
 \FloatBarrier
 
-Die unten stehenden Direktiven sind ein Auszug aus der Datei \textit{''loopExample.Sd''} im Anhang \ref{anhang:stabs}.
+Die untenstehenden Direktiven sind ein Auszug aus der Datei \textit{''loopExample.Sd''} im Anhang \ref{anhang:stabs}.
 Die Tabelle \ref{t-DisassemblierteSTABdirektive} beschreibt die Direktive 0 im Detail.
 \lstset{language=plain}
 \begin{lstlisting}
@@ -408,6 +409,8 @@ Zusätzlich kann so auch sichergestellt werden, dass der Stack in einem erlaubte
 
 Die beiden Branch-Instruktionen wurden mit der korrekten Syntax ersetzt.
 Als Ziel für diese Instruktionen wurden die beiden Assembler-Direktiven \texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} verwendet.
+
+
 
 
 

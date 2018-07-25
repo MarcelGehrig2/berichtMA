@@ -3,20 +3,20 @@
 \chapter{Zybo}
 % TODO: Text
 Das Zybo ist ein Experimentierboard für den Zynq-7000.
-Es beinhaltet die notwendigen Hardware wie Signaltransformatoren und Buchsen für Ethernet, USB, HDMI und VGA.
-Neben der Stromversorgung wird liefert es auch ein JTAG-Interface um den Zynq zu debuggen. 
+Es beinhaltet die notwendige Hardware, wie Signaltransformatoren und Buchsen, für Ethernet, USB, HDMI und VGA.
+Neben der Stromversorgung liefert es auch ein JTAG-Interface um den Zynq zu debuggen. 
 
 \section{Floating Point Unit}
 FPUs (\textit{Floating Point  Unit}) können je nach Implementation unterschiedliche Funktionen unterstützen.
-In den Register MVFR0 und MVFR (\textit{Media and VFP Feature Register}) lässt sich auslesen, welche Funktionen effektiv in der Hardware implementiert wurden und genutzt werden können.
+In den Registern MVFR0 und MVFR (\textit{Media and VFP Feature Register}) lässt sich auslesen welche Funktionen in der Hardware implementiert wurden und genutzt werden können.
 Diese Register können aber nicht mit einer einfachen \textit{Memory read} gelesen werden.
-Um diese Register, oder die anderen speziellen FPU-Register wie FPSID, FPSCR und PFEXC, lesen zu können, muss der Assembler Befehl \textit{''VMRS''} verwendet werden.
+Um diese Register oder die anderen speziellen FPU-Register, wie FPSID, FPSCR und PFEXC, lesen zu können, muss der Assembler Befehl \textit{''VMRS''} verwendet werden.
 
 \subsection{FPU initialisieren}
 Damit auf die FPU zugegriffen werden kann, muss der Co-Prozessor 15 erst so konfiguriert werden, dass das System im \textit{secure} und im \textit{non-secure mode} Zugriff auf die FPU hat.
-Der CP15 ist ein \textit{''System control coprocessor''} der neben der FPU auch den Cache und die MPU (Memory Protection Unit) konfiguriert.
+Der CP15 ist ein \textit{''System control coprocessor''}, der neben der FPU auch den Cache und die MPU (Memory Protection Unit) konfiguriert.
 Um in ein Register des Co-Prozessors schreiben zu können, muss eine spezielle Instruktion \texttt{''MCR''} verwendet werden, die ein ARM-Register in ein Co-Prozessor-Register speichert.
-Da OpenOCD diese Instruktion unterstützt, können die \textit{Access Control Register} direkt mit dem Debugger gesetzt werden kann.
+Da OpenOCD diese Instruktion unterstützt, können die \textit{Access Control Register} direkt mit dem Debugger gesetzt werden.
 
 Das NSACR (\textit{Non-secure Access Control Register}) kontrolliert, ob die FPU auch im \textit{non-secure mode} genutzt werden kann.
 Das CPACR (\textit{Coprocessor Access Control Register)} kontrolliert den Zugang zu allen Coprozessoren (CP10 und CP11 sind die FPU) abgesehen von CP14 und CP15.
@@ -70,7 +70,7 @@ Die Inhalte der Register sind:
 \subsection{Unterstützte Features der FPU}
 Die Register MVFR0 und MVFR1 enthalten Informationen über die unterstützten Features der FPU.
 % TODO Seite XXX
-Auf der Seite XXX des ARMv7-A ARM\cite{bib:ARMv7ArchitectureReferenceManual} (\textit{Architecture Reference Manual}) ist beschrieben, wie die unterstützten Features aus den Register gelesen  werden können.
+Auf der Seite XXX des ARMv7-A ARM\cite{bib:ARMv7ArchitectureReferenceManual} (\textit{Architecture Reference Manual}) ist beschrieben, wie die unterstützten Features aus den Registern gelesen werden können.
 
 Der Zynq 7000 des Zybo unterstützt:
 \begin{itemize}

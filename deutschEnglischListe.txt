@@ -28,6 +28,8 @@ Script
 
 
 % Diverse Eigennamen
+BDI3000
+
 \textit{deep}-Applikation
 
 \textit{gdb}
@@ -41,6 +43,6 @@ Zynq-7000
 
 
 % Abkürzungen und Präpositionen
-das XDSK		// Xylinx Standard Development Kit
+das XSDK		// Xylinx Standard Development Kit
 das XSCT		// Xilinx Software Command-Line Tool
 das Zybo
