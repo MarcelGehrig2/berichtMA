@@ -21,6 +21,7 @@ Aufzählungen wenn möglich, ausser bei einzelnen Wörtern, mit ganzen Sätzen u
 Webaddressen in Footnote.
 Wenn Referenz auf PDF dann ins Literaturverzeichnis
 
+Register-Variable
 
 Script
 

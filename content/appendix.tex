@@ -374,3 +374,203 @@ add R0, R1, #1
 add R1, R0, #1
 b 0
 \end{lstlisting}
+
+
+
+\subsection{loopWithAssembler.S:}
+\label{anhang:loopWithAssembler.S}
+\lstset{language={[x86masm]Assembler}}
+\begin{lstlisting}
+.include "stabs.include"
+.global _start
+#.stabs "M:/MA/stabs/",N_SO,0,0,Ltext0
+.stabs "loop.java",N_SO,0,0,Ltext0
+
+.stabs "char:t(0,2)=r(0,2);0;255;",N_LSYM,0,0,0
+.stabs "int:t(0,1)=r(0,1);-2147483648;2147483647;",N_LSYM,0,0,0
+.stabs "long int:t(0,3)=r(0,3);-2147483648;2147483647;",N_LSYM,0,0,0
+.stabs "unsigned int:t(0,4)=r(0,4);0;4294967295;",N_LSYM,0,0,0
+.stabs "long unsigned int:t(0,5)=r(0,5);0;4294967295;",N_LSYM,0,0,0
+.stabs "__int128:t(0,6)=r(0,6);0;-1;",N_LSYM,0,0,0
+.stabs "__int128 unsigned:t(0,7)=r(0,7);0;-1;",N_LSYM,0,0,0
+.stabs "long long int:t(0,8)=r(0,8);-0;4294967295;",N_LSYM,0,0,0
+.stabs "long long unsigned int:t(0,9)=r(0,9);0;-1;",N_LSYM,0,0,0
+.stabs "short int:t(0,10)=r(0,10);-32768;32767;",N_LSYM,0,0,0
+.stabs "short unsigned int:t(0,11)=r(0,11);0;65535;",N_LSYM,0,0,0
+.stabs "signed char:t(0,12)=r(0,12);-128;127;",N_LSYM,0,0,0
+.stabs "unsigned char:t(0,13)=r(0,13);0;255;",N_LSYM,0,0,0
+.stabs "float:t(0,14)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "double:t(0,15)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "long double:t(0,16)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Float32:t(0,17)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "_Float64:t(0,18)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Float32x:t(0,19)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "short _Fract:t(0,20)=r(0,1);1;0;",N_LSYM,0,0,0
+.stabs "_Fract:t(0,21)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "long _Fract:t(0,22)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "long long _Fract:t(0,23)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "unsigned short _Fract:t(0,24)=r(0,1);1;0;",N_LSYM,0,0,0
+.stabs "unsigned _Fract:t(0,25)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "unsigned long _Fract:t(0,26)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "unsigned long long _Fract:t(0,27)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Sat short _Fract:t(0,28)=r(0,1);1;0;",N_LSYM,0,0,0
+.stabs "_Sat _Fract:t(0,29)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "_Sat long _Fract:t(0,30)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "_Sat long long _Fract:t(0,31)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned short _Fract:t(0,32)=r(0,1);1;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned _Fract:t(0,33)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned long _Fract:t(0,34)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned long long _Fract:t(0,35)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "short _Accum:t(0,36)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "_Accum:t(0,37)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "long _Accum:t(0,38)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "long long _Accum:t(0,39)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "unsigned short _Accum:t(0,40)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "unsigned _Accum:t(0,41)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "unsigned long _Accum:t(0,42)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "unsigned long long _Accum:t(0,43)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Sat short _Accum:t(0,44)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "_Sat _Accum:t(0,45)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "_Sat long _Accum:t(0,46)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Sat long long _Accum:t(0,47)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned short _Accum:t(0,48)=r(0,1);2;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned _Accum:t(0,49)=r(0,1);4;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned long _Accum:t(0,50)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "_Sat unsigned long long _Accum:t(0,51)=r(0,1);8;0;",N_LSYM,0,0,0
+.stabs "void:t(0,52)=(0,52)",N_LSYM,0,0,0
+
+.stabs "_start:F(0,1)",N_FUN,0,0,_start
+.stabs "c_entry:F(0,1)",N_FUN,0,0,c_entry
+#.stabs "reset:F(0,1)",N_FUN,0,0,_reset
+
+
+#.global reset
+
+.stabs "int:t2=r2;-2147483648;2147483647;",N_LSYM,0,0,0
+
+
+.org 0x000000
+.text
+Ltext0:
+
+_start:
+_reset:
+c_entry:
+# US.PUTGPR(SP, 1024);	// set stack pointer
+.stabn N_SLINE, 0, 5, LM5
+LM5:
+movw R13, #1024
+
+
+# int x00 = 0;
+.stabn N_SLINE, 0, 7, LM7
+.stabs "x00:r(0,1)",N_RSYM,0,4,0
+LM7:
+movw R0, #0
+# int x01 = 10;
+.stabn N_SLINE, 0, 8, LM8
+.stabs "x01:r(0,1)",N_RSYM,0,4,1
+LM8:
+movw R1, #10
+# int x02 = 20;
+.stabn N_SLINE, 0, 9, LM9
+.stabs "x02:r(0,1)",N_RSYM,0,4,2
+LM9:
+movw R2, #20
+
+# x00++;
+.stabn N_SLINE, 0, 11, LM11
+.stabn N_LBRAC, 0, 0, LM11
+.stabs "x00:r(0,1)",N_RSYM,0,4,3
+LM11:
+add R3, R0, #1
+# x01++;
+.stabn N_SLINE, 0, 12, LM12
+.stabs "x01:r(0,1)",N_RSYM,0,4,0
+LM12:
+add R0, R1, #1
+# x02++;
+.stabn N_SLINE, 0, 13, LM13
+.stabs "x02:r(0,1)",N_RSYM,0,4,0
+LM13:
+add R0, R2, #1
+
+# int x100 = 100;
+.stabn N_SLINE, 0, 15, LM15
+.stabs "x100:r(0,1)",N_RSYM,0,4,0
+LM15:
+movw R0, #100
+
+
+.stabn N_RBRAC, 0, 0, LM27
+
+
+# for(int i=0; i<10; i++){
+.stabn N_SLINE, 0, 16, LM16
+.stabs "i:r(0,1)",N_RSYM,0,4,1
+LM16:
+movw R1, #0
+#  jump to check loop exit condition
+b CHECK_LOOP_EXIT	
+
+# x100 += 10;
+.stabn N_SLINE, 0, 17, LM17
+LM17:
+START_LOOP_BODY:
+add R0, R0, #10
+# (i++)
+.stabn N_SLINE, 0, 16, LM16_2
+LM16_2:
+add R1, R1, #1
+# (i<10)
+.stabn N_SLINE, 0, 16, LM16_3
+LM16_3:
+CHECK_LOOP_EXIT:
+cmp R1, #10
+#    branch if less than 0 to relative position -12
+blt START_LOOP_BODY
+
+
+# x100++;
+.stabn N_SLINE, 0, 20, LM20
+LM20:
+add R1, R0, #1
+# x100++;
+.stabn N_SLINE, 0, 21, LM21
+LM21:
+add R0, R1, #1
+# x100++;
+.stabn N_SLINE, 0, 22, LM22
+LM22:
+add R1, R0, #1
+# x100++;
+.stabn N_SLINE, 0, 23, LM23
+LM23:
+add R0, R1, #1
+# x100++;
+.stabn N_SLINE, 0, 24, LM24
+LM24:
+add R1, R0, #1
+
+# US.ASM("b -8"); // stop here
+.stabn N_SLINE, 0, 26, LM26
+LM26:
+b 0
+
+LM27:
+
+.stabs "x03:r(0,1)",N_RSYM,0,4,3
+
+#.stabs "x00:(0,1)",N_LSYM,0,0,1024
+#.stabs "x01:(0,1)",N_LSYM,0,0,1024+4
+#.stabs "x02:(0,1)",N_LSYM,0,0,1024+8
+.stabs "x100:(0,1)",N_LSYM,0,0,1024+12
+.stabn N_LBRAC, 0, 0, LM5
+.stabn N_LBRAC, 0, 0, LM16
+.stabn N_RBRAC, 0, 0, LM20
+.stabn N_RBRAC, 0, 0, LM27+4
+
+.stabn N_SO,0,0,LM27+4
+\end{lstlisting}
+
+

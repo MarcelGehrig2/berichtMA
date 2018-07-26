@@ -411,7 +411,62 @@ Die beiden Branch-Instruktionen wurden mit der korrekten Syntax ersetzt.
 Als Ziel für diese Instruktionen wurden die beiden Assembler-Direktiven \texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} verwendet.
 
 
+\subsection{STABS in das Assemblerprogramm einfügen}
+Um das Assemblerprogramm mit STABS zu ergänzen wurden drei verschiedene Quellen genutzt.
+Das Fertige Assemblerprogramm mit STABS ist im Anhang \ref{anhang:loopWithAssembler.S} angehängt.
+
+Die NTB-Wiki-Dokumentation\footnote{https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs} wurde als Ausgangslage genutzt.
+Die Datei \textit{''stabs.include''} (siehe Anhang \ref{anhang:stabs.include}) konnte direkt genutzt werde.
+Die Definition des Sourcecode (N\_SO) und die Definitionen der Zeilennummern (N\_SLINE) konnte ebenfalls übernommen werden.
+
+Da die Definitionen der Variablen-Typen in der NTB-Wiki-Dokumentation nicht vollständig war, konnte sie leider nicht verwendet werden.
+Alle Variablendefinitionen, Zeile 6-75, wurde aus dem disassemblierten Demoprogramm kopiert.
+Bei der While-Loop ist die Definition der Source-Code-Zeile ebenfalls etwas speziell, da sie auch bei der Überprüfung der Exit-Condition stimmen muss.
+Die genaue Implementation für die While-Loop wurde ebenfalls aus dem disassemblierten Demoprogramm übernommen.
+
+Der \textit{deep}-Compiler scheint die Variablen nicht auf dem Stack zu sichern, sofern noch genügend Register frei sind.
+Zusätzlich werden die Variablen in den Registern überschrieben, wenn diese im späteren Programmverlauf nicht mehr verwendet werden.
+Eine Register-Variable wird mit einer Direktive vom Typ 'N\_RSYM' definiert, die auf ein bestimmtes Register zeigt.
+So werden beispielsweise die Register-Variablen \texttt{x00}, \texttt{x01} und \texttt{x02} in den Zeilen 84, 89 und 94 definiert.
+
+\lstset{language={[x86masm]Assembler},
+  firstnumber=84,
+  numberfirstline=true}
+\begin{lstlisting}
+.stabs "x00:r(0,1)",N_RSYM,0,4,0
+\end{lstlisting}
+
+\lstset{language={[x86masm]Assembler},
+  firstnumber=89,
+  numberfirstline=true}
+\begin{lstlisting}
+.stabs "x01:r(0,1)",N_RSYM,0,4,1
+\end{lstlisting}
+
+\lstset{language={[x86masm]Assembler},
+  firstnumber=94,
+  numberfirstline=true}
+\begin{lstlisting}
+.stabs "x02:r(0,1)",N_RSYM,0,4,2
+\end{lstlisting}
+\lstset{firstnumber=1}
 
 
+Auf der Sourcecode-Zeile 11 wird die Variable \texttt{x00} um 1 inkrementiert.
+Im Assemblercode sieht man, dass die Variable neu im Register 3 abgespeichert wird.
+Aus diesem Grund muss die Register-Variable neu definiert werden.
+
+\lstset{language={[x86masm]Assembler},
+  firstnumber=98,
+  numberfirstline=true}
+\begin{lstlisting}
+# x00++;
+.stabn N_SLINE, 0, 11, LM11
+.stabn N_LBRAC, 0, 0, LM11
+.stabs "x00:r(0,1)",N_RSYM,0,4,3
+LM11:
+add R3, R0, #1
+\end{lstlisting}
+\lstset{firstnumber=1}
 
 % TODO nur hw breakpoints funktionieren
