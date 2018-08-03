@@ -469,4 +469,17 @@ add R3, R0, #1
 \end{lstlisting}
 \lstset{firstnumber=1}
 
+
+
+\subsection{Demoprogramm mit STABS kompilieren}
+Das Assemblerprogramm enthält nun alle notwendigen Informationen für den Maschinencode in Form von Assemblerinstruktionen.
+Die STABS ergänzen das Programm mit allen Informationen, welche der Debugger benötigt.
+
+Mit dem Script \textit{''XXX.ps1''} im Ahang \ref{anhang:XXX} kann das Programm assembliert werden.
+Die ELF-Datei \textit{''XXX''} kann dann mit dem \textit{gdb} geladen werden.
+
+
+
+% TODO besserer titel
+\section{Zybo mit \textit{gdb} verwenden}
 % TODO nur hw breakpoints funktionieren
