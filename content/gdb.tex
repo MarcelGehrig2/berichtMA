@@ -7,6 +7,9 @@ Zusätzlich werden auch alle unterstützten Funktionen und Grenzen der \textit{g
 
 
 \section{Installation des \textit{gdb}}
+% TODO aaaaaaaaa
+Der \textit{gdb} ist nur ein Teil von einer
+
 Es gibt diverse Versionen des \textit{gdb} für verschiedene Anwendungen.
 Die \textit{gdb}-Toolchains folgen meist einem \textit{A-B-C} Namensmuster.
 Dabei gilt:
@@ -37,7 +40,8 @@ Darin ist nicht nur der \textit{gdb} enthalten, sondern auch noch Programme wie 
 
 
 \section{\textit{gdb}-Anwendungsbeispiel mit \textit{''loopWithSTABS''} auf dem Zybo}
-Mit folgenden Schritten kann das kompilierte Programm mit den STABS auf den Zynq geladen und debuggt werden:
+\label{section:anwendungsbeispielGdb}
+Mit folgenden Schritten kann das kompilierte Programm \textit{''loopWithSTABS''} aus dem Kapitel \ref{section:demoprogrammSTABS} auf den Zynq geladen und debuggt werden:
 
 \begin{enumerate}
 	\item Die notwendige Software, wie im Kapitel \ref{kapitel:SoftwareinstallationOpenOCDToolchain} beschrieben, installieren.
@@ -54,16 +58,29 @@ Mit folgenden Schritten kann das kompilierte Programm mit den STABS auf den Zynq
 \end{enumerate}
 
 
-
+\section{Test der \textit{gdb}-Funktionen}
 % TODO nur hw breakpoints funktionieren	
+In diesem Kapitel werden alle aus dem Kapitel \ref{section:demoprogrammSTABS} geforderten Funktionen getestet.
+Als Ausgangspunkt dient das Anwendungsbeispiel aus dem Kapitel \ref{section:anwendungsbeispielGdb}.
+\textit{gdb} kann mit dem Befehlt \texttt{''q''} beendet und dann neu gestartet werden, damit die Ausgangslage bei jedem Test identisch ist.
 
+\subsection{Breakpoint}
+Das Programm stoppt bei einer gewünschten Zeile im Java-Sourcecode.
 
+\subsection{Source lookup}
+Wenn das Programm gestoppt wird, kann die entsprechende Zeile im Java-Sourcecode angezeigt werden.
 
+\subsection{Single-Stepping}
+Nur eine Zeile im Java-Sourcecode ausführen und dann pausieren.
 
+\subsection{Variable auslesen}
+Eine Java-Variable, z.B. ein Integer, auslesen.
 
+\subsection{Variable manipulieren}
+Eine Java-Variable verändern.
 
-
-
+\subsection{Prozessor-Register auslesen}
+Ein Register der CPU auslesen.
 
 
 
