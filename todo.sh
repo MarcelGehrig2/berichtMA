@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 [[ $_ != $0 ]] && script_is_sourced=true || script_is_sourced=false
@@ -9,10 +10,11 @@ fi
 SCRIPT_DIR="$(dirname $SCRIPT_PATH)"
 SCRIPT_NAME=$(basename $SCRIPT_PATH)
 
-echo 'TODO: '
-grep -rnwiHI ./ -e 'TODO'
 
-echo
-echo 'XXX:'
-grep -rnwiIH ./ -e 'XXX'
-
+declare -a array=("TODO" "XXX" "??")
+for KEYWORD in "${array[@]}"
+do
+	echo
+	echo $KEYWORD:
+	grep -rnwiHI ./ -e $KEYWORD
+done

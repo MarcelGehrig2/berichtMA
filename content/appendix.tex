@@ -36,8 +36,9 @@
 % reset_config srst_pulls_trst
 % \end{lstlisting}
 
+\section{OpenOCD}
 
-\section{zybo-ftdi.ocd angepasst:}
+\subsection{zybo-ftdi.cfg angepasst:}
 \label{anhang:zybo-ftdi.cfg}
 \lstset{language=tcl}
 \begin{lstlisting}
@@ -62,12 +63,63 @@ reset_config srst_only
 adapter_nsrst_delay 40
 \end{lstlisting}
 
+
+\subsection{zybo.cfg angepasst:}
+\label{anhang:zybo.cfg}
+\lstset{language=tcl}
+\begin{lstlisting}
+#
+# ZYBO board
+#
+# https://github.com/emard/wifi_jtag/blob/master/openocd/scripts/board/zybo.cfg 
+
+set _CHIPNAME zynq
+set _TARGETNAME $_CHIPNAME.cpu
+
+jtag newtap chip tap -irlen 6 -ircapture 0x1 -irmask 0x03 \
+    -expected-id 0x23727093 \
+    -expected-id 0x03727093 \
+    -expected-id 0x13722093
+
+jtag newtap $_CHIPNAME dap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x4ba00477
+
+target create ${_TARGETNAME}0 cortex_a -chain-position $_CHIPNAME.dap \
+    -coreid 0 -dbgbase 0x80090000
+target create ${_TARGETNAME}1 cortex_a -chain-position $_CHIPNAME.dap \
+    -coreid 1 -dbgbase 0x80092000
+target smp ${_TARGETNAME}0 ${_TARGETNAME}1
+
+adapter_khz 1000
+
+${_TARGETNAME}0 configure -event reset-assert-post "cortex_a dbginit"
+${_TARGETNAME}1 configure -event reset-assert-post "cortex_a dbginit"
+
+script ps7_init_modified.tcl
+
+# http://openocd.org/doc/html/CPU-Configuration.html#targetevents
+${_TARGETNAME}0 configure -event reset-init {
+	echo "Running reset init script for Zybo"
+	# Reset script for AT91EB40a
+#	map_OCM_low
+	initPS
+}
+
+
+init
+scan_chain
+halt
+
+#map_OCM_low
+#initPS
+\end{lstlisting}
+
+
 \label{anhang:zynq_7000.cfg}
 
 
 
 
-\section{Xilinx SDK Log:}
+\subsection{Xilinx SDK Log:}
 \label{anhang:SDKLog}
 \lstset{language=plain}
 \begin{lstlisting}
@@ -119,7 +171,7 @@ con
 \end{lstlisting}
 
 
-\section{system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl:}
+\subsection{system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl:}
 \label{anhang:elf_on_local.tcl}
 \lstset{language=plain}
 \begin{lstlisting}
@@ -573,4 +625,63 @@ LM27:
 .stabn N_SO,0,0,LM27+4
 \end{lstlisting}
 
+\subsection{make\_loop.ps1}
+\label{anhang:make_loop.ps1}
+\lstset{language=sh}
+\begin{lstlisting}
+# Add the path for the GNU Arm Embedded Toolchain to the 'Env:Path' variable
+$Env:Path += ";D:\GNUArmEmbeddedToolchain\7-2018-q2-update\bin"
 
+# Change to directory containing the program
+cd M:\MA\stabs
+
+
+$FILENAME="loopWithSTABS"
+#$FILENAME="loop"
+
+#arm-none-eabi-as -gstabs -march=armv7-a  "$FILENAME.S" -o "$FILENAME.o"
+
+# Assembles object file
+#   * -march=armv7-a    : assemble for ARMv7 architecture
+arm-none-eabi-as -march=armv7-a  "$FILENAME.S" -o "$FILENAME.o"
+
+# Linking one single object file
+#   * -Ttext=0x0        : text section will be copied to address 0x0    (executable code)
+#   * -Tdata=0x1000     : data section will be copied to address 0x100
+arm-none-eabi-ld -Ttext=0x0 -Tdata=0x100 "$FILENAME.o" -o "$FILENAME"
+
+# Disassemble linked file again
+#   * --disassemble     : disassemble the executable code section
+#   * --disassemble     : include all STABS informations
+arm-none-eabi-objdump --disassemble  -G  "$FILENAME.o" >"$FILENAME.Sd"
+
+\end{lstlisting}
+
+
+
+\section{gdb}
+\subsection{startGdb.ps1}
+\label{anhang:startGdb.ps1}
+\lstset{language=sh}
+\begin{lstlisting}
+$Env:Path += ";D:\GNUArmEmbeddedToolchain\6-2017-q2-update\bin"
+#$Env:Path += ";D:\GNUArmEmbeddedToolchain\7-2018-q2-update\bin"
+
+cd M:\MA\stabs
+arm-none-eabi-gdb --command=gdbInit.txt
+\end{lstlisting}
+
+
+\subsection{gdbInit.txt}
+\label{anhang:gdbInit.txt}
+\lstset{language=plain}
+\begin{lstlisting}
+set extension-language .java minimal
+file M:/MA/stabs/loop
+dir M:/MA/stabs/
+target remote localhost:3333
+monitor reset halt
+#monitor halt
+load
+monitor reg pc 0
+\end{lstlisting}

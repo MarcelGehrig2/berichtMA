@@ -122,6 +122,7 @@ Die STABS werden mit folgender Syntax im Assembler-Code definiert:\\
 
 
 \section{Demoprogramm mit STABS}
+\label{section:demoprogrammSTABS}
 % TODO alle files im Anhang
 In diesem Kapitel wird beschrieben wie ein Demoprogramm mit STABS-Informationen erstellt werden kann.
 Das Demoprogramm soll dann mit dem \textit{gdb} direkt auf den Zynq geladen werden.
@@ -475,11 +476,7 @@ add R3, R0, #1
 Das Assemblerprogramm enthält nun alle notwendigen Informationen für den Maschinencode in Form von Assemblerinstruktionen.
 Die STABS ergänzen das Programm mit allen Informationen, welche der Debugger benötigt.
 
-Mit dem Script \textit{''XXX.ps1''} im Ahang \ref{anhang:XXX} kann das Programm assembliert werden.
-Die ELF-Datei \textit{''XXX''} kann dann mit dem \textit{gdb} geladen werden.
+Mit dem Script \textit{''make\_loop.ps1''} im Ahang \ref{anhang:make_loop.ps1} kann das Programm assembliert werden.
+Die ELF-Datei \textit{''loopWithSTABS''} kann dann mit dem \textit{gdb} geladen werden.
 
 
-
-% TODO besserer titel
-\section{Zybo mit \textit{gdb} verwenden}
-% TODO nur hw breakpoints funktionieren
