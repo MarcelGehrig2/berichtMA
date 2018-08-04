@@ -83,7 +83,7 @@ In den folgenden Kapiteln wird folgende Notation verwendet, um einen CLI-Befehl 
 (\texttt{CLI: Befehl})
 
 
-\section{OpenOCD Konfiguration - Einleitung}
+\section{OpenOCD Konfiguration}
 % TODO: zum starten siehe kapitel ...
 % TODO: Files anhängen
 % nicht einfach
@@ -101,7 +101,7 @@ Mit folgendem Befehl kann OpenOCD mit der passenden Konfiguration für das Zybo 
 \texttt{openocd -f zybo-ftdi.cfg -f zybo.cfg}
 
 
-\section{OpenOCD Konfiguration - Interface}
+\subsection{OpenOCD Konfiguration - Interface}
 Die Interfacekonfiguration beschreibt hauptsächlich den verwendeten Adapter.
 Da beim Zybo kein Adapter verwendet wird, sondern der aufgelötete FT2232, wird mit diesem Script der FTDI-Chip und dessen Anbindung an den Zynq konfiguriert.
 
@@ -138,7 +138,7 @@ Von OpenOCD werden neben dem FT2232 auch noch andere Chips unterstützt.
 Zeile 7 definiert die \textit{Vendor} und \textit{Device-ID} des USB Devices.
 
 
-\subsection{Resetverhalten}
+\subsubsection{Resetverhalten}
 Liest man aus einer unerlaubten Speicheradresse (\texttt{CLI: mdw 0x40000000}), dann hängt sich die Debug-Peripherie des Zynq auf.
 Nach einem unerlaubten Speicherzugriff können auch keine erlaubten Speicherstellen mehr gelesen werden.
 Beim Versuch erscheint die Fehlermeldung:\\
@@ -205,11 +205,22 @@ Diese Wartezeit genügt, damit die FTDI-Interface wieder betriebsbereit ist, wen
 
 
 
-\section{OpenOCD Konfiguration - Board}
+\subsection{OpenOCD Konfiguration - Board}
 Da beim Zybo der Adapter direkt auf dem Board ist, ist die Bordkonfiguration bereits im Konfigurationsscript für das Interface enthalten.
 
-\section{OpenOCD Konfiguration - Target}
+\subsection{OpenOCD Konfiguration - Target}
 Für das Target, in diesem Fall der Zynq 7000 SOC, ist bereits ein Script unter \textit{openocd-0.10.0/scripts/ target/zynq\_7000.cfg} enthalten.
 In diesem Script werden nicht nur beide Kerne des Prozessors definiert, sondern auch ein TAP für das FPGA.
 Es ist also auch möglich, den FPGA mit dieser Toolchain zu laden.
 % zynq_7000.cfg
+
+
+\section{CLI-OpenOCD-Toolchain}
+\label{section:CLI-OpenOCD-Toolchain}
+Die \textit{CLI-OpenOCD-Toolchain} ist ein Eclipse-Plugin, welches in Kombination mit \textit{deep} verwendet werden kann.
+Es erfüllt die gleichen Funktionen wie die bestehende \textit{Abatron-Toolchain}.
+
+Das Plugin kann von folgendem Repositorie geklont werden:
+% TODO0: repo anlegen
+% \texttt{}
+

@@ -11,7 +11,7 @@ Es erlaubt einfach und schnell Robotersteuerungen und Regelungen zu implementier
 % debuging
 \textit{deep} unterstützt einige grundlegende Debuging-Funktionen.
 Mit einer mehreren tausend Franken teuren Abatronsonde kann der Speicher und die Register des Prozessors ausgelesen und auch geschrieben werden.
-Der aktuelle Debugger unterstützt keine \textit{Breakpoints} oder \textit{Source Code Navigation}, wie man es aus bekannten Debuggern wie dem \textit{gdb}\footnote{https://www.gnu.org/software/gdb/} kennt.
+Der aktuelle Debugger unterstützt keine \textit{Breakpoints} oder \textit{Sourcecode-Navigation}, wie man es aus bekannten Debuggern wie dem \textit{gdb}\footnote{https://www.gnu.org/software/gdb/} kennt.
 
 % TODO: JTAG
 
@@ -35,7 +35,7 @@ Java ist im Gegensatz zu C und C++ eine sehr zielorientierte Sprache.
 Bei Java muss man sich nicht so detailliert um Ressourcen, wie Speicher und Hardwareschnittstellen kümmern, wie in C-orientierten Sprachen.
 Dieser Aspekt soll auch beim Debugger beibehalten werden.
 Zusätzlich zum direkten Speicherauslesen sollen auch Variablen gelesen und geschrieben werden können.
-Eine native \textit{Source Code Navigation} in Eclipse vereinfacht die Entwicklung einer \textit{deep}-Applikation sehr.
+Eine native \textit{Sourcecode-Navigation} in Eclipse vereinfacht die Entwicklung einer \textit{deep}-Applikation sehr.
 
 
 
@@ -48,7 +48,7 @@ Bei dieser Arbeit werden mehrere Ziele verfolgt, die aufeinander aufbauen.
 \item Passende Hardware (Experimentierboard) finden, welche auch im Unterricht verwendet werden kann.
 \item Das grundlegendes Debug-Interface, welches bereits für PowerPC existiert, für die ausgewählte Hardware anpassen. Dieses Interface soll für die Entwicklung von \textit{deep} möglichst bald einsatzbereit sein.
 \item Den GNU-Debugger (\textit{gdb}) mit einem Programm verwenden, dass vom \textit{deep}-Compiler übersetzt wurde. Dazu soll vorerst das Command-Line-Interface (CLI) des \textit{gdb} genutzt werden.
-\item Den \textit{gdb} in das Eclipse Plug-In von \textit{deep} integrieren, damit der Debugger direkt aus Eclipse verwendet werden kann.
+\item Den \textit{gdb} in das Eclipse-Plugin von \textit{deep} integrieren, damit der Debugger direkt aus Eclipse verwendet werden kann.
 \end{enumerate}
 
 
@@ -68,5 +68,5 @@ Bei dieser Arbeit werden mehrere Ziele verfolgt, die aufeinander aufbauen.
 % Zwingend erforderlich ist die Integration unserer «flink» FPGA-Anbindung über ein geeignetes Hardwareinterface.
 % Das Board Support Package muss die wichtigsten Grundfunktionen für einen Betrieb anbieten.
 % Debugging ist sowohl für die Weiterentwicklung „deep“ wie auch für die Entwicklung von Applikationen sehr wichtig.
-% Debugging soll direkt aus «eclipse» möglich sein.
+% Debugging soll direkt aus Eclipse möglich sein.
 % Dazu sollen das On-Chip Debugging Framework (OCD) und der GNU-Debugger (gdb) eingesetzt werden.

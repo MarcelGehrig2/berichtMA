@@ -51,18 +51,22 @@ Da das CLI\footnote{Command Line Interface} von OpenOCD aber sehr ähnlich ist w
 Die \textit{CLI-OpenOCD-Toolchain} lehnt sich deshalb sehr stark an die bestehende \textit{Abatron-Toolchain} an.
 % Die bestehende Toolchain für den PPC ist nicht auf der offiziellen \textit{deep}-Homepage dokumentiert.
 
-Mit dieser Toolchain ist \textit{Source Code Debugging} aber nicht möglich.
-Das bedeutet, es ist nicht möglich im Source Code Breakpoints zu setzten oder durch einzelne Zeilen im Source Code zu steppen wie man es von Debuggern, wie dem \textit{gdb}, gewohnt ist.
+Mit dieser Toolchain ist \textit{Sourcecode-Debugging} aber nicht möglich.
+Das bedeutet, es ist nicht möglich im Sourcecode Breakpoints zu setzten oder durch einzelne Zeilen im Sourcecode zu steppen wie man es von Debuggern, wie dem \textit{gdb}, gewohnt ist.
 % TODO wirklich target commands?
 Bestehende Möglichkeiten aus der alten \textit{Abatron-Toolchain}, wie \textit{Target Commands}, bleiben aber erhalten.
 % TODO: Schema
 
+Im Kapitel \ref{section:CLI-OpenOCD-Toolchain} wird diese Toolchain genauer beschrieben.
+
 
 \subsection{\textit{gdb}-OpenOCD-Toolchain}
 In der \textit{gdb-OpenOCD-Toolchain} wird, wie bei der obigen Toolchain, ebenfalls die OpenOCD-Software und der FT2232-Chip verwendet.
-Es wird aber nicht mehr ein Interface bestehend auf der ''klassischen'' Abatron Toolchain verwendet, sondern es wird direkt der bekannte \textit{gdb}-Debugg verwendet.
-% Dadurch kann \textit{Source Code Debugging} direkt in Eclipse eingesetzt werden.
-Dadurch kann auch \textit{Source Code Debugging} verwendet werden.
+Es wird aber nicht mehr ein Interface bestehend auf der ''klassischen'' Abatron Toolchain verwendet, sondern es wird direkt der bekannte \textit{gdb}-Debugger verwendet.
+% Dadurch kann \textit{Sourcecode-Debugging} direkt in Eclipse eingesetzt werden.
+Dadurch kann auch \textit{Sourcecode-Debugging} verwendet werden.
 % günstige hardware
 % TODO: Schema
+% TODO: Verweis
 
+Im Kapitel \ref{chapter:Der-gdb-Debugger} wird diese Toolchain detailliert beschrieben.
