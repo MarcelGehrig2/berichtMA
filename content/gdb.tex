@@ -59,31 +59,81 @@ Mit folgenden Schritten kann das kompilierte Programm \textit{''loopWithSTABS''}
 
 
 \section{Test der \textit{gdb}-Funktionen}
-% TODO nur hw breakpoints funktionieren	
 In diesem Kapitel werden alle aus dem Kapitel \ref{section:demoprogrammSTABS} geforderten Funktionen getestet.
 Als Ausgangspunkt dient das Anwendungsbeispiel aus dem Kapitel \ref{section:anwendungsbeispielGdb}.
 \textit{gdb} kann mit dem Befehlt \texttt{''q''} beendet und dann neu gestartet werden, damit die Ausgangslage bei jedem Test identisch ist.
 
-\subsection{Breakpoint}
-Das Programm stoppt bei einer gewünschten Zeile im Java-Sourcecode.
 
-\subsection{Source lookup}
-Wenn das Programm gestoppt wird, kann die entsprechende Zeile im Java-Sourcecode angezeigt werden.
-
-\subsection{Single-Stepping}
-Nur eine Zeile im Java-Sourcecode ausführen und dann pausieren.
-
-\subsection{Variable auslesen}
-Eine Java-Variable, z.B. ein Integer, auslesen.
-
-\subsection{Variable manipulieren}
-Eine Java-Variable verändern.
-
-\subsection{Prozessor-Register auslesen}
-Ein Register der CPU auslesen.
+Für die bessere Übersicht wird hier nochmals der Java-Code des Demo-Programms \textit{''loop.java''} aufgelistet:
+\lstset{language=java}
+\begin{lstlisting}
+static void reset() {
 
 
 
+	US.PUTGPR(SP, stackBase + stackSize - 4);	// set stack pointer
+	
+	int x00 = 0;
+	int x01 = 1;
+	int x02 = 2;
+	
+	x00++;
+	x01++;
+	x02++;
+	
+	int x100 = 100;
+	for(int i=0; i<10; i++){
+		x100 += 10;
+   }
+		
+	x100++;
+	x100++;
+	x100++;
+	x100++;
+	x100++;
+
+	US.ASM("b -8"); // stop here
+}
+\end{lstlisting}
+
+
+\subsection{Durchführung des \textit{gdb}-Tests}
+Mit \texttt{''list''} kann der Sourcecode des Programmes angezeigt werden.
+\texttt{''list 10''} zeigt den Sourcecode ab der 10. Zeile an.
+Ein Hardware-Breakpoint auf Zeile 11 kann mit \texttt{''hbreak 11''} erstellt werden.
+Wird das Programm mit \texttt{''c''} gestartet, dann wird die Ausführung gestoppt, sobald die 11. Zeile des Sourcecodes erreicht wurde.
+\textit{gdb} zeigt dann an, dass die nächste Zeile \texttt{''x00++;''} sein wird.
+
+Mit \texttt{''p x00''} wird der Inhalt der Variable \texttt{''x00''} angezeigt.
+Führt man mit \texttt{''s''} einen einzelnen Step, also eine Zeile im Sourcecode aus, dann erhöht sich der Wert der Variable \texttt{''x00''} um 1.
+Das kann mit \texttt{''p x00''}  wieder überprüft werden.
+
+% TODO bei x01 funktioniert nicht, da in den selben registern
+
+Ein weiterer Hardware-Breakpoint auf Zeile 17 (\texttt{''break 17}) stoppt das Programm innerhalb der For-Loop.
+Die Variable \texttt{''i''} zeigt zu diesem Zeitpunkt wie erwartet ''0''.
+Wird das Programm fortgesetzt, dann stoppt das Programm wieder auf der Zeile 17 und \texttt{''i''} zeigt ''1''.
+Die Variable \texttt{''i''} kann mit \texttt{''set var i=9''} gesetzt werden.
+Da mit ''i=9'' die Abbruchbedingung der For-Loop erfüllt ist, wird der Breakpoint nicht mehr erreicht, wenn das Programm weiter ausgeführt wird.
+Das Programm hängt jetzt auf der letzten Zeile des Programms fest, und kann mit der Tastenkombination \textit{ĈTRL + C} gestoppt werden.
+
+Das Schlüsselwort \texttt{''monitor''} kann genutzt werden, um OpenOCD aus dem \textit{gdb} heraus direkt ein Befehl zu erteilen.
+So kann mit \texttt{''monitor reg''} der OpenOCD-Befehl \texttt{''reg''} genutzt werden, um alle Register anzuzeigen.
+
+\textbf{Hinweis}: 
+Seit der \textit{gdb}-Version 8 funktionieren Software-Breakpoints (z.B \texttt{''break 12''}) nicht mehr.
+Bei einem Software-Breakpoint wird eine Instruktion mit einer speziellen Instruktion ersetzt, die dann das Programm stoppt und den Debugger triggert.
+Das funktioniert bei allen \textit{gdb}-Versionen.
+Ab der \textit{gdb}-Version 8 wird diese Instruktion aber nicht mehr mit der alten, gültigen Instruktion ersetzt.
+Aus diesem Grund kann dann das Programm nicht mehr weiter ausgeführt werden.
+Die Hardware-Breakpoints funktionieren bei allen Versionen.
+
+
+\subsection{Fazit des \textit{gdb}-Tests}
+Alle geforderten Funktionen des Debuggers können grundsätzlich genutzt werden.
+
+Bei \textit{gdb}-Versionen die neuer als Version 8 können aber nur die Hardware-Breakpoints verwendet werden.
+Software-Breakpoints könnten aber auch verwendet werden, wenn die ersetzte Instruktion manuell wieder hergestellt wird.
 
 
 

@@ -157,7 +157,7 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 	\end{enumerate}
 	\item Lauffähiges Programm für den Zynq mit manuell ergänzten STABS erstellen:
 	\begin{enumerate}
-		\item \textbf{Reset.Java}: Den Source-Code des Java-Programms in die Reset-Methode des \textit{deep}-Kernel kopieren.
+		\item \textbf{Reset.Java}: Den Sourcecode des Java-Programms in die Reset-Methode des \textit{deep}-Kernel kopieren.
 		\item Den modifizierten Kernel mit \textit{deep} übersetzen.
 		\item \textbf{loopMachineCode.txt}: Enthält den Maschinen-Code aus der \textit{ClassTreeView} von \textit{deep}.
 		\item \textbf{loop.S}: Der aus \textit{''loopMachineCode.txt''} abgeleitete Assembler-Code.
@@ -171,8 +171,9 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 
 
 \subsection{Java Demoprogramm}
-Das unten stehende Programm ist das Testprogramm, dass von \textit{deep} in Maschinen-Code übersetzt werden soll und anschliessend manuell mit STABS ergänzt werden soll.
+Das unten stehende Programm ist das Testprogramm (loop.java), dass von \textit{deep} in Maschinen-Code übersetzt werden soll und anschliessend manuell mit STABS ergänzt werden soll.
 
+\textbf{loop.java:}
 \lstset{language=java}
 \begin{lstlisting}
 static void reset() {
@@ -422,7 +423,7 @@ Die Definition des Sourcecode (N\_SO) und die Definitionen der Zeilennummern (N\
 
 Da die Definitionen der Variablen-Typen in der NTB-Wiki-Dokumentation nicht vollständig war, konnte sie leider nicht verwendet werden.
 Alle Variablendefinitionen, Zeile 6-75, wurde aus dem disassemblierten Demoprogramm kopiert.
-Bei der While-Loop ist die Definition der Source-Code-Zeile ebenfalls etwas speziell, da sie auch bei der Überprüfung der Exit-Condition stimmen muss.
+Bei der While-Loop ist die Definition der Sourcecode-Zeile ebenfalls etwas speziell, da sie auch bei der Überprüfung der Exit-Condition stimmen muss.
 Die genaue Implementation für die While-Loop wurde ebenfalls aus dem disassemblierten Demoprogramm übernommen.
 
 Der \textit{deep}-Compiler scheint die Variablen nicht auf dem Stack zu sichern, sofern noch genügend Register frei sind.
