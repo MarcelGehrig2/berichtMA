@@ -1,11 +1,12 @@
 % TODO: Kapitel unterkapitel
 
 \chapter{Zynq}
-Der Zynq-7000 ist ein SoC (System on Chip), der einen 667 MHz Dual-Core ARM Cortex-A9 Prozessor und eine programmierbare Logik enthält, die einem Artix-7 FPGA entspricht.
+Der Zynq-7000 ist ein SoC (System on Chip), das einen 667 MHz Dual-Core ARM Cortex-A9 Prozessor und eine programmierbare Logik enthält, die einem Artix-7 FPGA entspricht.
 Der Prozessor und dessen Peripherie befindet sich im \textit{Processing System} oder kurz PS.
 Der FPGA-Teil des Zynq wird oft PL oder \textit{Programmable Logic} genannt.
-Über den AMBA-Bus kann der Prozessor und auch die PL auf die Peripherie, wie z.B. SPI, GPIO, Ethernet oder auch DDR3, zugreifen.
+Über den internen AMBA-Bus kann der Prozessor und auch die PL auf die Peripherie, wie z.B. SPI, GPIO, Ethernet oder auch DDR3, zugreifen.
 Das Block Diagramm in der Abbildung \ref{fig:BlockDiagrammZynq} gibt einen guten Überblick über das ganze SoC.
+Das restliche Kapitel beschreibt relevante Komponente und Eigenarten des Zynq.
 
 \begin{figure}[htbp]
 	\centering
@@ -16,9 +17,9 @@ Das Block Diagramm in der Abbildung \ref{fig:BlockDiagrammZynq} gibt einen guten
 \footnotetext{https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html}
 
 
-\subsection{MIO und EMIO}
+\section{MIO und EMIO}
 MIOs sind \textit{Multiplexed Input Output Pins}, welche direkt vom Prozessor angesprochen werden können, ohne dass die PL programmiert werden muss.
-Die EMIOs sind \textit{\textbf{Extended} Multiplexed Input Output Pins}, welche direkt an die PL angeschlossen sind.
+Die EMIOs sind \textit{\textbf{Extended} Multiplexed Input Output Pins}, welche nur über die PL angesprochen werden können.
 Aus diesem Grund können die EMIOs nur verwendet werden, wenn die PL entsprechend programmiert wurde.
 Diese Arbeit beschränkt sich nur auf die MIOs und das PS.
 Im TRM\footnote{Technical Reference Manual} des Zynq\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''2.5.4 MIO-at-a-Glance Table''} ist eine sehr gute Übersicht über alle möglichen Funktionen der MIOs gegeben.
@@ -42,7 +43,7 @@ Das XSDK verwendet im Hintergrund das XSCT\footnote{https://www.xilinx.com/html\
 Das XSDK kann interaktiv, oder mit Scripts verwendet werden.
 % Die Scriptsprache basiert, wie auch Jim-TCL, auf der Sprache TCL.
 Wie Jim-TCL basiert auch die verwendete Scriptsprache auf der Sprache TCL.
-Wird das ''Hello World'' Programm im XSDK gestartet, erhält man im \textit{SDK Log} Fenster ein detailliertes Log des ausgeführten Scripts.
+Wird das ''Hello World'' Programm im XSDK gestartet, erscheint im \textit{SDK Log} Fenster ein detailliertes Log des ausgeführten Scripts.
 In diesem Log kann nachvollzogen werden, was das Script beim Download und Start des Programms alles ausgeführt hat.
 
 % TODO was auch immer
@@ -69,7 +70,7 @@ Bevor die Register aber verändert werden können, müssen sie \textit{''unlocke
 
 
 \subsection{Grundlegende Methoden}
-Alle Methoden sind auf den folgenden vier Grundbefehlen aufgebaut:\\
+Alle Methoden des \textit{ps7\_init.tcl}-Scripts sind auf den folgenden vier Grundbefehlen aufgebaut:\\
 \textbf{mwr -force <address> <value>: }\\
 Schreibt den Wert <value> in die Adresse <address>.
 
@@ -133,7 +134,7 @@ Standardmässig ist die darin enthaltene Methode \textit{''ps7\_init()''} aber a
 \textit{''platform.c''} befindet sich im \textit{''design\_wrapper\_hw\_platform''}, welcher in Vivado erzeugt wurde.
 Vergleicht man \textit{''ps7\_init()''} mit \textit{ps7\_init.tcl}, dann sieht man schnell, dass das Script und auch die C-Methode genau die gleichen Register schreiben und lesen.
 
-\textit{''psu\_init()''} ist für ein \textit{''Zynq UltraScale+™ MPSoC''} Chip.
+\textit{''psu\_init()''} ist für ein \textit{''Zynq UltraScale+™ MPSoC''} Chip, welcher auf dem Zybo nicht verwendet wird.
 
 
 \textit{helloworld.c:}
@@ -290,8 +291,7 @@ proc get_number_of_cycles_for_delay { delay } {
 
 
 
-\section{Memory}
-\subsection{Address Mapping}
+\section{Memory Mapping}
 Im Kapitel 4.1 des \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} ist der Aufbau des Speichers beschrieben.
 Die Abbildung \ref{fig:AddressMapZynq} zeigt einen guten Überblick über die ganzen 4 GB des Adressraumes.
 Bei der Map fällt auf, dass nur ca. 1 GB für DDR RAM verwendet werden kann.
@@ -308,10 +308,99 @@ Mehr dazu im Zynq TRM\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=10cm,height=\textheight,keepaspectratio]{images/AddressMapZynq.png}
+		\includegraphics[width=14cm,height=\textheight,keepaspectratio]{images/AddressMapZynq.png}
 	\caption[]{Address Map des Zynq}
 	\label{fig:AddressMapZynq}
 \end{figure}
+
+
+\section{Floating Point Unit}
+FPUs (\textit{Floating Point  Unit}) können je nach Implementation unterschiedliche Funktionen unterstützen.
+In den Registern MVFR0 und MVFR (\textit{Media and VFP Feature Register}) lässt sich auslesen welche Funktionen in der Hardware implementiert wurden und genutzt werden können.
+Diese Register können aber nicht mit einer einfachen \textit{Memory read} gelesen werden.
+Um diese Register oder die anderen speziellen FPU-Register, wie FPSID, FPSCR und PFEXC, lesen zu können, muss die ARM-Instruktion \textit{''VMRS''} verwendet werden.
+
+\subsection{FPU initialisieren}
+Damit auf die FPU zugegriffen werden kann, muss der Co-Prozessor 15 erst so konfiguriert werden, dass das System im \textit{secure} und im \textit{non-secure mode} Zugriff auf die FPU hat.
+Der CP15 ist ein \textit{''System control coprocessor''}, der neben der FPU auch den Cache und die MPU (Memory Protection Unit) konfiguriert.
+Um in ein Register des Co-Prozessors schreiben zu können, muss eine spezielle Instruktion \texttt{''MCR''} verwendet werden, die ein ARM-Register in ein Co-Prozessor-Register speichert.
+Da OpenOCD diese Instruktion unterstützt, können die \textit{Access Control Register} direkt mit dem Debugger gesetzt werden.
+
+Das NSACR (\textit{Non-secure Access Control Register}) kontrolliert, ob die FPU auch im \textit{non-secure mode} genutzt werden kann.
+Das CPACR (\textit{Coprocessor Access Control Register)} kontrolliert den Zugang zu allen Coprozessoren (CP10 und CP11 sind die FPU).
+
+Zusätzlich muss auch noch das FPEXC EN Bit im FPEXC Register (\textit{Floating-Point Satus and Control Register}) gesetzt werden.
+Das FPEXC Register kann aber nicht mit dem Debugger direkt gesetzt werden, da eine spezielle ARM Instruktion dafür verwendet werden muss.
+Im Kapitel \textit{''2.4.2 Accessing the FPU registers} des FPU-TRM\cite{bib:FPUTechnicalReferenceManual} sind die Details beschrieben, welche Register genau gesetzt werden müssen.
+
+Mit dem folgenden ARM Code kann die FPU z.B. beim Booten des Kernels initialisiert werden:
+
+\lstset{language=[x86masm]Assembler}
+\begin{lstlisting}[frame=single]
+; Set bits [11:10] of the NSACR for access to CP10 and CP11 from both Secure and Non-secure states:
+MRC p15, 0, r0, c1, c1, 2
+ORR r0, r0, #2_11<<10 ; enable fpu/neon
+MCR p15, 0, r0, c1, c1, 2
+; Set the CPACR for access to CP10 and CP11:
+LDR r0, =(0xF << 20)
+MCR p15, 0, r0, c1, c0, 2
+; Set the FPEXC EN bit to enable the FPU:
+MOV r3, #0x40000000
+VMSR FPEXC, r3
+\end{lstlisting}
+
+
+\subsection{MVFR lesen mit OpenOCD}
+OpenOCD kann zwar direkt die Register der generischen Co-Prozessoren lesen und schreiben, nicht aber die Register der FPU.
+Der folgende Ablauf ermöglicht es aber trotzdem, diese Register auszulesen:
+
+\begin{enumerate}
+\item OpenOCD starten und für das CLI eine Telnetverbindung zu Port 4444 aufbauen
+\item \texttt{reset init}\ \ \ \ \ \textcolor{darkgreen}{// Reset und Initialisierung des ganzen Systems.} 
+\item \texttt{arm mcr 15 0 1 1 2 0x0c00}\ \ \ \ \ \textcolor{darkgreen}{// Non-secure access für FPU (NSACR Register).} 
+\item \texttt{arm mcr 15 0 1 0 2 0x00f00000}\ \ \ \ \ \textcolor{darkgreen}{// Genereller Zugang für FPU erlauben (CPACR Register).} 
+\item \texttt{mww 0x0 0xEEF70A10}\ \ \ \ \ \textcolor{darkgreen}{// Speichert die Instruktion \texttt{''VMRS R0, MVFR0''} in den OCM.}
+\item \texttt{mww 0x4 0xEEF61A10}\ \ \ \ \ \textcolor{darkgreen}{// Speichert die Instruktion \texttt{''VMRS R1, MVFR1''} in den OCM.}
+\item \texttt{bp 0x8 1 hw}\ \ \ \ \ \textcolor{darkgreen}{// Breakpoint nach der Instruktion (32 Bit Instruktion = 4 Byte)}
+\item \texttt{resume 0x0}\ \ \ \ \ \textcolor{darkgreen}{// Führt die Instruktion bei der Adresse 0 aus}
+\item \texttt{reg 0}\ \ \ \ \ \textcolor{darkgreen}{// Liest dass Register 0 aus, welches eine Kopie des MVFR0 enthält.}
+\item \texttt{reg 1}\ \ \ \ \ \textcolor{darkgreen}{// Liest dass Register 1 aus, welches eine Kopie des MVFR1 enthält.}
+\end{enumerate}
+
+Die Inhalte der Register sind:
+\begin{itemize}
+	\item MVFR0:	0x1011\_0222
+	\item MVFR1:	0x0111\_1111
+\end{itemize}
+
+
+
+\subsection{Unterstützte Features der FPU}
+Die Register MVFR0 und MVFR1 enthalten Informationen über die unterstützten Features der FPU.
+Auf der Seite B5-36 des ARMv7-A ARM\cite{bib:ARMv7ArchitectureReferenceManual} (\textit{Architecture Reference Manual}) ist beschrieben, wie die unterstützten Features aus den Registern gelesen werden können.
+
+Der Zynq des Zybo unterstützt:
+\begin{itemize}
+	\item All rounding modes
+	\item VFP squarde root operations
+	\item VFP divide operations
+	\item Full VFP douple-precision v3 (VFPv3)
+	\item VFPv3 single-precision
+	\item Advanced SIMD register bank: 32 x 64-bit registers
+	\item All VFP instructions (\texttt{LDC, STC, MCR,} and \texttt{MRC})
+	\item Half-precision floating-point conversion operations (VFP and advanced SIMD)
+	\item Single-precision floating-point operations (advanced SIMD)
+	\item Integer operations (advanced SIMD)
+	\item Load/store operations (advanced SIMD)
+	\item Propagation of NaN values
+\end{itemize}
+
+Nicht unterstützt wird:
+\begin{itemize}
+	\item VFP short vectors
+	\item VFP exception trapping
+\end{itemize}
+
 
 
 

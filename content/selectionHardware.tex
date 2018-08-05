@@ -1,14 +1,12 @@
 \chapter{Auswahl der Hardware}
-
-\section{Einleitung}
 Die Auswahl von Hardware mit ARM-Prozessoren ist extrem gross.
-Ende September 2016 sind bereits über 86 Milliarden ARM basierte Prozessoren verkauft worden.\footnote{Elektronischer/Anhang/ARM-media-fact-sheet-2016.pdf}
+Ende September 2016 sind bereits über 86 Milliarden ARM basierte Prozessoren verkauft worden.\footnote{https://www.google.com/url?sa=t\&rct=j\&q=\&esrc=s\&source=web\&cd=1\&ved=2ahUKEwjag87kpNbcAhWCM-wKHeEiCkUQFjAAegQIABAC\&url=https\%3A\%2F\%2Fwww.arm.com\%2F-\%2Fmedia\%2Farm-com\%2Fnews\%2FARM-media-fact-sheet-2016.pdf}%3Fla%255Cu003den&usg=AOvVaw0espCUd47jPb5U2s59E8q4}
 Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM Prozessoren verbreitet sind.
 
 In diesem Kapitel soll aus dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
 % Die ausgewählte Hardware soll ein Experimentierboard mit einem ARM-Prozessor gefunden werden, dass im Robotik Unterricht verwendet werden kann.
 Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern auch für den Robotik-Unterricht.
-Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sein, um ihn in anspruchsvollen Robotikprojekten verwenden zu können.
+Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sein, um ihn, oder eine Variante aus der gleichen Familie, in anspruchsvollen Robotikprojekten verwenden zu können.
 %TODO extrem weit verbreitet
 %TODO gorosse auswahl von verschiedener hw
 %TODO warum muss hw in dieser arbeit gewählt werden
@@ -24,23 +22,23 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 \item Systemebene
 	\begin{itemize}
 	\item FPGA: Der Prozessor muss mit einem FPGA kommunizieren können.
-	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger, wie beispielsweise das JTAG Interface BDI3000\footnote{http://www.abatron.ch/fileadmin/user\_upload/news/BDI3000-Brochure.pdf}, von Abatron unterstützen. 
+	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger, wie beispielsweise das BDI3000\footnote{http://www.abatron.ch/fileadmin/user\_upload/news/BDI3000-Brochure.pdf}, von Abatron unterstützen. 
 	\item Günstiger Programmierer: Wenn zusätzliche Hardware benötigt wird um die \textit{deep}-Applikation auf das Target zu schreiben, dann muss diese möglichst günstig sein.
 	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende Produkte oder Nischenprodukte sind nicht akzeptabel.
-	\item Als fertiges Modul erhältlich: Ein eigenes PCB entwickeln und herstellen ist keine Option.
+	\item Als fertiges Modul erhältlich: Für den Unterricht ein eigenes PCB entwickeln und herstellen ist keine Option.
 	%TODO synonym einbettbar:
 	\item Einbettbar: Der Prozessor muss auch bei einem selbstentwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
 	\item Die Hardware muss noch lange erhältlich bleiben.
-	\end{itemize}
-\item Prozessorebene
-	\begin{itemize}
-	\item ARMv7: Der Prozessor muss auf einer ARMv7 ISA (\textit{Instruction Set Architecture}) basieren.
-	\item ARM Instruktionen: Der Prozessor muss ARM Instruktionen unterstützen. \textit{Thumb} Instruktionen sind nicht ausreichend.
 	\item FPU (\textit{Floating Point Unit}): Für Gleitzahlenarithmetik.
 	\item Netzwerkschnitstelle: RJ-45 inklusive MAC\footnote{Media Access Control} und \textit{Magnetics}.
 	\item USB: USB Schnittstelle als Host und als Slave.
 	\item Flash: Mehr als 50kByte Flash.
 	\item RAM: Mehr als 100kByte RAM.
+	\end{itemize}
+\item Prozessorebene
+	\begin{itemize}
+	\item ARMv7: Der Prozessor muss auf einer ARMv7 ISA (\textit{Instruction Set Architecture}) basieren.
+	\item ARM Instruktionen: Der Prozessor muss ARM Instruktionen unterstützen. \textit{Thumb} Instruktionen sind nicht ausreichend.
 	\end{itemize}
 \end{itemize}
 
@@ -70,8 +68,8 @@ Der Begriff \textit{Hardware Debugger} ist nicht eindeutig definiert.
 Im einfachsten Fall kann ein Hardware Debugger nur ein \textit{Boundary Scan} durchführen wie es ursprünglich für JTAG vorgesehen war.
 Bei \textit{Boundary Scan} können die I/O Pins von einem Prozessor gelesen und auch gesetzt werden.
 Mit so einem Scan kann in der Produktion bei der Bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und dabei keine Kurzschlüsse bilden.
-Für diesen Scan wird der Prozessor Kern nicht verwendet, sondern separate Peripherie im Prozessor.
-Über das JTAG Interface kann der Scan ausgeführt werden, ohne dass eine Software auf dem Prozessor ausgeführt werden muss.
+Für diesen Scan wird der Prozessor Kern nicht verwendet, sondern eine separate Peripherie im Prozessor.
+Über das JTAG Interface kann der Scan ausgeführt werden, ohne dass eine Applikation auf dem Prozessor ausgeführt werden muss.
 
 Moderne Prozessoren erweitern diese grundlegende Funktionen mit einigen sehr hilfreichen Features.
 % Moderne Prozessoren haben noch viel mehr Funktionen.
@@ -85,7 +83,7 @@ Die für diese Arbeit relevanten Funktionen sind \textbf{fett} geschrieben.
 	\item \textbf{RAM lesen und schreiben}
 	\item \textbf{Externer Flash Speicher lesen und schreiben} 
 	\item \textbf{Hardware Breakpoint auf den Program Counter} 
-	\item \textbf{Hardware Breakpoint auf einer Speicherstelle (Watchpoint)} 
+	\item Hardware Breakpoint auf einer Speicherstelle (Watchpoint)
 	\item Debug Trace (ETM Program Trace) 
 	\item Debug Trace Buffer
 \end{itemize}
@@ -133,19 +131,19 @@ Aus diesen Gründen wird die Auswahl auf die Prozessoren aus der Cortex-A-Reihe 
 \hline
 \textbf{}  & \textbf{Vorteile}                                                                                                                                                                                                                                    & \textbf{Nachteile}                                                                                                                                                                             \\ \hline
 \textbf{A} & \begin{tabular}[c]{@{}l@{}}* Sehr leistungsstark\\ * Support für vollwertige Betriebssysteme\\ * Grosse Variation erhältlich (energiesparend /\\  sehr leistungsstark)\\ * Reichhaltiger Funktionsumfang\\ * NEON und FPU Unterstützung\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Langsamer Context-Switch\\ * Relativ hoher Stromverbrauch\\ * Relativ teuer\\ * Mit GPU erhältlich\\ * Keine DSP Unterstützung\\ * Keine HW-Division\end{tabular} \\ \hline
-\textbf{B} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geeignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux-Unterstützung\end{tabular}                                                        \\ \hline
-\textbf{C} & \begin{tabular}[c]{@{}l@{}}* Sehr schneller Context-Switch\\ * Sehr energiesparend\\ * DSP-Unterstützung\end{tabular}                                                                                                                                & \begin{tabular}[c]{@{}l@{}}* Geringe Rechenleistung\\ * Keine Linux-Unterstützung\\ * Unterstützt nur Thumb-Instruktionen\end{tabular}                                                         \\ \hline
+\textbf{R} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geeignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux-Unterstützung\end{tabular}                                                        \\ \hline
+\textbf{M} & \begin{tabular}[c]{@{}l@{}}* Sehr schneller Context-Switch\\ * Sehr energiesparend\\ * DSP-Unterstützung\end{tabular}                                                                                                                                & \begin{tabular}[c]{@{}l@{}}* Geringe Rechenleistung\\ * Keine Linux-Unterstützung\\ * Unterstützt nur Thumb-Instruktionen\end{tabular}                                                         \\ \hline
 \end{tabular}
 \end{table}
 
 
 
 \section{Anbindung des FPGAs}
-\subsection{Einleitung}
 FPGAs haben typischerweise einen sehr hohen \textit{Pin-Count} und werden in \textit{BGA-Packages} ausgeliefert.
 
 Es gibt verschiedene Möglichkeiten, wie ein FPGA mit einem Prozessor verbunden werden kann.
-Die Vor- und Nachteile der verschiedenen Bauarten werden in diesem Kapitel abgewogen und im Bild \ref{fig:anbindungFPG} schematisch zusammengefasst.
+Die Vor- und Nachteile der verschiedenen Bauarten werden in diesem Kapitel abgewogen und in der Tabelle \ref{} zusammengefasst.
+Bild \ref{fig:anbindungFPG} gibt eine schematische Übersicht über die verschiedenen Bauarten.
 
 % Um ein FPGA an einen Prozessor anzubinden kann eine serielle und auch parallele Kommunikation verwendet werden.
 
@@ -178,13 +176,13 @@ Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den A
 \begin{itemize}
 	\item Relativ günstig.
 	\item Funktioniert ''Out of the Box''
-	\item Schnelles GPMC\footnote{General-Purpose Memory Controller} Interface (bis zu 70 MB/s) zwischen Prozessor und FPGA.
+	\item Schnelles GPMC (General-Purpose Memory Controller) Interface (bis zu 70 MB/s) zwischen Prozessor und FPGA.
 \end{itemize}
 
 \textit{Nachteile:}
 \begin{itemize}
 	\item Verwendet ein modifiziertes Linux-Image, das LOGI-Image.
-	\item Der eMMC\footnote{Embedded Multi Media Card} Speicher des Beaglebone kann nicht gleichzeitig mit dem GPMC verwendet werden.
+	\item Der eMMC (Embedded Multi Media Card) Speicher des Beaglebone kann nicht gleichzeitig mit dem GPMC verwendet werden.
 	\item Die Verfügbarkeit vom Cape ist nicht garantiert.
 	\item Nur ein FPGA und Prozessor erhältlich.
 \end{itemize}
@@ -196,18 +194,19 @@ Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den A
 
 \subsection{FPGA auf dem gleichen Modul wie der Prozessor (System On Module) - Bauweise ''SOM''}
 Bei einem SOM (System On Module) ist die CPU und auch der FPGA auf dem gleichen PCB-Modul verbaut verbaut.
-Dadurch ist eine sehr hohe Bandbreite bei der Kommunikation zwischen der CPU und dem FGPA möglich.
+Dadurch kann der Hersteller auf dem Modul ein Bus mit kontrollierter Impedanz implementieren.
+Dies ermöglicht sehr hohe Bandbreite bei der Kommunikation zwischen der CPU und dem FGPA möglich.
 Das Modul benötigt ein zusätzliches PCB, ein Basisboard, in dem es eingebettet werden kann.
 Oft existieren Experimentierboards mit einer grossen Zahl an unterschiedlichen I/O-Möglichkeiten die gebrauchsfertig gekauft werden können.
-Für eine spezifische Anwendung muss so ein Basisboard für das SOM selbst designed werden, da ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
+Für eine spezifische Anwendung muss so ein Basisboard für das SOM selbst designed werden, weil ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
 Da neben dem FPGA auch High-Speed-Peripherie wie z.B. RAM auf dem Modul verbaut ist, kann beim Basisboard oft auf die aufwändige Entwicklung von High-Speed-PCB-Traces verzichtet werden.
 
 Es hat sich gezeigt, dass nur eine Firma ein SOM mit FPGA produziert.
 Die Firma XXX verkauft ein Module mit einem XXX Prozessor und einem XXX FPGA.
 
-% TODO link für SOM
+% TODO0 link für SOM
 
-Da die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter verfolgt.
+Weil die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter verfolgt.
 
  
 \subsection{FPGA im gleichen Gehäuse wie der Prozessor (System On Chip - Bauweise ''SOC''}

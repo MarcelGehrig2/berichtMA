@@ -1,7 +1,14 @@
-\chapter{ELF Dateiformat}
+\chapter{Das ELF-Dateiformat}
 ELF (\textit{Executable and Linking Format}) ist das Standard-Binärformat von vielen UNIX-ähnlichen Betriebssystemen.
 Es wird für ausführbare Dateien und auch für Libraries verwendet.
 Es können auch notwendige Informationen für den Debugger in dieses Format gepackt werden.
+
+% TODO: besser embeddet anwendung beschreiben
+Das ELF-Format wird auch für Embedded-Anwendungen verwendet.
+Das Cross-Kompilierte Programm kann zusammen mit Debug-Informationen in eine ELF-Datei gepackt werden.
+Der \textit{gdb} kann dann genutzt werden, um die Applikation auf das Target zu laden.
+Im Anschluss kann der \textit{gdb} gleich als Debugger für die Applikation genutzt werden, da alle Notwendigen Informationen in der ELF-Datei vorhanden sind.
+
 In diesem Kapitel wird der grundlegende Aufbau des Formats erklärt.
 Zusätzlich wird auf einige Details genauer eingegangen, die für einen Debugger relevant sind.
 
@@ -9,9 +16,10 @@ Einen sehr guten Einstieg bietet auch der Artikel \textit{''Understanding the EL
 In der Spezifikation für das ELF-Format\cite{bib:ELFSpecification} ist der Aufbau des Formats im Detail erklärt.
 
 
-\section{Nützliche Tools}
+\section{Nützliche Tools im Umgang mit ELF-Dateien}
 \textit{readelf} ist ein nützliches Linux-Tool um Informationen einer ELF-Datei anzeigen zu lassen.
-Unter Windows kann diese Software ebenfalls in der Shell verwendet werden, wenn \textit{mingw}\footnote{http://www.mingw.org/} installiert ist.
+Unter Windows kann diese Software ebenfalls in der Shell verwendet werden, wenn die \textit{''GNU Embedded Toolchain''} installiert wurde.
+Im Kapitel \ref{section:installationGDB} wird beschrieben, wie die Toolchain installiert werden kann.
 % mingw
 
 \section{Grundlegender Aufbau}
@@ -43,7 +51,7 @@ Darin ist enthalten, welchen Offset die einzelnen Segmente innerhalb der Datei h
 Zusätzlich ist auch definiert, zu welcher Speicheradresse (im RAM) die Segmente kopiert werden, wenn das Programm gestartet wird und was für Rechte (ausführbar, lesen und schreiben) jedes Speichersegment hat.
 Wird, z.B. wegen eines nicht initialisierten Pointers, in einer Speicherstelle im Memory gelesen, die kein \textit{''read flag''} hat, wird ein \textit{Segmentation Fault} ausgelöst.
 % TODO: welches segment wird beim gdb geschrieben?
-Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binären Daten mit dem Befehl \texttt{''load''} an welchen Speicherort kopiert werden sollen.
+Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binären Daten mit dem Befehl \texttt{''load''} an welchen Speicherort der Programmcode, die Variablen und die Konstanten kopiert werden sollen.
 Ein Segment beinhaltet ein oder mehrere \textit{Sections}.
 % TODO: satz sollte klarer sein
 % Die Segmente sind beim Ausführen der Datei relevant.
@@ -51,7 +59,7 @@ Ein Segment beinhaltet ein oder mehrere \textit{Sections}.
 Im \textit{Section Header} sind alle \textit{Sections} beschrieben.
 Mit \texttt{''readelf filename -WS''} kann man sehen, dass jede \textit{Section} unter anderem einen Namen, einen Typ, eine Adresse (absolut) und einen Offset (relativ, innerhalb der ELF-Datei) enthält.
 Jede \textit{Section} beinhaltet einen anderen Teil des Programms.
-Die folgende Liste gibt eine kleine, nicht vollständige Übersicht über die einzelnen \textit{Sections}:
+Die folgende Liste gibt eine nicht vollständige Übersicht über die einzelnen \textit{Sections}:
 \begin{itemize}
 	\item \texttt{.text}\ \ \ \ \ \ \ \ \ Der ausführbare Teil des Programms.
 	\item \texttt{.data}\ \ \ \ \ \ \ \ \ Enthält die globalen Variablen.
@@ -72,8 +80,6 @@ DWARF ist flexibler und hat einen besseren funktionalen Umfang als das STABS-For
 
 
 
-
-
 \section{STABS}
 \label{label:stabs}
 % TODO: Debugging-Informationen oder Debugginginformationen.
@@ -87,7 +93,7 @@ Es soll getestet werden, ob es möglich ist, eine \textit{deep}-Applikation mit 
 Dazu benötigt der \textit{gdb}, neben dem ausführbaren Maschinencode, zusätzliche Debug-Informationen in der Form von STABS oder im DWARF-Format.
 In beiden Fällen werden die Informationen im ELF-Format eingebettet.
 
-In dieser Arbeit wird ein Demo-Programm mit STABS implementiert, da STABS-Informationen einfacher manuell zu implementieren sind als DWARF-Informationen.
+In dieser Arbeit wird ein Demoprogramm mit STABS implementiert, da STABS-Informationen einfacher manuell zu implementieren sind als DWARF-Informationen.
 
 
 \subsection{Aufbau des STABS-Format}
@@ -97,7 +103,7 @@ In der Dokumentation von \textit{Sourceware}\footnote{\ \ Direkter Link: \ \ \ \
 
 Der Aufbau dieses Formats wird in der oben genannten Dokumentation von \textit{Sourceware} und in der Dokumentation der \textit{''University of Utha''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ http://www.math.utah.edu/docs/info/stabs\_toc.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717132825/http://www.math.utah.edu/docs/info/stabs\_toc.html} beschrieben.
 Obwohl diese Dokumentationen zum Teil sehr detailliert sind, sind sie nicht lückenlos.
-Im Folgenden wird nur auf die Grundlagen eingegangen, die für das Beispielprogramm relevant sind.
+Im Folgenden wird nur auf die Grundlagen eingegangen, die für die Demo-Applikation relevant sind.
 
 STABS-Informationen sind in einzelne Informations-Elemente, sogenannte \textit{directives}, unterteilt.
 Jede Direktive ist entweder ein \textit{''.stabs''} (String), ein \textit{''.stabn''} (Integer) oder ein \textit{''.stabd''} (Dot).
@@ -140,9 +146,9 @@ Zusätzlich sollen folgende \textit{gdb}-Features getestet werden:\\
 \subsection{Vorgehen}
 Um ein Demoprogramm zu erstellen, werden die untenstehenden Schritte durchgeführt.
 Alle Schritte werden weiter unten im Detail erklärt.
-Das Programm \textit{''loop''} soll für den \textit{gdb}-Test verwendet werden.
+Das Programm \textit{''loop''}, beziehungsweise \textit{''loopWithSTABS''}, soll für den \textit{gdb}-Test verwendet werden.
 \textit{''loopExample''} ist ein Hilfsprogramm, das vom \textit{gdb} automatisch generierte STABS enthält.
-Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzufügen zu können.
+Es dient als Vorlage, um die korrekten STABS im Programm \textit{''loop''} hinzufügen zu können.
 
 % Das Demoprogramm 
 \begin{enumerate}
@@ -152,11 +158,11 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 	\begin{enumerate}
 		\item \textbf{loopExample.c}: Das Java-Programm manuell in C-Code übersetzen.
 		\item \textbf{loopExample.o}: Das Programm mit STABS-Informationen kompilieren.
-		\item \textbf{loopExample.Sd}: Das disassemblierte Programm, um die STABS in einer leserlichen Form zu erhalten.
+		\item \textbf{loopExample.Sd}: Das disassemblierte Programm mit STABS in einer leserlichen Form.
 		\item \textbf{loopExample.host.c}: Leicht abgeändertes \textit{''loopExample.c''}, um ein ausführbares Programm für den Host-PC zu erhalten.
 		\item \textbf{loopExample.host.a}: Ausführbares Programm für den Host-PC.
 	\end{enumerate}
-	\item Lauffähiges Programm für den Zynq mit manuell ergänzten STABS erstellen:
+	\item Lauffähiges Demoprogramm für den Zynq mit manuell ergänzten STABS erstellen:
 	\begin{enumerate}
 		\item \textbf{Reset.Java}: Den Sourcecode des Java-Programms in die Reset-Methode des \textit{deep}-Kernel kopieren.
 		\item Den modifizierten Kernel mit \textit{deep} übersetzen.
@@ -165,7 +171,7 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 		\item \textbf{loopWithSTABS.S}: Der Assembler-Code inklusive den manuell ergänzten STABS.
 		\item \textbf{loopWithSTABS.o}: Kompiliertes Objekt aus dem Assembler-Code.
 		\item \textbf{loopWithSTABS}: Gelinktes Objekt aus dem kompilierten Objekt.
-		\item \textbf{loopWithSTABS.Sd}: Das disassemblierte Programm, um die STABS in einer leserlichen Form zu erhalten.
+		\item \textbf{loopWithSTABS.Sd}: Das disassemblierte Programm mit STABS in einer leserlichen Form.
 	\end{enumerate}
 \end{enumerate}
 
@@ -287,11 +293,12 @@ Symnum n_type n_othr n_desc n_value  n_strx String
 \textit{n\_othr}  & 0             & Das \textit{other}-Feld wird normalerweise nicht genutzt und auf ''0'' gesetzt.                                         \\ \hline
 \textit{n\_desc}  & 2             & \textit{''the starting text address of the compilation.''}\footnote{http://www.math.utah.edu/docs/info/stabs\_12.html\#SEC73}                                        \\ \hline
 \textit{n\_value} & 00000000      & Dieser Integer wird hauptsächlich für \textit{.stabn}-Direktive genutzt.                                         \\ \hline
-\textit{n\_strx}  & 15            & Start des Strings für die nächste Direktive                                         \\ \hline
+\textit{n\_strx}  & 15            & Start des Strings der nächste Direktive                                         \\ \hline
 \textit{String}   & loopExample.c & \begin{tabular}[c]{@{}l@{}}Der String, der die eigentliche Information enthält. In diesem Fall\\ 
 									ist es das Source-File mit der \texttt{''main()''}-Methode.\end{tabular}            \\  \hline                           
 \end{tabular}
 \end{table}
+% TODO: the starting text address of the compilation
 
 Die Direktiven 2 bis 50 beschreiben alle Variablentypen.
 Für das Testprogramm \textit{''loop''} können diese einfach kopiert werden.
@@ -316,12 +323,12 @@ Im disassemblierten Maschinencode sieht man folgende Instruktionen:
   10:	e50b3010 	str	r3, [fp, #-16]
 \end{lstlisting}
 
-Wie es aussieht, wird der Stackpointer initialisiert, bevor die erste Zeile, oder genauer gesagt Zeile 5, in \textit{''looopExample.c''}, ausgeführt wird.
+Wie es aussieht, wird der Stackpointer mit den ersten drei Instruktionen initialisiert, bevor die erste Zeile, oder genauer gesagt Zeile 5, in \textit{''looopExample.c''}, ausgeführt wird.
 
 Die LSYM-Direktiven ab Nr. 72 definieren Variablen, welche auf dem Stack gespeichert sind.
 Mit \textit{n\_value} wird die Adresse der Variable im Speicher definiert.
 Der \textit{String} definiert den Variablennamen ''x00'' und den Typ ''(0,1)''.
-Der Typ ''(0,1)'' wird mit der Direktive 2 als Integer definiert.
+Der Typ ''(0,1)'' wurde mit der Direktive 2 als Integer definiert.
 
 Die Direktive 75 definiert eine Variable, die nicht auf dem Stack gespeichert wird.
 Dieser Typ wird verwendet, wenn die Variable nur in einem Prozessor-Register gespeichert und nicht auf dem Stack abgelegt wird.
@@ -427,7 +434,7 @@ Alle Variablendefinitionen, Zeilen 6-75, wurden aus dem disassemblierten Demopro
 Bei der For-Loop ist die Definition der Sourcecode-Zeile ebenfalls etwas speziell, da sie auch bei der Überprüfung der Exit-Condition stimmen muss.
 Die genaue Implementation für die For-Loop wurde ebenfalls aus dem disassemblierten Demoprogramm übernommen.
 
-Der \textit{deep}-Compiler scheint die Variablen nicht auf dem Stack zu sichern, sofern noch genügend Register frei sind.
+Sofern noch genügend Register frei sind, scheint der \textit{deep}-Compiler die Variablen nicht auf dem Stack zu sichern.
 Zusätzlich werden die Variablen in den Registern überschrieben, wenn diese im späteren Programmverlauf nicht mehr verwendet werden.
 Eine Register-Variable wird mit einer Direktive des Typs 'N\_RSYM' definiert, die auf ein bestimmtes Register zeigt.
 So werden beispielsweise die Register-Variablen \texttt{x00}, \texttt{x01} und \texttt{x02} in den Zeilen 84, 89 und 94 definiert.

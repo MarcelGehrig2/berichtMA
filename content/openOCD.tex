@@ -55,7 +55,7 @@ Die Installation der Treiber ist am einfachsten mit dem \textit{USB Driver Tool}
 Das Zybo muss per USB mit dem PC verbunden sein, damit der Treiber installiert werden kann.
 Wenn der Jumper '\textit{J15}' auf USB gesetzt ist, wird keine zusätzliche Stromversorgung für das Zybo benötigt.
 
-Öffnet man das \textit{USB Driver Tool} werden alle USB Devices aufgelistet.
+Wird das \textit{USB Driver Tool} geöffnet, dann werden alle USB Devices aufgelistet.
 Das Device mit der \textit{Vendor ID=0403}, der \textit{Device ID=6010} und dem \textit{Interface 0} ist das JTAG Interface des FT2232.
 Mit einem Rechtsklick kann \textit{Install WinUSB} ausgewählt und der Treiber installiert werden.
 Abbildung \ref{fig:InstallWinUSBDriver} zeigt die Liste mit allen USB Devices und das Kontextmenü für die Installation des richtigen Treibers.
@@ -145,7 +145,7 @@ Beim Versuch erscheint die Fehlermeldung:\\
 \texttt{Timeout waiting for cortex\_a\_exec\_optcode}.\\
 Wahrscheinlich ist die \textit{CoreSight} Debug-Peripherie abgestürzt oder in einem undefinierten Zustand.
 Aus diesem Grund bekommt OpenOCD keine Antwort vom Zynq, wenn versucht wird, eine Speicheradresse zu lesen.
-Mit einem manuellen Powercycle vom Zybo kann die Hardware wieder zurückgesetzt werden.
+Mit einem manuellen Powercycle des Zybos kann die Hardware wieder zurückgesetzt werden.
 
 Im Supportbereich der Xilinx Homepage\footnote{https://www.xilinx.com/support/answers/63871.html} ist eine mögliche Erklärung für dieses Verhalten zu finden.
 In diesem Artikel wird beschrieben, dass die Fehlermeldung ''\textit{Invalid address - it can hang PS interconnect}'' erscheint, wenn mit dem XSDB (\textit{Xilinx System Debugger}) auf bestimmte Adressbereiche zugegriffen wird.
@@ -186,12 +186,13 @@ Zeile 12 \texttt{''ftdi\_layout\_signal nSRST -data 0x3000 -oe 0x1000''} konfigu
 Im elektrischen Schema des Zybos (siehe Anhang \ref{anhang:schemaZybo}) könnte man überprüfen, welche I/Os des FT2232 tatsächlich für den Reset verwendet werden.
 Die Seite mit dem Schema für den FT2232, Seite 7, ist aber als einzige Seite im Schema nicht veröffentlicht worden.
 Die korrekten I/O Pins lassen sich also nicht mit dem Schema ermitteln.
+Direkt aus dem PCB sind die Verbindungen auch nicht eindeutig ablesbar, da es sich beim Zybo um ein relativ dichtes PCD mit mehreren Lagen handelt.
 
 Im OpenOCD User Manual\cite{bib:OpenOCDDoku} wird der \texttt{''ftdi\_layout\_signal nSRST} genauer beschrieben.
 Der Switch \textit{-data 0x3000} definiert alle relevanten Pins für den SRST und \textit{-oe 0x1000} konfiguriert alle Ausgänge.
 In einem Versuch wurden diverse Kombinationen für die beiden Switches ausprobiert.
 Keine Kombination mit nur einem Pin (z.B. \textit{-data 0x2000} mit \textit{-oe 0x2000}) hat funktioniert.
-Es hat sich herausgestellt, dass die Kombination \textit{-data 0x3000} mit \textit{-oe 0x3000} tatsächlich einen System Reset ermöglicht.
+Es hat sich dann aber herausgestellt, dass die Kombination \textit{-data 0x3000} mit \textit{-oe 0x3000} tatsächlich einen System Reset ermöglicht.
 
 Weil der Debugger direkt nach dem SRST versucht mit dem Zynq zu kommunizieren, tritt folgende Fehlermeldung auf:\\
 \texttt{
@@ -201,7 +202,7 @@ JTAG-DP STICKY ERROR\\
 ...\\
 }
 Mit dem Kommando \texttt{''adapter\_nsrst\_delay 40''} wartet der Debugger nach dem SRST zusätzliche 40 Millisekunden.
-Diese Wartezeit genügt, damit die FTDI-Interface wieder betriebsbereit ist, wenn der Debugger zu kommunizieren versucht.
+Diese Wartezeit genügt, damit die FTDI-Interface des Zynq wieder betriebsbereit ist, wenn der Debugger versucht zu kommunizieren.
 
 
 
