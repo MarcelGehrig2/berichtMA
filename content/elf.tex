@@ -2,11 +2,11 @@
 ELF (\textit{Executable and Linking Format}) ist das Standard-Binärformat von vielen UNIX-ähnlichen Betriebssystemen.
 Es wird für ausführbare Dateien und auch für Libraries verwendet.
 Es können auch notwendige Informationen für den Debugger in dieses Format gepackt werden.
-In diesem Kapitel wird der grundlegende Aufbau des Formates erklärt.
+In diesem Kapitel wird der grundlegende Aufbau des Formats erklärt.
 Zusätzlich wird auf einige Details genauer eingegangen, die für einen Debugger relevant sind.
 
 Einen sehr guten Einstieg bietet auch der Artikel \textit{''Understanding the ELF''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://medium.com/@MrJamesFisher/understanding-the-elf-4bd60daac571\\ Archivierter Link: https://web.archive.org/web/20180705122234/https://medium.com/@MrJamesFisher/understanding-the-elf-4bd60daac571} von James Fisher.
-In der Spezifikation für das ELF Format\cite{bib:ELFSpecification} ist der Aufbau des Formates im Detail erklärt.
+In der Spezifikation für das ELF-Format\cite{bib:ELFSpecification} ist der Aufbau des Formats im Detail erklärt.
 
 
 \section{Nützliche Tools}
@@ -40,7 +40,7 @@ Mit \texttt{''readelf filename -Wh''} lässt sich der \textit{File Header} einer
 
 Der \textit{Program Header} kann mit \texttt{''readelf filename -Wl''} ausgegeben werden.
 Darin ist enthalten, welchen Offset die einzelnen Segmente innerhalb der Datei haben.
-Zusätzlich ist auch definiert, zu welcher Speicheraddresse (im RAM) die Segmente kopiert werden, wenn das Programm gestartet wird und was für Rechte (ausführbar, lesen und schreiben) jedes Speichersegment hat.
+Zusätzlich ist auch definiert, zu welcher Speicheradresse (im RAM) die Segmente kopiert werden, wenn das Programm gestartet wird und was für Rechte (ausführbar, lesen und schreiben) jedes Speichersegment hat.
 Wird, z.B. wegen eines nicht initialisierten Pointers, in einer Speicherstelle im Memory gelesen, die kein \textit{''read flag''} hat, wird ein \textit{Segmentation Fault} ausgelöst.
 % TODO: welches segment wird beim gdb geschrieben?
 Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binären Daten mit dem Befehl \texttt{''load''} an welchen Speicherort kopiert werden sollen.
@@ -59,12 +59,12 @@ Die folgende Liste gibt eine kleine, nicht vollständige Übersicht über die ei
 	\item \texttt{.stab}\ \ \ \ \ \ \ \ \ Enthält die STABS Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
 	\item \texttt{.stabstr}\ \ \ Enthält die STABS Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
 \end{itemize}
-Der Compiler nutzt die \textit{Secitons} um das Programm in logische Einheiten zu unterteilen.
+Der Compiler nutzt die \textit{Secitons}, um das Programm in logische Einheiten zu unterteilen.
 % Eine \textit{Seciton} ist eine Logische Einheit eines Programms, deren Einteilung besonders für den Compiler Vorteile bringt.
 
 
 \subsection{Informationen für den Debugger}
-Zusätzliche Informationen für den Debugger werden ebenfalls im ELF Format gespeichert.
+Zusätzliche Informationen für den Debugger werden ebenfalls im ELF-Format gespeichert.
 Moderne Compiler verwenden hauptsächlich das DWARF-Format und nicht das veraltete STABS-Format.
 Trotzdem wird von aktuellen Compilern und auch Debuggern das veraltete STABS-Format immer noch unterstützt.
 
@@ -80,31 +80,31 @@ DWARF ist flexibler und hat einen besseren funktionalen Umfang als das STABS-For
 STABS ist ein Datenformat für Debug-Informationen.
 Die Informationen sind als Strings in \textit{\textbf{S}ymbol \textbf{TA}ble \textbf{S}trings} gespeichert.
 % Obwohl dieses Format veraltet ist, wird dieses Format in dieser Arbeit verwendet, weil es am einfachsten manuell zu implementieren ist.
-% Bei moderneren Systemen wurde das STABS Format durch das neuere DWARF-Format abgelöst.
+% Bei moderneren Systemen wurde das STABS-Format durch das neuere DWARF-Format abgelöst.
 
 \subsection{Zielsetzung}
 Es soll getestet werden, ob es möglich ist, eine \textit{deep}-Applikation mit dem \textit{gdb} zu debuggen.
-Dazu benötigt der \textit{gdb} neben dem ausführbaren Maschinencode zusätzliche Debug-Informationen in der Form von STABS oder im DWARF-Format.
+Dazu benötigt der \textit{gdb}, neben dem ausführbaren Maschinencode, zusätzliche Debug-Informationen in der Form von STABS oder im DWARF-Format.
 In beiden Fällen werden die Informationen im ELF-Format eingebettet.
 
 In dieser Arbeit wird ein Demo-Programm mit STABS implementiert, da STABS-Informationen einfacher manuell zu implementieren sind als DWARF-Informationen.
 
 
-\subsection{Aufbau des STABS Formats}
+\subsection{Aufbau des STABS-Format}
 Eine einheitliche Dokumentation für STABS gibt es nicht.
-Es ist nicht einmal sicher bekannt, wer der ursprüngliche Erfinder von dieses Formats ist.
+Es ist nicht einmal sicher bekannt, wer der ursprüngliche Erfinder dieses Formats ist.
 In der Dokumentation von \textit{Sourceware}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.sourceware.org/gdb/onlinedocs/stabs.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717131349/https://www.sourceware.org/gdb/onlinedocs/stabs.html} wird aber Peter Kessler als Erfinder genannt.
 
-Der Aufbau dieses Formats wird in der oben genannten Dokumentation von \textit{Sourceware} und in der Dokumentation von der \textit{''University of Utha''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ http://www.math.utah.edu/docs/info/stabs\_toc.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717132825/http://www.math.utah.edu/docs/info/stabs\_toc.html} beschrieben.
+Der Aufbau dieses Formats wird in der oben genannten Dokumentation von \textit{Sourceware} und in der Dokumentation der \textit{''University of Utha''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ http://www.math.utah.edu/docs/info/stabs\_toc.html\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180717132825/http://www.math.utah.edu/docs/info/stabs\_toc.html} beschrieben.
 Obwohl diese Dokumentationen zum Teil sehr detailliert sind, sind sie nicht lückenlos.
 Im Folgenden wird nur auf die Grundlagen eingegangen, die für das Beispielprogramm relevant sind.
 
-STABS-Informationen sind in einzelne Informations-Elemente, so genannte \textit{directives}, unterteilt.
+STABS-Informationen sind in einzelne Informations-Elemente, sogenannte \textit{directives}, unterteilt.
 Jede Direktive ist entweder ein \textit{''.stabs''} (String), ein \textit{''.stabn''} (Integer) oder ein \textit{''.stabd''} (Dot).
 Zusätzlich hat jede Direktive einen bestimmten Typ.
 Der Typ definiert, was die einzelnen Direktiven genau beschreiben.
 Um die Leserlichkeit zu verbessern sind alle Typen in der Datei \textit{''stabs.include''} (Siehe Anhang \ref{anhang:stabs.include}) definiert.
-Im Kapitel 12 der Dokumentation der \textit{''University of Utha''} sind die einzelnen Typen genau beschreiben.
+Im Kapitel 12 der Dokumentation der \textit{''University of Utha''} sind die einzelnen Typen genau beschrieben.
 % TODO grafische übersicht stabs-stabstring-typ
 
 Die STABS werden mit folgender Syntax im Assembler-Code definiert:\\
@@ -136,11 +136,12 @@ Zusätzlich sollen folgende \textit{gdb}-Features getestet werden:\\
 	\item \textbf{Prozessor-Register auslesen}: Ein Register der CPU auslesen.
 \end{enumerate}
 
+
 \subsection{Vorgehen}
-Um ein Demoprogramm zu erstellen, werden untenstehende Schritte durchgeführt.
+Um ein Demoprogramm zu erstellen, werden die untenstehenden Schritte durchgeführt.
 Alle Schritte werden weiter unten im Detail erklärt.
 Das Programm \textit{''loop''} soll für den \textit{gdb}-Test verwendet werden.
-\textit{''loopExample''} ist ein Hilfsprogramm, das vom \textit{gdb} automatische generierte STABS enthält.
+\textit{''loopExample''} ist ein Hilfsprogramm, das vom \textit{gdb} automatisch generierte STABS enthält.
 Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzufügen zu können.
 
 % Das Demoprogramm 
@@ -151,7 +152,7 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 	\begin{enumerate}
 		\item \textbf{loopExample.c}: Das Java-Programm manuell in C-Code übersetzen.
 		\item \textbf{loopExample.o}: Das Programm mit STABS-Informationen kompilieren.
-		\item \textbf{loopExample.Sd}: Das disassembliert Programm, um die STABS in einer leserlichen Form zu erhalten.
+		\item \textbf{loopExample.Sd}: Das disassemblierte Programm, um die STABS in einer leserlichen Form zu erhalten.
 		\item \textbf{loopExample.host.c}: Leicht abgeändertes \textit{''loopExample.c''}, um ein ausführbares Programm für den Host-PC zu erhalten.
 		\item \textbf{loopExample.host.a}: Ausführbares Programm für den Host-PC.
 	\end{enumerate}
@@ -171,7 +172,7 @@ Es dient als Vorlage, um die richtigen STABS im Programm \textit{''loop''} hinzu
 
 
 \subsection{Java Demoprogramm}
-Das unten stehende Programm ist das Testprogramm (loop.java), dass von \textit{deep} in Maschinen-Code übersetzt werden soll und anschliessend manuell mit STABS ergänzt werden soll.
+Das untenstehende Programm ist das Testprogramm (loop.java), dass von \textit{deep} in Maschinen-Code übersetzt werden soll und anschliessend manuell mit STABS ergänzt werden soll.
 
 \textbf{loop.java:}
 \lstset{language=java}
@@ -206,17 +207,17 @@ static void reset() {
 \end{lstlisting}
 
 In diesem Beispiel wird die \texttt{reset()}-Methode genutzt, da sie bei \textit{deep} als erstes beim Booten ausgeführt wird.
-\texttt{''US.PUTGPR''} in Zeile 5 ist natürlich keine Java Methode.
+\texttt{''US.PUTGPR''} in Zeile 5 ist natürlich keine Java-Methode.
 Da Low-Level-Operationen, wie die Initialisierung des Stackpointers, mit Java normalerweise nicht möglich sind, wird hier die entsprechende \textit{deep}-Instruktion verwendet.
 
 
 \subsection{Beispiel-Programm ''loopExample''}
 Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:stabs} ist fast identisch mit dem Code des Java Demoprogramms.
-Es wurden nur einige Änderungen gemacht, damit der Code als C-Programm kompiliert werden kann.
+Es wurden nur einige Änderungen vorgenommen, damit der Code als C-Programm kompiliert werden kann.
 \texttt{c\_entry()} ist der Eintrittspunkt des Programms und erfüllt im embedded Bereich eine ähnliche Aufgabe wie die  \texttt{main()}-Methode in einem generischen C-Programm.
 
 Mit dem PowerShell-Script \textit{''make\_loopExample.ps1''} im Anhang \ref{anhang:stabs} kann das C-Programm kompiliert werden.
-Es erzeugt das Object-File \textit{''loopExample.o''} inklusive Debuginformationen im STABS Format.
+Es erzeugt das Object-File \textit{''loopExample.o''} inklusive Debuginformationen im STABS-Format.
 Das disassemblierte Object-File wird als \textit{''loopExample.Sd''} gespeichert.
 Im disassemblierten Object-File sind alle STABS-Informationen und auch der ausführbare Code als Assembler enthalten.
 Der Assembler-Code und auch die STABS-Informationen können direkt \textit{''human readable''} gelesen werden, aber sie können nicht direkt in einem kompilierbaren Programm verwendet werden, da die Syntax nicht übereinstimmt.
@@ -276,7 +277,7 @@ Symnum n_type n_othr n_desc n_value  n_strx String
 \end{lstlisting}
 
 \begin{table}[H]
-\caption{Disassemblierte STAB direktive}
+\caption{Disassemblierte STAB-Direktive}
 \label{t-DisassemblierteSTABdirektive}
 \begin{tabular}{|l|l|l|}
  \hline
@@ -292,19 +293,19 @@ Symnum n_type n_othr n_desc n_value  n_strx String
 \end{tabular}
 \end{table}
 
-Die Direktiven 2 bis 50 beschreiben alles verschiedene Variablentypen.
+Die Direktiven 2 bis 50 beschreiben alle Variablentypen.
 Für das Testprogramm \textit{''loop''} können diese einfach kopiert werden.
 
 Die GSYM-Direktive deklariert eine globale Variable.
-Direktive Nummer 52 vom Typ FUN definiert eine Methode.
+Direktive Nummer 52, vom Typ FUN, definiert eine Methode.
 
 Die Direktiven 53 bis 71 sind vom Typ SLINE.
-Sie werden für die \textit{Source lookup} Funktion verwendet.
+Sie werden für die \textit{Source lookup}-Funktion verwendet.
 \textit{n\_desc} beschreibt die Zeile im Sourcecode und \textit{n\_value} die entsprechende Adresse im Maschinencode.
-Es fällt auf, dass sich die Sourcecode-Adresse von der Direktive 53 auf 54 nur um eine Zeile steigt, die Maschinencode-Adresse aber von 00000000 auf 0000000c.
+Es fällt auf, dass die Sourcecode-Adresse von der Direktive 53 auf 54 nur um eine Zeile steigt, die Maschinencode-Adresse aber von 00000000 auf 0000000c.
 Im Gegensatz zur Zeilennummer, wird die Adresse im Maschinencode im Hexadezimalen System angegeben.
 Da es sich um 32-Bit lange Maschinen-Instruktionen (also 4 Byte) handelt, steigt die Adresse um 4 nach jeder Instruktion.
-Es werden also drei Maschinen Instruktionen ausgeführt, bevor die erste Zeile in der Methode \texttt{''c\_entry()''} ausgeführt wird.
+Es werden also drei Maschinen-Instruktionen ausgeführt, bevor die erste Zeile in der Methode \texttt{''c\_entry()''} ausgeführt wird.
 Im disassemblierten Maschinencode sieht man folgende Instruktionen:
 \lstset{language=plain}
 \begin{lstlisting}
@@ -315,32 +316,32 @@ Im disassemblierten Maschinencode sieht man folgende Instruktionen:
   10:	e50b3010 	str	r3, [fp, #-16]
 \end{lstlisting}
 
-Wie es aussieht, wird der Stackpointer initialisiert, bevor die erste Zeile, oder genauer gesagt Zeile 5 in \textit{''looopExample.c''}, C-Code ausgeführt wird.
+Wie es aussieht, wird der Stackpointer initialisiert, bevor die erste Zeile, oder genauer gesagt Zeile 5, in \textit{''looopExample.c''}, ausgeführt wird.
 
-Die LSYM Direktiven ab Nr. 72 definieren Variablen, welche auf dem Stack gespeichert sind.
+Die LSYM-Direktiven ab Nr. 72 definieren Variablen, welche auf dem Stack gespeichert sind.
 Mit \textit{n\_value} wird die Adresse der Variable im Speicher definiert.
-Der \textit{String} definiert den Variablenname ''x00'' und den Typ ''(0,1)''.
+Der \textit{String} definiert den Variablennamen ''x00'' und den Typ ''(0,1)''.
 Der Typ ''(0,1)'' wird mit der Direktive 2 als Integer definiert.
 
-Die Direktive 75 definiert eine Variable die nicht auf dem Stack gespeichert wird.
+Die Direktive 75 definiert eine Variable, die nicht auf dem Stack gespeichert wird.
 Dieser Typ wird verwendet, wenn die Variable nur in einem Prozessor-Register gespeichert und nicht auf dem Stack abgelegt wird.
-Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack wenn sie erzeugt oder verändert werden und lädt sie jedes mal neu vom Stack, wenn sie wieder gelesen werden.
-Wird beim Kompilieren eine Code-Optimierung verwendet, dann kann dieses Verhalten ändern.
-Mit der Zeile \texttt{{''register int s=1;''}} im C-Code wird der Compiler gezwungen, die Variable nur in den Registern zu behalten und nicht auf dem Stack abzulegen.
-Aus diesem Grund wird für die Variable \textit{''s''} eine Direktive vom Typ RSYM verwendet, die nur den Namen der Variable und die Registernummer beschreibt, in der die Variable gespeichert wird.
+Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack wenn sie erzeugt oder verändert werden und lädt sie jedesmal neu vom Stack, wenn sie wieder gelesen werden.
+Wird beim Kompilieren eine Code-Optimierung verwendet, kann dieses Verhalten ändern.
+Mit der Zeile \texttt{{''register int s=1;''}} im C-Code wird der Compiler gezwungen, die Variable in den Registern zu behalten und nicht auf dem Stack abzulegen.
+Aus diesem Grund wird für die Variable \textit{''s''} eine Direktive des Typs RSYM verwendet, die nur den Namen der Variable und die Registernummer beschreibt, in der die Variable gespeichert wird.
 
-Mit STABs können auch lexikalische Blöcke abgegrenzt werden, ähnlich wie mit geschwungenen Klammern ({}) in C-Code.
-Zusätzlich werden so auch die Lebensdauer von Variablen begrenzt.
-Die Direktiven 78 und 80 (LBRAC) markieren einen Start und die Direktiven 81 und 82 (RBRAC) markieren jeweils das Ende von so einem Block.
+Mit STABS können auch lexikalische Blöcke abgegrenzt werden, ähnlich wie mit geschwungenen Klammern ({}) in C-Code.
+Zusätzlich wird so auch die Lebensdauer von Variablen begrenzt.
+Die Direktiven 78 und 80 (LBRAC) markieren einen Start und die Direktiven 81 und 82 (RBRAC) markieren jeweils das Ende eines solchen Blocks.
 
 
 \subsection{Assemblerprogramm mit \textit{deep} erzeugen}
 Um das Java-Programm möglichst einfach mit \textit{deep} übersetzen zu können, wird die \texttt{''reset()''}-Methode des Objekts \textit{''Reset.java''} aus dem Package \textit{''zynq7000''} überschrieben.
 % TODO satzbau:
 Diese Methode wird beim Starten einer \textit{deep}-Applikation immer als erstes ausgeführt und ist somit mit einem Debugger gleich ab der ersten Instruktion der Applikation kontrollierbar.
-Das vollständige Programm ist im Anhang \ref{anhang:reset.java/} Angehängt.
+Das vollständige Programm ist im Anhang \ref{anhang:reset.java/} angehängt.
 
-Die unten stehenden Zeilen entsprechen den Zeilen 39-42 von \textit{''Reset.java} aus dem Anhang \ref{anhang:reset.java/}.
+Die untenstehenden Zeilen entsprechen den Zeilen 39-42 von \textit{''Reset.java} aus dem Anhang \ref{anhang:reset.java/}.
 In diesen Zeilen wird die Position des Stacks ausgerechnet und im Stackpointer gespeichert:
 \lstset{language=java}
 \begin{lstlisting}
@@ -351,7 +352,7 @@ US.PUTGPR(SP, stackBase + stackSize - 4);	// set stack pointer
 \end{lstlisting}
 
 Wird ein Dummy-Programm mit dem \textit{deep}-Compiler und dem modifiziertem Kernel kompiliert, dann wird auch der Kernel kompiliert.
-Mit der \textit{ClassTreeView} (siehe Abbildung \ref{fig:MaschineCode.ClassTreeView.Deep}) von \textit{deep} kann der Assemblercode der \texttt{''reset()''}-Methode kopiert werden welcher im Anhang \ref{anhang:loopMachineCode.txt} angehängt ist.
+Mit der \textit{ClassTreeView} (siehe Abbildung \ref{fig:MaschineCode.ClassTreeView.Deep}) von \textit{deep} kann der Assemblercode der \texttt{''reset()''}-Methode kopiert werden, welcher im Anhang \ref{anhang:loopMachineCode.txt} angehängt ist.
 
 \begin{figure}[htbp]
 	\centering
@@ -403,8 +404,8 @@ b 0
 % TODO aufgeräumt gut?
 \textit{''loop.S''} im Anhang \ref{anhang:loop.S} enthält den ''aufgeräumten'' Assemblercode.
 Der Code wurde mit zusätzlichen Assembler-Direktiven ergänzt.
-\texttt{''c\_entry''} beschreibt den Punkt, an dem das Programm anfängt.
-\texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} sind Punkte, welche für die \textit{While-Loop} benötigt werden.
+\texttt{''c\_entry''} beschreibt den Start des Programms.
+\texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} sind Punkte, welche für die \textit{For-Loop} benötigt werden.
 
 In Zeile 10 wird der Stackpointer direkt mit einer Konstante gesetzt und nicht mehr mit \textit{deep}-Konstanten ausgerechnet.
 Zusätzlich kann so auch sichergestellt werden, dass der Stack in einem erlaubten Speicherbereich im OCM angelegt wird.
@@ -415,20 +416,20 @@ Als Ziel für diese Instruktionen wurden die beiden Assembler-Direktiven \texttt
 
 \subsection{STABS in das Assemblerprogramm einfügen}
 Um das Assemblerprogramm mit STABS zu ergänzen wurden drei verschiedene Quellen genutzt.
-Das Fertige Assemblerprogramm mit STABS ist im Anhang \ref{anhang:loopWithAssembler.S} angehängt.
+Das fertige Assemblerprogramm mit STABS ist im Anhang \ref{anhang:loopWithAssembler.S} angehängt.
 
 Die NTB-Wiki-Dokumentation\footnote{https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs} wurde als Ausgangslage genutzt.
-Die Datei \textit{''stabs.include''} (siehe Anhang \ref{anhang:stabs.include}) konnte direkt genutzt werde.
-Die Definition des Sourcecode (N\_SO) und die Definitionen der Zeilennummern (N\_SLINE) konnte ebenfalls übernommen werden.
+Die Datei \textit{''stabs.include''} (siehe Anhang \ref{anhang:stabs.include}) konnte direkt genutzt werden.
+Die Definition des Sourcecods (N\_SO) und die Definitionen der Zeilennummern (N\_SLINE) konnten ebenfalls übernommen werden.
 
-Da die Definitionen der Variablen-Typen in der NTB-Wiki-Dokumentation nicht vollständig war, konnte sie leider nicht verwendet werden.
-Alle Variablendefinitionen, Zeile 6-75, wurde aus dem disassemblierten Demoprogramm kopiert.
-Bei der While-Loop ist die Definition der Sourcecode-Zeile ebenfalls etwas speziell, da sie auch bei der Überprüfung der Exit-Condition stimmen muss.
-Die genaue Implementation für die While-Loop wurde ebenfalls aus dem disassemblierten Demoprogramm übernommen.
+Da die Definitionen der Variablen-Typen in der NTB-Wiki-Dokumentation nicht vollständig waren, konnten sie leider nicht verwendet werden.
+Alle Variablendefinitionen, Zeilen 6-75, wurden aus dem disassemblierten Demoprogramm kopiert.
+Bei der For-Loop ist die Definition der Sourcecode-Zeile ebenfalls etwas speziell, da sie auch bei der Überprüfung der Exit-Condition stimmen muss.
+Die genaue Implementation für die For-Loop wurde ebenfalls aus dem disassemblierten Demoprogramm übernommen.
 
 Der \textit{deep}-Compiler scheint die Variablen nicht auf dem Stack zu sichern, sofern noch genügend Register frei sind.
 Zusätzlich werden die Variablen in den Registern überschrieben, wenn diese im späteren Programmverlauf nicht mehr verwendet werden.
-Eine Register-Variable wird mit einer Direktive vom Typ 'N\_RSYM' definiert, die auf ein bestimmtes Register zeigt.
+Eine Register-Variable wird mit einer Direktive des Typs 'N\_RSYM' definiert, die auf ein bestimmtes Register zeigt.
 So werden beispielsweise die Register-Variablen \texttt{x00}, \texttt{x01} und \texttt{x02} in den Zeilen 84, 89 und 94 definiert.
 
 \lstset{language={[x86masm]Assembler},

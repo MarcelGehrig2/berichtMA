@@ -1,7 +1,7 @@
 \chapter{Der \textit{gdb}-Debugger}
 \label{chapter:Der-gdb-Debugger}
 Es gibt diverse Debugger auf dem Markt.
-Diese Arbeit beschränke sich aber auf den  \textit{gdb} (GNU-Debugger), da dieser unter der GNU GPL (General Public License) Lizenz steht und somit eine Open Source Software ist.
+Diese Arbeit beschränkt sich aber auf den  \textit{gdb} (GNU-Debugger), da dieser unter der GNU GPL (General Public License) Lizenz steht und somit eine Open Source Software ist.
 
 In diesem Kapitel wird beschrieben, wie der \textit{gdb} installiert und genutzt werden kann, um das Demoprogramm aus dem Kapitel \ref{section:demoprogrammSTABS} auf den Zynq zu laden.
 % Zusätzlich werden auch alle unterstützten Funktionen und Grenzen der \textit{gdb}-OpenOCD-Toolchain diskutiert.
@@ -9,7 +9,7 @@ In diesem Kapitel wird beschrieben, wie der \textit{gdb} installiert und genutzt
 
 \section{Installation des \textit{gdb}}
 ARM stellt eine komplette \textit{''GNU Embedded Toolchain''} für ARM Prozessoren zur Verfügung.
-Sie enthält neben dem GCC Compiler und dem \textit{gdb} auch noch diverse Hilfsprogramme wie \textit{''readelf''} und \textit{''objdump''}.
+Sie enthält neben dem GCC-Compiler und dem \textit{gdb} auch noch diverse Hilfsprogramme wie \textit{''readelf''} und \textit{''objdump''}.
 Für diese Arbeit wird die \textit{''GNU Arm Embedded Toolchain: 7-2018-q2-update''} Toolchain verwendet, die von der ARM-Webseite\footnote{https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads} heruntergeladen werden kann.
 Sobald das Archiv auf der lokalen Festplatte entpackt wird, ist die Toolchain einsatzbereit.
 Bei den Build-Scripten in dieser Arbeit muss jeweils die \textit{''PATH''}-Variable mit dem Pfad zur Toolchain ergänzt werden, damit die Toolchain vom Script gefunden wird.
@@ -54,7 +54,7 @@ Mit folgenden Schritten kann das kompilierte Programm \textit{''loopWithSTABS''}
 	       Die Pfade im Script müssen angepasst werden.
 	       Die Konfigurationsdatei \textit{''gdbInit.txt''} (siehe Anhang \ref{anhang:gdbInit.txt}) muss im aktiven Ordner vorhanden sein.
 	       Alle Pfade in der Konfigurationsdatei müssen ebenfalls angepasst werden.
-	\item Im \textit{''gdbInit.txt''} wir die ELF-Datei \textit{''loopWithSTABS''} mit der Instruktion \texttt{''file M:/MA/stabs/loopWithSTABS''} in den \textit{gdb} geladen. Die Instruktion \texttt{''load''} lädt dann das Segment \textit{''.text''} mit dem ausführbaren Code direkt in den Speicher des Zynq.
+	\item Im \textit{''gdbInit.txt''} wird die ELF-Datei \textit{''loopWithSTABS''} mit der Instruktion \texttt{''file M:/MA/stabs/loopWithSTABS''} in den \textit{gdb} geladen. Die Instruktion \texttt{''load''} lädt dann das Segment \textit{''.text''} mit dem ausführbaren Code direkt in den Speicher des Zynq.
 	\item Die Applikation kann jetzt mit dem \textit{gdb} auf dem Zybo debuggt werden.
 \end{enumerate}
 
@@ -118,7 +118,7 @@ Die Variable \texttt{''i''} kann mit \texttt{''set var i=9''} gesetzt werden.
 Da mit ''i=9'' die Abbruchbedingung der For-Loop erfüllt ist, wird der Breakpoint nicht mehr erreicht, wenn das Programm weiter ausgeführt wird.
 Das Programm hängt jetzt auf der letzten Zeile des Programms fest, und kann mit der Tastenkombination \textit{ĈTRL + C} gestoppt werden.
 
-Das Schlüsselwort \texttt{''monitor''} kann genutzt werden, um OpenOCD aus dem \textit{gdb} heraus direkt ein Befehl zu erteilen.
+Das Schlüsselwort \texttt{''monitor''} kann genutzt werden, um OpenOCD aus dem \textit{gdb} heraus direkt einen Befehl zu erteilen.
 So kann mit \texttt{''monitor reg''} der OpenOCD-Befehl \texttt{''reg''} genutzt werden, um alle Register anzuzeigen.
 
 \textbf{Hinweis}: 
@@ -133,8 +133,8 @@ Die Hardware-Breakpoints funktionieren bei allen Versionen.
 \subsection{Fazit des \textit{gdb}-Tests}
 Alle geforderten Funktionen des Debuggers können grundsätzlich genutzt werden.
 
-Bei \textit{gdb}-Versionen die neuer als Version 8 können aber nur die Hardware-Breakpoints verwendet werden.
-Software-Breakpoints könnten aber auch verwendet werden, wenn die ersetzte Instruktion manuell wieder hergestellt wird.
+Bei \textit{gdb}-Versionen die neuer als Version 8 sind, können aber nur die Hardware-Breakpoints verwendet werden.
+Software-Breakpoints könnten aber auch verwendet werden, wenn die ersetzte Instruktion manuell wiederhergestellt wird.
 
 
 
