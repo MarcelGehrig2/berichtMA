@@ -34,18 +34,27 @@ Der FT2232 verwendet den selben, blauen JTAG-Bus wie das BDI3000 als Verbindung 
 \end{figure}
 
 
+\FloatBarrier
 \section{Debugger Toolchains}
 Im Folgenden werden die drei verschiedenen Toolchains genauer erklärt.
 
 \subsection{Abatron-Toolchain}
-Die \textit{Abatron-Toolchain} benötigt weder OpenOCD noch den FT2232, dafür aber das teure BDI3000.
+Die \textit{Abatron-Toolchain} (siehe Abbildung \ref{fig:AbatronToolchain}) benötigt weder OpenOCD noch den FT2232, dafür aber das teure BDI3000.
 Diese ''klassische'' Toolchain wird für die Entwicklung von \textit{deep}-Applikationen für den PowerPC verwendet.
 In dieser Arbeit wird sie aber nicht verwendet.
-% TODO: Schema
+
+\begin{figure}[htbp]
+	\centering
+		% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{graphs/abatronToolchain.png}
+		\includegraphics[width=10cm,height=\textheight,keepaspectratio]{graphs/abatronToolchain.png}
+	\caption{Abatron-Toolchain}
+	\label{fig:AbatronToolchain}
+\end{figure}
 
 
+\FloatBarrier
 \subsection{CLI-OpenOCD-Toolchain}
-Das teure BDI wird für diese Toolchain nicht  benötigt.
+Wie in der Abbildung \ref{fig:CLIOpenOCDToolchain} zu sehen ist, wird das teure BDI wird für diese Toolchain nicht  benötigt.
 % verbessern: satzbau
 Da das CLI\footnote{Command Line Interface} von OpenOCD aber sehr ähnlich ist wie das CLI des BDI, ist eine Portierung der bestehenden \textit{Abatron-Toolchain} in die neue \textit{CLI-OpenOCD-Toolchain} relativ einfach.
 Die \textit{CLI-OpenOCD-Toolchain} lehnt sich deshalb sehr stark an die bestehende \textit{Abatron-Toolchain} an.
@@ -60,13 +69,30 @@ Bestehende Möglichkeiten aus der alten \textit{Abatron-Toolchain}, wie \textit{
 Im Kapitel \ref{section:CLI-OpenOCD-Toolchain} wird diese Toolchain genauer beschrieben.
 
 
+\begin{figure}[htbp]
+	\centering
+		% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{graphs/CLIOpenOCDToolchain.png}
+		\includegraphics[width=10cm,height=\textheight,keepaspectratio]{graphs/CLIOpenOCDToolchain.png}
+	\caption{CLI-OpenOCD-Toolchain}
+	\label{fig:CLIOpenOCDToolchain}
+\end{figure}
+
+
+\FloatBarrier
 \subsection{\textit{gdb}-OpenOCD-Toolchain}
 In der \textit{gdb-OpenOCD-Toolchain} wird, wie bei der obigen Toolchain, ebenfalls die OpenOCD-Software und der FT2232-Chip verwendet.
 Es wird aber nicht mehr ein Interface bestehend auf der ''klassischen'' Abatron Toolchain verwendet, sondern es wird direkt der bekannte \textit{gdb}-Debugger verwendet.
+In der schematische Übersicht der Toolchain in Abbildung \ref{fig:gdbOpenOCDToolchain} wird deutlich, dass sie fast die gleichen Komponenten nutzt wie die \textit{CLI-OpenOCD-Toolchain}.
 % Dadurch kann \textit{Sourcecode-Debugging} direkt in Eclipse eingesetzt werden.
 Dadurch kann auch \textit{Sourcecode-Debugging} verwendet werden.
 % günstige hardware
-% TODO: Schema
-% TODO: Verweis
+
+\begin{figure}[htbp]
+	\centering
+		% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{graphs/gdbOpenOCDToolchain.png}
+		\includegraphics[width=10cm,height=\textheight,keepaspectratio]{graphs/gdbOpenOCDToolchain.png}
+	\caption{\textit{gdb}-OpenOCD-Toolchain}
+	\label{fig:gdbOpenOCDToolchain}
+\end{figure}
 
 Im Kapitel \ref{chapter:Der-gdb-Debugger} wird diese Toolchain detailliert beschrieben.
