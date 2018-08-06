@@ -1,0 +1,81 @@
+\input{header}
+\include{Glossar}
+%%Grosser Zeilenabstand für Korrektur
+% \usepackage{setspace}
+% \linespread{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dokument              %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\renewcommand{\thepage}{\roman{page}}
+	\renewcommand{\bibname}{Quellenverzeichnis}
+%	\include{Titelseite}
+%	\newpage
+%	\include{Zusammenfassung}
+	\newpage
+	\makeatletter
+	\addtocontents{toc}{\protect\thispagestyle{scrheadings}}
+	\renewcommand{\tableofcontents}{\section*{\contentsname} \pagestyle{scrheadings} \@starttoc{toc}}
+	\makeatother
+	\setcounter{secnumdepth}{2}		% Numerierungstiefe bei den Titel / Untertitel
+	\setcounter{tocdepth}{1}		% Numerierungstiefe im Inhaltsverzeichnis
+	\tableofcontents
+	\newpage
+	\renewcommand{\thepage}{\arabic{page}}
+	\setcounter{page}{1}
+	
+%	\include{content/stuff}
+	\include{content/introduction}
+	\include{content/selectionHardware}
+	\include{content/system}
+	\include{content/zynq}
+%	\include{content/zybo}
+	\include{content/openOCD}
+	\include{content/elf}
+	\include{content/gdb}
+
+
+
+	\input{content/statutoryDeclaration}
+%	\include{Elektronik_BBB}
+%	\include{Elektronik_ComCape}	
+%	
+	\printglossaries
+%	\include{content/sources}
+
+
+%	\include{literature}
+
+
+
+	\appendix
+	\setcounter{page}{1}
+	\renewcommand{\thepage}{\Alph{section} \arabic{page}}
+	\addchap*{\appendixname}
+
+	\newenvironment{nosectionintoc}{
+		\setcounter{secnumdepth}{3}
+		\addtocontents{toc}{\protect\setcounter{tocdepth}{0}\ignorespaces}
+	}
+	{\setcounter{secnumdepth}{3}%
+	\addtocontents{toc}{\protect\setcounter{tocdepth}{3}\ignorespaces}}
+
+%	\begin{nosectionintoc}
+%		\makeatletter
+%		\@addtoreset{figure}{section}
+%		\@addtoreset{table}{section}
+%		\makeatother
+%	    \renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}
+%	    \renewcommand{\thetable}{\Alph{section}.\arabic{table}}
+%    	\renewcommand{\thesection}{\Alph{section}}
+%	    \let\oldsection=\section
+%	    \def\resetpage{\setcounter{page}{1}}
+%	    \renewcommand{\section}[1]{\oldsection{#1}\resetpage}
+%
+%
+%		\input{content/appendix}
+%%
+%	\end{nosectionintoc}
+
+\end{document}
