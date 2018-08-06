@@ -94,6 +94,9 @@ Da ein Hardware Debugger keine funktionsfähige Software auf dem Prozessor benö
 
 
 \section{Übersicht über die ARM Mikroarchitekturen}
+In diesem Kapitel werden die verschiedenen ARM-Architekturen untersucht und beurteilt.
+Tabelle \ref{t-uebersichtARMMikroarchitekturen} fasst alle Vor- und Nachteile zusammen.
+
 \subsection{Cortex-A}
 Prozessoren der Cortex-A Familie sind gut geeignet für die Verwendung mit einem vollen Betriebssystem, wie Windows, Linux oder Android.
 Cortex-A Prozessoren bieten den umfangreichsten Support für externe Peripherien, wie USB, Ethernet und RAM.
@@ -109,7 +112,6 @@ Mit einer Taktrate von über 1GHz und einem sehr schnellen Interruptverhalten ei
 Die Prozessoren aus der Cortex-M Familien sind mit einer Taktrate um 200Mhz relativ langsam.
 Sie sind sehr stromsparend und durch die kurze Pipeline haben sie eine deterministische und kurze Interruptverzögerung.
 Die Prozessoren aus der Cortex-M Reihe unterstützen aber nur die Thumb-Instruktionen und kommen deshalb nicht in Frage.
-
 
 \subsection{ARM-Prozessoren ausserhalb der Cortex Reihe}
 Seit 2004 werden die meisten Kerne in eine der Cortex-Familien eingeteilt.
@@ -188,9 +190,10 @@ Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den A
 \end{itemize}
 
 \textit{Fazit - Bauweise ''Modular''}
-% unflexibel
-%  - nur ein prozessortyp fpga
-%  - custom pcb muss nachgebaut werden
+Eine modulare Bauweise ist grundsätzlich sehr flexibel.
+Leider sind auf dem Markt nur sehr wenige verschiedene Module zu finden.
+So ein kleines Angebot disqualifiziert diese Bauweise.
+
 
 \subsection{FPGA auf dem gleichen Modul wie der Prozessor (System On Module) - Bauweise ''SOM''}
 Bei einem SOM (System On Module) ist die CPU und auch der FPGA auf dem gleichen PCB-Modul verbaut verbaut.
@@ -201,10 +204,8 @@ Oft existieren Experimentierboards mit einer grossen Zahl an unterschiedlichen I
 Für eine spezifische Anwendung muss so ein Basisboard für das SOM selbst designed werden, weil ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
 Da neben dem FPGA auch High-Speed-Peripherie wie z.B. RAM auf dem Modul verbaut ist, kann beim Basisboard oft auf die aufwändige Entwicklung von High-Speed-PCB-Traces verzichtet werden.
 
-Es hat sich gezeigt, dass nur eine Firma ein SOM mit FPGA produziert.
-Die Firma XXX verkauft ein Module mit einem XXX Prozessor und einem XXX FPGA.
-
-% TODO0 link für SOM
+Es hat sich gezeigt, dass es nur zwei Anbieter SOM mit FPGA produzieren.
+Nur die beiden Anbieter \textit{solectrix}\footnote{https://www.solectrix.de/de/sxom-module} und \textit{OposSom}\footnote{https://www.solectrix.de/de/sxom-module} scheinen solche Module zu verkaufen.
 
 Weil die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter verfolgt.
 
@@ -213,8 +214,18 @@ Weil die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter 
 Seit einigen Jahren werden Produkte verkauft, die eine programmierbare Logik (FPGA) und auch eine dedizierte CPU in einem Chip-Gehäuse verbaut haben.
 Da der FPGA und auch die CPU im selben Gehäuse verbaut sind, ist eine sehr schnelle, integrierte Kommunikation zwischen CPU und FPGA möglich.
 
+Die beiden grossen FPGA-Hersteller Altera und auch Xylinx bieten beide mehrere Produkte als eine SOC Lösung an.
+Die Produkte von Altera sind aber deutlich teurer als die Chips von Xylinx.
+Besonders die Evaluierungsboards von Altera sind sehr teuer.
+
+Bei der Produktfamilie Zynq von Xilynx gibt es ein breites Angebot von SOCs und auch von Experimentierboards.
+Das Experimentierboard \textit{''Zyb''} wird sogar schon im Unterricht der NTB für die Entwicklung von VHDL genutzt.
+
 
 \subsection{ARM als Softcore in FPGA - Bauweise ''FPGA''}
+% TODO0: softcore FPGA
+
+
 
 % \subsubsection{Übersicht Bauformen}
 \begin{table}[]
@@ -224,7 +235,7 @@ Da der FPGA und auch die CPU im selben Gehäuse verbaut sind, ist eine sehr schn
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Bauweise} & \textbf{Vorteile}                                                                                                                      & \textbf{Nachteile}                                                       \\ \hline
-\textbf{Modular}  & \begin{tabular}[c]{@{}l@{}}* Günstig wenn nur Prozessor verwendet wird\\ * Unterschiedliche FPGAs können verwendet werden\end{tabular} & * Datenbus evt. nicht Memory mapped                                      \\ \hline
+\textbf{Modular}  & \begin{tabular}[c]{@{}l@{}}* Günstig wenn nur Prozessor verwendet wird\\ * Unterschiedliche FPGAs können verwendet werden\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Datenbus evt. nicht Memory \\mapped    \end{tabular}                                  \\ \hline
 \textbf{SOB}      & \begin{tabular}[c]{@{}l@{}}* Sauberes, abgeschlossenes System\end{tabular} & * FPGA ist fix                                                           \\ \hline
 \textbf{SOC}      & \begin{tabular}[c]{@{}l@{}}* Potenziell sehr schnelle Datenverbindung\\ \ \ \ zwischen FPGA und Prozessor\\ * Sauberes, abgeschlossenes System\end{tabular}                       & \begin{tabular}[c]{@{}l@{}}* FPGA ist fix\\ * Relativ teuer\end{tabular} \\ \hline
 \textbf{FPGA}     & * Flexibel                                                                                                                             & * Sehr teuer                                                             \\ \hline
