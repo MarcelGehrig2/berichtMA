@@ -41,6 +41,8 @@ BDI3000
 
 Zynq-7000
 
+Eclipse 
+
 \textit{stabs}
 
 
