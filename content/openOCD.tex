@@ -218,15 +218,45 @@ Es ist also auch möglich, den FPGA mit dieser Toolchain zu laden.
 
 \section{CLI-OpenOCD-Toolchain}
 \label{section:CLI-OpenOCD-Toolchain}
-Die \textit{CLI-OpenOCD-Toolchain} ist ein Eclipse-Plugin, welches in Kombination mit \textit{deep} verwendet werden kann.
-Es erfüllt die gleichen Funktionen wie die bestehende \textit{Abatron-Toolchain}.
-
 Das Kernelement der \textit{CLI-OpenOCD-Toolchain} ist das \textit{deep}-Plugin \textit{''OpenOCDInterface''}.
-Es ist identisch aufgebaut
+Es basiert auf dem bestehenden Plugin \textit{''AbatronInterface''} und erfüllt die gleichen Funktionen.
 
 Das Plugin kann von folgendem Repositorie geklont werden:\\
 \texttt{https://github.com/MarcelGehrig/openOCDInterface.git}
 
+
 \subsection{Aufbau des OpenOCDInterface}
-Wie 
+Wie das \textit{''AbatronInterface''} besteht dieses Interface auch nur aus einer Java-Datei.
+Es besteht aus einer einzigen Klasse (\texttt{ch.ntb.inf.openOCDInterface.OpenOCD}) welche die abstrakte Klasse \texttt{TargetConnection} von \textit{deep} erweitert.
+
+Da das BDI3000 ein sehr ähnliches CLI wie OpenOCD verwendet, musste oft nur die Syntax von einigen Befehlen angepasst werden.
+Die Kommunikation mit Telnet konnte übernommen werden.
+Ein sehr einfaches Beispiel für so einen ähnlichen Befehl ist die \texttt{wirteWord()}-Methode:
+
+\lstset{language=java}
+\begin{lstlisting}
+// OpenOCDInterface:
+out.write(("mww 0x" + Integer.toHexString(address) + " 0x" + Integer.toHexString(data) + "\r\n").getBytes()
+// AbatronInterface:
+out.write(("mm 0x" + Integer.toHexString(address) + " 0x" + Integer.toHexString(data) + "\r\n").getBytes()
+\end{lstlisting}
+
+Etwas aufwändiger waren Methoden wie etwa \texttt{readWord()}.
+Bei OpenOCD wird nicht nur der Wert der Speicherstelle zurückgesendet, sondern auch nochmals die Adresse.
+Eine Antwort wird in folgender Form zurückgegeben:\\
+\texttt{0x00000100: e41010004}
+
+Deshalb musste für einige Methode die Antwort geparsed werden.
+
+Alle Debugging-Views sind bereits im \textit{deep}-Plugin selbst implementiert und müssen nicht erneut implementiert werden. 
+
 % TODO: ganze chain erklären
+
+
+\subsection{Anpassungen des \textit{deep-Runtime-Library}}
+Die \textit{deep-Runtime-Library} muss noch ergänzt werden, so dass das \textit{''OpenOCDInterface''} in \textit{deep} integriert werden kann.
+% TODO link zum repo
+Die Datei \textit{''openOCD.deep''} unter \texttt{config/programmers} hinzufügen.
+Der Inhalt der Datei ist im Anhang \ref{anhang:CLI-OpenOCD-Toolchain} angehängt.
+
+
