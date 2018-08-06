@@ -1,17 +1,42 @@
-% \chapter{Anhang}
+ % \chapter{Anhang}
 
 
-% Zybo
+% 1 Einleitung
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% \section{Einleitung}
 
 
 
-% openOCD
+
+
+
+% 2 Auswahl der Hardware
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Schema Zybo}
+% \section{Auswahl der Hardware}
+
+
+
+
+
+
+% 3 System
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{System}
+
+
+
+
+
+% 4 Zynq
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zynq}
+
+\subsection{Schema Zybo}
 \label{anhang:schemaZybo}
+\includepdf[pages=-, landscape=true]{appendix/zybo_schematic.pdf}
 
 % \label{anhang:zybo-ftdi.cfg-orig}
 % \textit{zybo-ftdi.ocd original:}
@@ -36,6 +61,13 @@
 % reset_config srst_pulls_trst
 % \end{lstlisting}
 
+
+
+
+
+
+% 5 openOCD
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{OpenOCD}
 
 \subsection{zybo-ftdi.cfg angepasst:}
@@ -171,7 +203,7 @@ con
 \end{lstlisting}
 
 
-\subsection{system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl:}
+\subsection{system\_debugger\_using\_debug\_01\_gettingstarted\\\_applicationproject.elf\_on\_local.tcl:}
 \label{anhang:elf_on_local.tcl}
 \lstset{language=plain}
 \begin{lstlisting}
@@ -215,10 +247,12 @@ programmer openOCD {
 
 
 
-\section{STABS}
-\label{anhang:stabs}
 
 
+% 6 Das ELF-Dateiformat
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Das ELF-Dateiformat}
+\label{anhang:DasELF-Dateiformat}
 \subsection{loop.java:}
 \label{anhang:loop.java}
 \lstset{language=java}
@@ -325,6 +359,226 @@ static void reset() {
 .set N_NBSTS,		0xf6
 .set N_NBLCS,		0xf8
 \end{lstlisting}
+
+
+
+\subsection{loopExample.c}
+\label{anhang:loopExample.c}
+\lstset{language=c}
+\begin{lstlisting}
+int global = 111;
+
+
+int c_entry() {
+	int x00 = 0;
+	int x01 = 10;
+	int x02 = 20;
+	x00++;
+	x01++;
+	x02++;
+	register int s=1;
+	float float0=1.1;
+	int int0 = 10;
+	for(int i=0; i<=2; i++) {
+		int0=int0+10;
+	}
+	int0 = int0 + s;
+	int0 = int0 + s;
+	int0 = int0 + s;
+	int0 = int0 + s;
+	
+	while(1);
+  return 0;
+}
+\end{lstlisting}
+
+
+\subsection{make\_loopExample.ps1}
+\label{anhang:make_loopExample.ps1}
+\lstset{language=sh}
+\begin{lstlisting}
+# Add the path for the GNU Arm Embedded Toolchain to the 'Env:Path' variable
+$Env:Path += ";D:\GNUArmEmbeddedToolchain\7-2018-q2-update\bin"
+
+# Change to directory containing the program
+cd M:\MA\stabs\cExample
+
+
+# Compile the C test program with automatic generated stabs
+#   * -c      compile and assemble, but do not link.
+#   * -O0     no optimization
+#   * -march=armv7-a    compile for architecture armv7 
+#   * -g      compile with debugsymbols
+#   * -gstabs compile with stabs debug symbols
+arm-none-eabi-gcc -c -march=armv7-a -O0 -g -gstabs loopExample.c -o loopExample.o
+
+# Disassemble object file again
+#   * --disassemble     : disassemble the executable code section
+#   * --disassemble     : include all STABS informations
+arm-none-eabi-objdump -d  -G  loopExample.o > loopExample.Sd
+
+
+
+# Build for host
+gcc -std=c99 -g loopExample.host.c -o loopExample.host.a
+\end{lstlisting}
+
+
+
+\subsection{loopExample.Sd}
+\label{anhang:loopExample.Sd}
+\lstset{language=plain}
+\begin{lstlisting}
+
+loopExample.o:     file format elf32-littlearm
+
+Contents of .stab section:
+
+Symnum n_type n_othr n_desc n_value  n_strx String
+
+-1     HdrSym 0      84     000007e4 1     
+0      SO     0      2      00000000 15     loopExample.c
+1      OPT    0      0      00000000 29     gcc2_compiled.
+2      LSYM   0      0      00000000 44     int:t(0,1)=r(0,1);-2147483648;2147483647;
+3      LSYM   0      0      00000000 86     char:t(0,2)=r(0,2);0;255;
+4      LSYM   0      0      00000000 112    long int:t(0,3)=r(0,3);-2147483648;2147483647;
+5      LSYM   0      0      00000000 159    unsigned int:t(0,4)=r(0,4);0;4294967295;
+6      LSYM   0      0      00000000 200    long unsigned int:t(0,5)=r(0,5);0;4294967295;
+7      LSYM   0      0      00000000 246    __int128:t(0,6)=r(0,6);0;-1;
+8      LSYM   0      0      00000000 275    __int128 unsigned:t(0,7)=r(0,7);0;-1;
+9      LSYM   0      0      00000000 313    long long int:t(0,8)=r(0,8);-0;4294967295;
+10     LSYM   0      0      00000000 356    long long unsigned int:t(0,9)=r(0,9);0;-1;
+11     LSYM   0      0      00000000 399    short int:t(0,10)=r(0,10);-32768;32767;
+12     LSYM   0      0      00000000 439    short unsigned int:t(0,11)=r(0,11);0;65535;
+13     LSYM   0      0      00000000 483    signed char:t(0,12)=r(0,12);-128;127;
+14     LSYM   0      0      00000000 521    unsigned char:t(0,13)=r(0,13);0;255;
+15     LSYM   0      0      00000000 558    float:t(0,14)=r(0,1);4;0;
+16     LSYM   0      0      00000000 584    double:t(0,15)=r(0,1);8;0;
+17     LSYM   0      0      00000000 611    long double:t(0,16)=r(0,1);8;0;
+18     LSYM   0      0      00000000 643    short _Fract:t(0,17)=r(0,1);1;0;
+19     LSYM   0      0      00000000 676    _Fract:t(0,18)=r(0,1);2;0;
+20     LSYM   0      0      00000000 703    long _Fract:t(0,19)=r(0,1);4;0;
+21     LSYM   0      0      00000000 735    long long _Fract:t(0,20)=r(0,1);8;0;
+22     LSYM   0      0      00000000 772    unsigned short _Fract:t(0,21)=r(0,1);1;0;
+23     LSYM   0      0      00000000 814    unsigned _Fract:t(0,22)=r(0,1);2;0;
+24     LSYM   0      0      00000000 850    unsigned long _Fract:t(0,23)=r(0,1);4;0;
+25     LSYM   0      0      00000000 891    unsigned long long _Fract:t(0,24)=r(0,1);8;0;
+26     LSYM   0      0      00000000 937    _Sat short _Fract:t(0,25)=r(0,1);1;0;
+27     LSYM   0      0      00000000 975    _Sat _Fract:t(0,26)=r(0,1);2;0;
+28     LSYM   0      0      00000000 1007   _Sat long _Fract:t(0,27)=r(0,1);4;0;
+29     LSYM   0      0      00000000 1044   _Sat long long _Fract:t(0,28)=r(0,1);8;0;
+30     LSYM   0      0      00000000 1086   _Sat unsigned short _Fract:t(0,29)=r(0,1);1;0;
+31     LSYM   0      0      00000000 1133   _Sat unsigned _Fract:t(0,30)=r(0,1);2;0;
+32     LSYM   0      0      00000000 1174   _Sat unsigned long _Fract:t(0,31)=r(0,1);4;0;
+33     LSYM   0      0      00000000 1220   _Sat unsigned long long _Fract:t(0,32)=r(0,1);8;0;
+34     LSYM   0      0      00000000 1271   short _Accum:t(0,33)=r(0,1);2;0;
+35     LSYM   0      0      00000000 1304   _Accum:t(0,34)=r(0,1);4;0;
+36     LSYM   0      0      00000000 1331   long _Accum:t(0,35)=r(0,1);8;0;
+37     LSYM   0      0      00000000 1363   long long _Accum:t(0,36)=r(0,1);8;0;
+38     LSYM   0      0      00000000 1400   unsigned short _Accum:t(0,37)=r(0,1);2;0;
+39     LSYM   0      0      00000000 1442   unsigned _Accum:t(0,38)=r(0,1);4;0;
+40     LSYM   0      0      00000000 1478   unsigned long _Accum:t(0,39)=r(0,1);8;0;
+41     LSYM   0      0      00000000 1519   unsigned long long _Accum:t(0,40)=r(0,1);8;0;
+42     LSYM   0      0      00000000 1565   _Sat short _Accum:t(0,41)=r(0,1);2;0;
+43     LSYM   0      0      00000000 1603   _Sat _Accum:t(0,42)=r(0,1);4;0;
+44     LSYM   0      0      00000000 1635   _Sat long _Accum:t(0,43)=r(0,1);8;0;
+45     LSYM   0      0      00000000 1672   _Sat long long _Accum:t(0,44)=r(0,1);8;0;
+46     LSYM   0      0      00000000 1714   _Sat unsigned short _Accum:t(0,45)=r(0,1);2;0;
+47     LSYM   0      0      00000000 1761   _Sat unsigned _Accum:t(0,46)=r(0,1);4;0;
+48     LSYM   0      0      00000000 1802   _Sat unsigned long _Accum:t(0,47)=r(0,1);8;0;
+49     LSYM   0      0      00000000 1848   _Sat unsigned long long _Accum:t(0,48)=r(0,1);8;0;
+50     LSYM   0      0      00000000 1899   void:t(0,49)=(0,49)
+51     GSYM   0      0      00000000 1919   global:G(0,1)
+52     FUN    0      0      00000000 1933   c_entry:F(0,1)
+53     SLINE  0      4      00000000 0      
+54     SLINE  0      5      0000000c 0      
+55     SLINE  0      6      00000014 0      
+56     SLINE  0      7      0000001c 0      
+57     SLINE  0      8      00000024 0      
+58     SLINE  0      9      00000030 0      
+59     SLINE  0      10     0000003c 0      
+60     SLINE  0      11     00000048 0      
+61     SLINE  0      12     0000004c 0      
+62     SLINE  0      13     00000058 0      
+63     SLINE  0      14     00000060 0      
+64     SLINE  0      15     0000006c 0      
+65     SLINE  0      14     00000078 0      
+66     SLINE  0      14     00000084 0      
+67     SLINE  0      17     00000090 0      
+68     SLINE  0      18     0000009c 0      
+69     SLINE  0      19     000000a8 0      
+70     SLINE  0      20     000000b4 0      
+71     SLINE  0      22     000000c0 0      
+72     LSYM   0      0      fffffff0 1948   x00:(0,1)
+73     LSYM   0      0      ffffffec 1958   x01:(0,1)
+74     LSYM   0      0      ffffffe8 1968   x02:(0,1)
+75     RSYM   0      0      00000004 1978   s:r(0,1)
+76     LSYM   0      0      ffffffe4 1987   float0:(0,14)
+77     LSYM   0      0      fffffff8 2001   int0:(0,1)
+78     LBRAC  0      0      00000000 0      
+79     LSYM   0      0      fffffff4 2012   i:(0,1)
+80     LBRAC  0      0      00000060 0      
+81     RBRAC  0      0      00000090 0      
+82     RBRAC  0      0      000000c4 0      
+83     SO     0      0      000000c4 0      
+
+
+Disassembly of section .text:
+
+00000000 <c_entry>:
+   0:	e92d0810 	push	{r4, fp}
+   4:	e28db004 	add	fp, sp, #4
+   8:	e24dd018 	sub	sp, sp, #24
+   c:	e3a03000 	mov	r3, #0
+  10:	e50b3010 	str	r3, [fp, #-16]
+  14:	e3a0300a 	mov	r3, #10
+  18:	e50b3014 	str	r3, [fp, #-20]	; 0xffffffec
+  1c:	e3a03014 	mov	r3, #20
+  20:	e50b3018 	str	r3, [fp, #-24]	; 0xffffffe8
+  24:	e51b3010 	ldr	r3, [fp, #-16]
+  28:	e2833001 	add	r3, r3, #1
+  2c:	e50b3010 	str	r3, [fp, #-16]
+  30:	e51b3014 	ldr	r3, [fp, #-20]	; 0xffffffec
+  34:	e2833001 	add	r3, r3, #1
+  38:	e50b3014 	str	r3, [fp, #-20]	; 0xffffffec
+  3c:	e51b3018 	ldr	r3, [fp, #-24]	; 0xffffffe8
+  40:	e2833001 	add	r3, r3, #1
+  44:	e50b3018 	str	r3, [fp, #-24]	; 0xffffffe8
+  48:	e3a04001 	mov	r4, #1
+  4c:	e30c3ccd 	movw	r3, #52429	; 0xcccd
+  50:	e3433f8c 	movt	r3, #16268	; 0x3f8c
+  54:	e50b301c 	str	r3, [fp, #-28]	; 0xffffffe4
+  58:	e3a0300a 	mov	r3, #10
+  5c:	e50b3008 	str	r3, [fp, #-8]
+  60:	e3a03000 	mov	r3, #0
+  64:	e50b300c 	str	r3, [fp, #-12]
+  68:	ea000005 	b	84 <c_entry+0x84>
+  6c:	e51b3008 	ldr	r3, [fp, #-8]
+  70:	e283300a 	add	r3, r3, #10
+  74:	e50b3008 	str	r3, [fp, #-8]
+  78:	e51b300c 	ldr	r3, [fp, #-12]
+  7c:	e2833001 	add	r3, r3, #1
+  80:	e50b300c 	str	r3, [fp, #-12]
+  84:	e51b300c 	ldr	r3, [fp, #-12]
+  88:	e3530002 	cmp	r3, #2
+  8c:	dafffff6 	ble	6c <c_entry+0x6c>
+  90:	e51b3008 	ldr	r3, [fp, #-8]
+  94:	e0833004 	add	r3, r3, r4
+  98:	e50b3008 	str	r3, [fp, #-8]
+  9c:	e51b3008 	ldr	r3, [fp, #-8]
+  a0:	e0833004 	add	r3, r3, r4
+  a4:	e50b3008 	str	r3, [fp, #-8]
+  a8:	e51b3008 	ldr	r3, [fp, #-8]
+  ac:	e0833004 	add	r3, r3, r4
+  b0:	e50b3008 	str	r3, [fp, #-8]
+  b4:	e51b3008 	ldr	r3, [fp, #-8]
+  b8:	e0833004 	add	r3, r3, r4
+  bc:	e50b3008 	str	r3, [fp, #-8]
+  c0:	eafffffe 	b	c0 <c_entry+0xc0>
+\end{lstlisting}
+
+
+
 
 
 \subsection{Reset.Java:}
@@ -710,7 +964,11 @@ arm-none-eabi-objdump --disassemble  -G  "$FILENAME.o" >"$FILENAME.Sd"
 
 
 
-\section{gdb}
+
+
+% 7 Der gdb-Debugger
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Der gdb-Debugger}
 \subsection{startGdb.ps1}
 \label{anhang:startGdb.ps1}
 \lstset{language=sh}

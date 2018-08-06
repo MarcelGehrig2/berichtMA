@@ -218,11 +218,11 @@ Da Low-Level-Operationen, wie die Initialisierung des Stackpointers, mit Java no
 
 
 \subsection{Beispiel-Programm ''loopExample''}
-Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:stabs} ist fast identisch mit dem Code des Java Demoprogramms.
+Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:loopExample.c} ist fast identisch mit dem Code des Java Demoprogramms.
 Es wurden nur einige Änderungen vorgenommen, damit der Code als C-Programm kompiliert werden kann.
 \texttt{c\_entry()} ist der Eintrittspunkt des Programms und erfüllt im embedded Bereich eine ähnliche Aufgabe wie die  \texttt{main()}-Methode in einem generischen C-Programm.
 
-Mit dem PowerShell-Script \textit{''make\_loopExample.ps1''} im Anhang \ref{anhang:stabs} kann das C-Programm kompiliert werden.
+Mit dem PowerShell-Script \textit{''make\_loopExample.ps1''} im Anhang \ref{anhang:make_loopExample.ps1} kann das C-Programm kompiliert werden.
 Es erzeugt das Object-File \textit{''loopExample.o''} inklusive Debuginformationen im STABS-Format.
 Das disassemblierte Object-File wird als \textit{''loopExample.Sd''} gespeichert.
 Im disassemblierten Object-File sind alle STABS-Informationen und auch der ausführbare Code als Assembler enthalten.
@@ -253,7 +253,7 @@ push {r4, fp}
 \subsection{Analyse der disassemblierten STABS}
 \FloatBarrier
 
-Die untenstehenden Direktiven sind ein Auszug aus der Datei \textit{''loopExample.Sd''} im Anhang \ref{anhang:stabs}.
+Die untenstehenden Direktiven sind ein Auszug aus der Datei \textit{''loopExample.Sd''} im Anhang \ref{anhang:loopExample.Sd}.
 Die Tabelle \ref{t-DisassemblierteSTABdirektive} beschreibt die Direktive 0 im Detail.
 \lstset{language=plain}
 \begin{lstlisting}
@@ -346,9 +346,8 @@ Die Direktiven 78 und 80 (LBRAC) markieren einen Start und die Direktiven 81 und
 Um das Java-Programm möglichst einfach mit \textit{deep} übersetzen zu können, wird die \texttt{''reset()''}-Methode des Objekts \textit{''Reset.java''} aus dem Package \textit{''zynq7000''} überschrieben.
 % TODO satzbau:
 Diese Methode wird beim Starten einer \textit{deep}-Applikation immer als erstes ausgeführt und ist somit mit einem Debugger gleich ab der ersten Instruktion der Applikation kontrollierbar.
-Das vollständige Programm ist im Anhang \ref{anhang:reset.java/} angehängt.
 
-Die untenstehenden Zeilen entsprechen den Zeilen 39-42 von \textit{''Reset.java} aus dem Anhang \ref{anhang:reset.java/}.
+Die untenstehenden Zeilen entsprechen den Zeilen 39-42 von \textit{''Reset.java} aus dem Anhang \ref{anhang:reset.java}.
 In diesen Zeilen wird die Position des Stacks ausgerechnet und im Stackpointer gespeichert:
 \lstset{language=java}
 \begin{lstlisting}
