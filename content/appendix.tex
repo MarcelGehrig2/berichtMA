@@ -1229,47 +1229,6 @@ proc initFPU {} {
 
 
 
-% \subsection{Xilinx SDK Log:}
-% \label{anhang:SDKLog}
-% \lstset{language=plain}
-% \begin{lstlisting}
-
-% \end{lstlisting}
-
-
-
-
-
-
-
-
-
-% \label{anhang:zybo-ftdi.cfg-orig}
-% \textit{zybo-ftdi.ocd original:}
-% \lstset{language=tcl}
-% \begin{lstlisting}
-% #
-% # ZYBO ft2232hq usbserial jtag
-% #
-
-% interface ftdi
-% ftdi_device_desc "Digilent Adept USB Device"
-% ftdi_vid_pid 0x0403 0x6010
-
-% ftdi_layout_init 0x3088 0x1f8b
-% #ftdi_layout_signal nTRST -data 0x1000 -oe 0x1000
-% # 0x2000 is reset
-% ftdi_layout_signal nSRST -data 0x3000 -oe 0x1000
-% # green MIO7 LED
-% ftdi_layout_signal LED -data 0x0010
-% #ftdi_layout_signal LED -data 0x1000
-
-% reset_config srst_pulls_trst
-% \end{lstlisting}
-
-
-
-
 
 
 % 5 openOCD
@@ -1280,6 +1239,30 @@ proc initFPU {} {
 \label{anhang:schemaZybo}
 \includepdf[pages=-, landscape=true]{appendix/zybo_schematic.pdf}
 
+
+
+\subsection{zybo-ftdi.cfg original:}
+\label{anhang:zybo-ftdi-orig.cfg}
+\lstset{language=tcl}
+\begin{lstlisting}
+#
+# ZYBO ft2232hq usbserial jtag
+#
+
+interface ftdi
+ftdi_device_desc "Digilent Adept USB Device"
+ftdi_vid_pid 0x0403 0x6010
+
+ftdi_layout_init 0x3088 0x1f8b
+#ftdi_layout_signal nTRST -data 0x1000 -oe 0x1000
+# 0x2000 is reset
+ftdi_layout_signal nSRST -data 0x3000 -oe 0x1000
+# green MIO7 LED
+ftdi_layout_signal LED -data 0x0010
+#ftdi_layout_signal LED -data 0x1000
+
+reset_config srst_pulls_trst
+\end{lstlisting}
 
 
 \subsection{zybo-ftdi.cfg angepasst:}
@@ -1308,7 +1291,42 @@ adapter_nsrst_delay 40
 \end{lstlisting}
 
 
-\subsection{zybo.cfg angepasst:}
+
+\subsection{zynq\_7000.cfg:}
+\label{anhang:zynq_7000.cfg}
+\lstset{language=tcl}
+\begin{lstlisting}
+#
+# Xilinx Zynq-7000 All Programmable SoC
+#
+# http://www.xilinx.com/products/silicon-devices/soc/zynq-7000/index.htm
+#
+
+set _CHIPNAME zynq
+set _TARGETNAME $_CHIPNAME.cpu
+
+jtag newtap zynq_pl bs -irlen 6 -ircapture 0x1 -irmask 0x03 \
+    -expected-id 0x23727093 \
+    -expected-id 0x13722093 \
+    -expected-id 0x03727093
+
+jtag newtap $_CHIPNAME dap -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id 0x4ba00477
+
+target create ${_TARGETNAME}0 cortex_a -chain-position $_CHIPNAME.dap \
+    -coreid 0 -dbgbase 0x80090000
+target create ${_TARGETNAME}1 cortex_a -chain-position $_CHIPNAME.dap \
+    -coreid 1 -dbgbase 0x80092000
+target smp ${_TARGETNAME}0 ${_TARGETNAME}1
+
+adapter_khz 1000
+
+${_TARGETNAME}0 configure -event reset-assert-post "cortex_a dbginit"
+${_TARGETNAME}1 configure -event reset-assert-post "cortex_a dbginit"
+\end{lstlisting}
+
+
+
+\subsection{zybo.cfg:}
 \label{anhang:zybo.cfg}
 \lstset{language=tcl}
 \begin{lstlisting}
@@ -1358,7 +1376,6 @@ halt
 \end{lstlisting}
 
 
-\label{anhang:zynq_7000.cfg}
 
 
 
