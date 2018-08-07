@@ -4,6 +4,12 @@
  \usepackage{setspace}
 % \linespread{2}
 
+% Quellenverzeichnis im Inhaltsverzeichnis:
+\usepackage[nottoc,numbib]{tocbibind}
+
+
+\usepackage[toc,page]{appendix}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Dokument              %
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,22 +40,21 @@
 	\include{content/openOCD}
 	\include{content/elf}
 	\include{content/gdb}
+	\include{content/conclusion}
 
 
 
 	\input{content/statutoryDeclaration}
-%	\include{Elektronik_BBB}
-%	\include{Elektronik_ComCape}	
 %	
 	\printglossaries
 %	\include{content/sources}
-
 
 	\include{literature}
 
 
 
 	\appendix
+	
 	\setcounter{page}{1}
 	\renewcommand{\thepage}{\Alph{section} \arabic{page}}
 	\addchap*{\appendixname}
