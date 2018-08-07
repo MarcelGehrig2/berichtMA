@@ -49,7 +49,7 @@ In diesem Log kann nachvollzogen werden, was das Script beim Download und Start 
 % TODO was auch immer
 Im Anhang \ref{anhang:SDKLog} ist eine Kopie eines solchen Logs zu finden.
 % TODO: langesWort
-\textit{D:/Vivado/01\_gettingStarted/01\_gettingStarted.sdk/.sdk/launch\_scripts/xilinx\_c-c++\_application\_(system\_debugger)/system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
+% \textit{D:/Vivado/01\_gettingStarted/01\_gettingStarted.sdk/.sdk/launch\_scripts/xilinx\_c-c++\_application\_(system\_debugger)/system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
 % \textit{D:/Vivado\01\_gettingStarted\01\_gettingStarted.sdk\.sdk\launch\_scripts\xilinx\_c-c++\_application\_(system\_debugger)\system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
 
 Das Script \textit{ps7\_init.tcl} definiert unter anderem die fünf Initialisierungs-Methoden:
@@ -87,6 +87,7 @@ Wartet <value> Millisekunden.
 
 
 \subsection{Initialisierungsmethoden}
+\label{Initialisierungsmethoden}
 Im Folgenden werden alle Methoden beschrieben, welche zur Initialisierung des Zynq auf dem Zybo verwendet werden.
 
 \textbf{ps7\_mio\_init\_data\_3\_0:}\\
@@ -113,6 +114,9 @@ Konfiguriert diverse Clocks, die im Prozessor gebraucht werden.
 \textbf{ps7\_ddr\_init\_data\_3\_0}\\
 Konfiguriert den DDR Bus.
 Für die Konfiguration werden insgesamt 79 verschiedene Register geschrieben und die DCI (\textit{Digital Controlled Impedance}) kalibriert.
+Nachdem diese Methode ausgeführt wurde, kann der DDR genutzt werden.
+Vorher ist nur der OCM (On Chip Memory) nutzbar.
+Mehr dazu im Kapitel \ref{MemoryMapping}.
 
 \textbf{ps7\_peripherals\_init\_data\_3\_0}\\
 Konfiguriert folgende Peripherien:
@@ -137,7 +141,7 @@ Vergleicht man \textit{''ps7\_init()''} mit \textit{ps7\_init.tcl}, dann sieht m
 \textit{''psu\_init()''} ist für ein \textit{''Zynq UltraScale+™ MPSoC''} Chip, welcher auf dem Zybo nicht verwendet wird.
 
 
-\textit{helloworld.c:}
+\textit{Auszug aus ''helloworld.c'' (Komplettes Programm im Anhang \ref{anhang:helloworld.c}):}
 \lstset{language=c}
 \begin{lstlisting}[frame=single]
 ...
@@ -154,7 +158,7 @@ while(1){
 
 
 
-\textit{platform.c:}
+\textit{Auszug aus ''platform.c'' (Komplettes Programm im Anhang \ref{anhang:platform.c}):}
 \lstset{language=c}
 \begin{lstlisting}[frame=single]
 ...
@@ -191,7 +195,7 @@ Mit folgenden Änderungen ist das Script mit OpenOCD kompatibel:
 \begin{enumerate}
 \item Untenstehende Methoden wurden dem Script hinzugefügt.
 
-\textit{ps7\_init\_modified.tcl:}
+\textit{Auszug aus ''ps7\_init\_modified.tcl'' (Komplettes Script im Anhang \ref{anhang:ps7initmodified.tcl}):}
 \lstset{language=tcl}
 \begin{lstlisting}[frame=single]
 proc unlock_SLCR {} {
@@ -229,10 +233,10 @@ proc initPS {} {
 
 \item Jeder \texttt{''mwr -force <address> <value>''} Befehl wurde mit \texttt{''\textbf{mww} <address> <value>''} ersetzt.
 
-\item Folgende Methoden wurden mit den untenstehenden Implementationen ersetzt:
+\item Folgende Methoden wurden mit den untenstehenden Implementationen ersetzt.
 
 % TODO highlight changed lines
-\textit{ps7\_init\_modified.tcl:}
+\textit{Auszug aus ''ps7\_init\_modified.tcl'' (Komplettes Script im Anhang \ref{anhang:ps7initmodified.tcl})}:
 \lstset{language=tcl}
 \begin{lstlisting}[frame=single]
 proc mask_poll { addr mask } {
@@ -287,11 +291,12 @@ proc get_number_of_cycles_for_delay { delay } {
 \end{enumerate}
 
 
-% TODO implementierung in openOCD scripts
+% % TODO implementierung in openOCD scripts
 
 
 
 \section{Memory Mapping}
+\label{MemoryMapping}
 Im Kapitel 4.1 des \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} ist der Aufbau des Speichers beschrieben.
 Die Abbildung \ref{fig:AddressMapZynq} zeigt einen guten Überblick über die ganzen 4 GB des Adressraumes.
 Bei der Map fällt auf, dass nur ca. 1 GB für DDR RAM verwendet werden kann.
@@ -305,6 +310,9 @@ Das geschieht noch bevor die erste Instruktion aus dem User-Code ausgeführt wir
 Der oben beschriebene Bootvorgang kann nicht geändert werden.
 Mit Pull-Up-Widerständen kann aber beeinflusst werden, ob der ARM im \textit{Secure-Mode} oder im \textit{Non-Secure-Mode} booten soll und wo der Bootloader gesucht werden soll.
 Mehr dazu im Zynq TRM\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''Kapitel 4.4: Boot and Configuration''}.
+
+Der Speicherbereich für den RAM ist erst nutzbar, wenn der RAM initialisiert wurde.
+Die Initialisierungsmethode wird im Kapitel \ref{Initialisierungsmethoden}.
 
 \begin{figure}[htbp]
 	\centering
