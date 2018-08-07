@@ -48,6 +48,6 @@ Eclipse
 
 
 % Abkürzungen und Präpositionen
-das XSDK		// Xylinx Standard Development Kit
+das XSDK		// Xilinx Standard Development Kit
 das XSCT		// Xilinx Software Command-Line Tool
 das Zybo

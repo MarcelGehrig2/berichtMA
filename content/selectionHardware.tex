@@ -5,7 +5,7 @@ Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Proze
 
 In diesem Kapitel soll aus dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
 % Die ausgewählte Hardware soll ein Experimentierboard mit einem ARM-Prozessor gefunden werden, dass im Robotik Unterricht verwendet werden kann.
-Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern auch für den Robotik-Unterricht.
+Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern später auch für den Robotik-Unterricht.
 Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sein, um ihn, oder eine Variante aus der gleichen Familie, in anspruchsvollen Robotikprojekten verwenden zu können.
 %TODO extrem weit verbreitet
 %TODO gorosse auswahl von verschiedener hw
@@ -27,7 +27,7 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende Produkte oder Nischenprodukte sind nicht akzeptabel.
 	\item Als fertiges Modul erhältlich: Für den Unterricht ein eigenes PCB entwickeln und herstellen ist keine Option.
 	%TODO synonym einbettbar:
-	\item Einbettbar: Der Prozessor muss auch bei einem selbstentwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
+	\item Einbettbar: Der Prozessor muss auch bei einem selbst entwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
 	\item Die Hardware muss noch lange erhältlich bleiben.
 	\item FPU (\textit{Floating Point Unit}): Für Gleitzahlenarithmetik.
 	\item Netzwerkschnitstelle: RJ-45 inklusive MAC\footnote{Media Access Control} und \textit{Magnetics}.
@@ -67,7 +67,7 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 Der Begriff \textit{Hardware Debugger} ist nicht eindeutig definiert.
 Im einfachsten Fall kann ein Hardware Debugger nur ein \textit{Boundary Scan} durchführen wie es ursprünglich für JTAG vorgesehen war.
 Bei \textit{Boundary Scan} können die I/O Pins von einem Prozessor gelesen und auch gesetzt werden.
-Mit so einem Scan kann in der Produktion bei der Bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und dabei keine Kurzschlüsse bilden.
+Mit so einem Scan kann während der Produktion bei den bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und dabei keine Kurzschlüsse bilden.
 Für diesen Scan wird der Prozessor Kern nicht verwendet, sondern eine separate Peripherie im Prozessor.
 Über das JTAG Interface kann der Scan ausgeführt werden, ohne dass eine Applikation auf dem Prozessor ausgeführt werden muss.
 
@@ -189,7 +189,6 @@ Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den A
 	\item Nur ein FPGA und Prozessor erhältlich.
 \end{itemize}
 
-\textit{Fazit - Bauweise ''Modular''}
 Eine modulare Bauweise ist grundsätzlich sehr flexibel.
 Leider sind auf dem Markt nur sehr wenige verschiedene Module zu finden.
 So ein kleines Angebot disqualifiziert diese Bauweise.
@@ -214,8 +213,8 @@ Weil die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter 
 Seit einigen Jahren werden Produkte verkauft, die eine programmierbare Logik (FPGA) und auch eine dedizierte CPU in einem Chip-Gehäuse verbaut haben.
 Da der FPGA und auch die CPU im selben Gehäuse verbaut sind, ist eine sehr schnelle, integrierte Kommunikation zwischen CPU und FPGA möglich.
 
-Die beiden grossen FPGA-Hersteller Altera und auch Xylinx bieten beide mehrere Produkte als eine SOC Lösung an.
-Die Produkte von Altera sind aber deutlich teurer als die Chips von Xylinx.
+Die beiden grossen FPGA-Hersteller Altera und auch Xilinx bieten beide mehrere Produkte als eine SOC Lösung an.
+Die Produkte von Altera sind aber deutlich teurer als die Chips von Xilinx.
 Besonders die Evaluierungsboards von Altera sind sehr teuer.
 
 Bei der Produktfamilie Zynq von Xilynx gibt es ein breites Angebot von SOCs und auch von Experimentierboards.
@@ -224,6 +223,15 @@ Das Experimentierboard \textit{''Zyb''} wird sogar schon im Unterricht der NTB f
 
 \subsection{ARM als Softcore in FPGA - Bauweise ''FPGA''}
 % TODO0: softcore FPGA
+In FPGAs können Prozessoren als sogenannte \textit{Softcores} implementiert werden.
+Dabei wird ein Teil der FPGA-Gates so konfiguriert, dass sie wie ein Mikroprozessor verwendet werden können.
+
+Es existieren aber nur Designs für einfachere Mikroprozessoren, da komplexe Prozessoren viel zu viele Gates benötigen um ökonomisch sinnvoll zu sein.
+ARM Prozessoren der Cortex-A Familie sind sehr komplex und nicht als FPGA-Softcores erhältlich.
+Von der ARM Cortex-Familie sind nur Cortex-M0 und Cortex-M1 erhältlich.
+Diese Cores sind aber kostenpflichtig und nicht Open Source.
+
+Weil keine Cortex-A Cores erhältlich sind und alle anderen ARM-Cores kostenpflichtig sind, wird diese Bauweise nicht mehr weiter verfolgt.
 
 
 
@@ -263,5 +271,34 @@ Das Experimentierboard \textit{''Zyb''} wird sogar schon im Unterricht der NTB f
 
 
 
-\subsubsection{STM23}
-STM
+\subsection{Wahl der Bauweise}
+Es hat sich gezeigt, dass es nicht sehr viele Produkte gibt, die einen Cortex-A Prozessor in Kombination mit einem FPGA bieten.
+Einige Produkte zielen mehr auf den Hobby-Bereich wie zum Beispiel das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}.
+Für professionellere Lösungen scheinen selbst entwickelte PCBs der Standard zu sein.
+Alle anderen Ansätze sind oft nur Nischenprodukte für spezielle Anwendungen oder mit geringer Verfügbarkeit.
+
+Seit einigen Jahren ist aber eine signifikante Auswahl von SOCs auf dem Markt.
+Diese werden aber nur von den beiden Herstellern Altera und Xilinx angeboten.
+Beide Hersteller bieten aber ein sehr umfangreiches Angebot.
+
+% Die SOCs bieten d
+
+
+
+\section{Fazit - Auswahl der Hardware}
+Da die Wahl bereits auf einen Cortex-A in einem SOC eingeschränkt wurde, ist das verbleibende Angebot sehr begrenzt.
+Die Entscheidung zwischen Zynq von Xilinx und den SOCs von Altera fällt auf Zynq, da die Altera Experimentierboards mehrere tausend Franken kosten.
+
+Das Zybo-Experimentierboard ist eine sehr naheliegende Wahl, da es bereits für den Unterricht in der NTB genutzt wird.
+Der Preis des Boards ist auch tief genug, dass eine ganze Klasse für den Unterricht damit ausgerüstet werden kann.
+Eine grosszügige Auswahl an I/Os bieten eine sehr hohe Flexibilität zum experimentieren und auch für den Unterricht.
+
+Das Zybo ist mit Zynq-7000 bestückt.
+Der Zynq-7000 ist ein Modell mit einem Dual-Core Cortex-A9 Prozessor mit 667 MHz.
+Es existieren aber auch noch günstigere Zynqs mit weniger Leistung und sehr viel teurere Varianten mit einem leistungsstärkeren Prozessor und grösseren FPGA.
+Zusätzlich sind die Zynqs als standalone Chip oder als Modul inklusive RAM erhältlich.
+
+All diese Eigenschaften machen das Zybo mit dem Zynq-7000 zum klaren Favorit.
+
+
+% TODO bild zybo
