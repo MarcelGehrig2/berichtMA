@@ -1,44 +1,115 @@
-\chapter{Ergebnis, Fazit und Ausblick}
-\section{Ergebnis}
-Im Kontrollsystem einer EEROS Applikation können Blöcke implementiert werden, die Informationen von beliebigen ROS \textit{Topics} lesen können.
-Wenn ein externer Sensor, zum Beispiel ein Laserscanner, auf ein \textit{Topic} seine Messdaten veröffentlicht, kann eine EEROS Applikation diese Daten im Kontrollsystem nutzen.
-Es können auch Daten aus dem Kontrollsystem auf einem beliebigen ROS \textit{Topic} veröffentlicht werden, um sie dann mit \textit{rviz} oder einem anderen ROS Tool zu visualisieren oder abzuspeichern.
+\chapter{Kundennutzen, Fazit und Ausblick}
+\section{Rückblick und Kundennutzen}
+Für das Projekt \textit{deep} steht mit dem Zybo ein kostengünstiges Experimentierboard mit einem leistungsstarken Prozessor und FPGA zur Verfügung.
 
-In EEROS wurde auch ein neuer Block implementiert, der einfache Signale inklusive Zeitstempel aus dem Kontrollsystem kontinuierlich und verlustfrei auf einem \textit{Topic} veröffentlicht.
-Die veröffentlichten Daten können dann mit bestehenden ROS Programmen wie \textit{rqt-multiplot} visualisiert und abgespeichert werden.
-Dies ist besonders für die Fehlersuche ein nützliche Funktion.
+Das \textit{''OpenOCDInterface''} kann mit dem Zybo gleich eingesetzt werden, wie das bestehende \textit{''AbatronInterface''} für PowerPCs.
+Damit kann die Entwicklung des \textit{deep}-Kernel mit dem neuen ARM-Prozessor gleich weiter geführt werden wie bisher.
 
-Die EEROS HAL kann auch verwendet werden um Daten von einem \textit{Topic} zu lesen, oder um Daten auf einem \textit{Topic} zu veröffentlichen.
+Die in dieser Arbeit entwickelte Toolchain ermöglicht es, ohne zusätzliche Hardware, ein von \textit{deep} kompiliertes Programm auf den Zynq des Zybos zu laden.
 
-Neu ist es auch möglich, eine EEROS-Applikation mit einer \textit{Gazebo} Simulation zu testen.
-Selbst wenn die Simulation nicht in Echtzeit läuft, kann die EEROS Applikation mit der Simulation synchronisiert werden.
-Auch die Zeitstempel werden richtig berechnet.
+Mit dieser Arbeit konnte auch aufgezeigt werden, dass der \textit{gdb} grundsätzlich genutzt werden kann, um eine \textit{deep}-Applikation direkt auf dem Prozessor zu debuggen.
+Dabei können auch \textit{gdb}-Features wie Sourcecode-Lookup verwendet werden, obwohl der \textit{gdb} Java nicht mehr direkt unterstützt.
 
+Die Toolchain kann ebenfalls als Hardware-Debugger verwendet werden.
+Es ist möglich Prozessorregister und Speichersegmente zu lesen und zu schreiben und es können Hardware-Breakpoints gesetzt werden.
 
-\section{Fazit}	%subjektiv
-Bei meiner letzten Vertiefungsarbeit hatte ich versucht, alle Änderungen für die Software auf einen Schlag zu implementieren.
-Ich hatte mein ganzes Konzept als Pseudocode durchgedacht und dann versucht, alles in der Software zu implementieren.
-Dies ging schief.
-Bei der Implementation hatte ich gemerkt, dass viele von mir ausgedachten Konzepte nicht funktionierten.
-Aus diesem Grund geriet ich am Schluss in Zeitnot und konnte meine Änderungen nicht sauber implementieren und testen.
-
-Bei dieser Arbeit habe ich mich deshalb entschieden, meine Aufgabe in Teilziele aufzuteilen.
-Zusätzlich habe ich für jedes Teilziel das ich implementieren wollte einen Test geschrieben.
-Nach der Implementierung konnte ich dann den Code einfach testen.
-Die kontinuierlichen Tests haben mir nicht nur Sicherheit gegeben, sondern immer auch Teilziele, auf die ich hinarbeiten konnte.
-
-Die Simulation mit Gazebo war ein Ziel, dass erst im Verlauf der Arbeit aufgekommen ist, und nicht in meinem Zeitplan eingeplant war.
-Da ich aber meine ursprüngliche Aufgabe in Teilziele geteilt habe, konnte ich ein weniger wichtiges \textit{Feature} (die ROS logging Funktion) streichen und die Anbindung an die Simulation stattdessen implementieren.
-
-In dieser Arbeit habe ich besonders bezüglich Arbeitsplanung und wie ich ein Software Projekt aufbaue viel gelernt.
 
 
 \section{Ausblick}
-EEROS ist nun mit sehr vielen Funktionen ausgestattet, die eine möglichst einfache und flexible Anbindung an ein ROS Netzwerk erlauben.
+Die entwickelte Toolchain bietet eine gute Ausgangslage für die weitere Entwicklung von \textit{deep}.
+Damit der Debugger aber effizient genutzt werden kann, fehlen noch zwei Kernelemente:
+\begin{enumerate}
+	\item Die Debug-Informationen müssen automatisch beim kompilieren der \textit{deep}-Applikation erzeugt werden.
+		  Dabei sollten nicht die veralteten STABS verwendet werden, wie in dieser Arbeit, sondern das modernere DWARF-Format.
+	\item Ein \textit{gdb}-Plugin für \textit{Eclipse} muss noch entwickelt werden.
+		  Das \textit{''GNU MCU Eclipse plug-ins for ARM \& RISC-V C/C++ developers''}\footnote{https://github.com/gnu-mcu-eclipse/eclipse-plugins} ist ein Plugin für Eclispe, dass genau dieses Problem löst.
+		  Allerdings muss es noch so angepasst werden, dass es in die OpenOCD-Toolchain von dieser Arbeit integrierte werden kann.
+\end{enumerate}
 
-Die Logging Funktion wurde aber noch nicht implementiert.
-Der EEROS Logger schreibt bis jetzt die Ausgaben wahlweise in eine Datei oder auf die Konsole.
-Wenn der EEROS Logger so umgelenkt werden könnte, dass er alle Ausgaben als ROS Logger Nachrichten ausgeben würde, könnte auch für solche Nachrichten bestehende ROS Software genutzt werden.
 
-Der ROS Logger hat auch noch zusätzliche Funktionen wie zum Beispiel eine \textit{Throttle} und eine \textit{Filter} Funktion.
-Solche Funktionen wären auch für den EEROS Logger vorteilhaft.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Im Kontrollsystem einer EEROS Applikation können Blöcke implementiert werden, die Informationen von beliebigen ROS \textit{Topics} lesen können.
+% Wenn ein externer Sensor, zum Beispiel ein Laserscanner, auf ein \textit{Topic} seine Messdaten veröffentlicht, kann eine EEROS Applikation diese Daten im Kontrollsystem nutzen.
+% Es können auch Daten aus dem Kontrollsystem auf einem beliebigen ROS \textit{Topic} veröffentlicht werden, um sie dann mit \textit{rviz} oder einem anderen ROS Tool zu visualisieren oder abzuspeichern.
+
+% In EEROS wurde auch ein neuer Block implementiert, der einfache Signale inklusive Zeitstempel aus dem Kontrollsystem kontinuierlich und verlustfrei auf einem \textit{Topic} veröffentlicht.
+% Die veröffentlichten Daten können dann mit bestehenden ROS Programmen wie \textit{rqt-multiplot} visualisiert und abgespeichert werden.
+% Dies ist besonders für die Fehlersuche ein nützliche Funktion.
+
+% Die EEROS HAL kann auch verwendet werden um Daten von einem \textit{Topic} zu lesen, oder um Daten auf einem \textit{Topic} zu veröffentlichen.
+
+% Neu ist es auch möglich, eine EEROS-Applikation mit einer \textit{Gazebo} Simulation zu testen.
+% Selbst wenn die Simulation nicht in Echtzeit läuft, kann die EEROS Applikation mit der Simulation synchronisiert werden.
+% Auch die Zeitstempel werden richtig berechnet.
+
+
+% \section{Fazit}	%subjektiv
+% Bei meiner letzten Vertiefungsarbeit hatte ich versucht, alle Änderungen für die Software auf einen Schlag zu implementieren.
+% Ich hatte mein ganzes Konzept als Pseudocode durchgedacht und dann versucht, alles in der Software zu implementieren.
+% Dies ging schief.
+% Bei der Implementation hatte ich gemerkt, dass viele von mir ausgedachten Konzepte nicht funktionierten.
+% Aus diesem Grund geriet ich am Schluss in Zeitnot und konnte meine Änderungen nicht sauber implementieren und testen.
+
+% Bei dieser Arbeit habe ich mich deshalb entschieden, meine Aufgabe in Teilziele aufzuteilen.
+% Zusätzlich habe ich für jedes Teilziel das ich implementieren wollte einen Test geschrieben.
+% Nach der Implementierung konnte ich dann den Code einfach testen.
+% Die kontinuierlichen Tests haben mir nicht nur Sicherheit gegeben, sondern immer auch Teilziele, auf die ich hinarbeiten konnte.
+
+% Die Simulation mit Gazebo war ein Ziel, dass erst im Verlauf der Arbeit aufgekommen ist, und nicht in meinem Zeitplan eingeplant war.
+% Da ich aber meine ursprüngliche Aufgabe in Teilziele geteilt habe, konnte ich ein weniger wichtiges \textit{Feature} (die ROS logging Funktion) streichen und die Anbindung an die Simulation stattdessen implementieren.
+
+% In dieser Arbeit habe ich besonders bezüglich Arbeitsplanung und wie ich ein Software Projekt aufbaue viel gelernt.
+
+
+% \section{Ausblick}
+% EEROS ist nun mit sehr vielen Funktionen ausgestattet, die eine möglichst einfache und flexible Anbindung an ein ROS Netzwerk erlauben.
+
+% Die Logging Funktion wurde aber noch nicht implementiert.
+% Der EEROS Logger schreibt bis jetzt die Ausgaben wahlweise in eine Datei oder auf die Konsole.
+% Wenn der EEROS Logger so umgelenkt werden könnte, dass er alle Ausgaben als ROS Logger Nachrichten ausgeben würde, könnte auch für solche Nachrichten bestehende ROS Software genutzt werden.
+
+% Der ROS Logger hat auch noch zusätzliche Funktionen wie zum Beispiel eine \textit{Throttle} und eine \textit{Filter} Funktion.
+% Solche Funktionen wären auch für den EEROS Logger vorteilhaft.

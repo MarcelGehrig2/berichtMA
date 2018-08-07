@@ -135,7 +135,7 @@ Das Demoprogramm soll dann mit dem \textit{gdb} direkt auf den Zynq geladen werd
 Zusätzlich sollen folgende \textit{gdb}-Features getestet werden:\\
 \begin{enumerate}
 	\item \textbf{Breakpoint}: Das Programm stoppt bei einer gewünschten Zeile im Java-Sourcecode.
-	\item \textbf{Source lookup}: Wenn das Programm gestoppt wird, kann die entsprechende Zeile im Java-Sourcecode angezeigt werden.
+	\item \textbf{Sourcecode-Lookup}: Wenn das Programm gestoppt wird, kann die entsprechende Zeile im Java-Sourcecode angezeigt werden.
 	\item \textbf{Single-Stepping}: Nur eine Zeile im Java-Sourcecode ausführen und dann pausieren.
 	\item \textbf{Variable auslesen}: Eine Java-Variable, z.B. ein Integer, auslesen.
 	\item \textbf{Variable manipulieren}: Eine Java-Variable verändern.
@@ -307,7 +307,7 @@ Die GSYM-Direktive deklariert eine globale Variable.
 Direktive Nummer 52, vom Typ FUN, definiert eine Methode.
 
 Die Direktiven 53 bis 71 sind vom Typ SLINE.
-Sie werden für die \textit{Source lookup}-Funktion verwendet.
+Sie werden für die \textit{Sourcecode-Lookup}-Funktion verwendet.
 \textit{n\_desc} beschreibt die Zeile im Sourcecode und \textit{n\_value} die entsprechende Adresse im Maschinencode.
 Es fällt auf, dass die Sourcecode-Adresse von der Direktive 53 auf 54 nur um eine Zeile steigt, die Maschinencode-Adresse aber von 00000000 auf 0000000c.
 Im Gegensatz zur Zeilennummer, wird die Adresse im Maschinencode im Hexadezimalen System angegeben.
