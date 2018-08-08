@@ -27,7 +27,7 @@ Im \textit{TRM}\footnote{Technical Reference Manual} des Zynq\cite{bib:ZynqTechn
 % TODO MIO config des zybos
 
 \section{Standard Zybo Workflow}
-Im \textit{Getting Started with Zynq\footnote{https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1}} Tutorial von Digilent ist beschrieben, wie man ein einfaches Design für die PL und ein einfaches Programm für das PS erstellt.
+Im \textit{Getting Started with Zynq\footnote{https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1}} Tutorial von Digilent ist beschrieben, wie ein einfaches Design für die PL und ein einfaches Programm für das PS erstellt werden kann.
 Das Tutorial deckt den ganzen Workflow ab.
 Dabei werden, z.B. für LED1, LED2 und LED3 auch die EMIOs verwendet.
 In Schritt 1 bis 7 wird mit Vivado das Design für die PL erstellt und exportiert.
@@ -136,7 +136,7 @@ Wird die Initialisierung in der Applikation durchgeführt, und die Applikation a
 Im Beispielprogramm \textit{''helloworld.c''} ist die Methode \textit{''init\_platform()''} enthalten, welche in \textit{''platform.c''} deklariert ist.
 Standardmässig ist die darin enthaltene Methode \textit{''ps7\_init()''} aber auskommentiert.
 \textit{''platform.c''} befindet sich im \textit{''design\_wrapper\_hw\_platform''}, welcher in Vivado erzeugt wurde.
-Vergleicht man \textit{''ps7\_init()''} mit \textit{ps7\_init.tcl}, dann sieht man schnell, dass das Script und auch die C-Methode genau die gleichen Register schreiben und lesen.
+Wird \textit{''ps7\_init()''} mit \textit{ps7\_init.tcl} verglichen, dann wird schnell deutlich, dass das Script und auch die C-Methode genau die gleichen Register schreiben und lesen.
 
 \textit{''psu\_init()''} ist für ein \textit{''Zynq UltraScale+™ MPSoC''} Chip, welcher auf dem Zybo nicht verwendet wird.
 

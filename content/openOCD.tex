@@ -94,7 +94,7 @@ Die Konfiguration erfolgt mit Konfigurationsscripts (*.cfg) in der Scriptsprache
 \textit{Jim-Tcl} ist eine abgespeckte Version von \textit{Tcl}\footnote{http://www.tcl.tk}.
 
 Normalerweise werden die Scripts in die drei Gruppen \textit{interface, board} und \textit{target} aufgeteilt.
-So kann einfach ein Script ausgewechselt werden, wenn man den gleichen Adapter aber einen anderen Prozessor verwenden will.
+So kann einfach ein Script ausgewechselt werden, wenn der gleiche Adapter mit einen anderen Prozessor verwenden will.
 Im Pfad \texttt{openocd-0.10.0/scripts} befindet sich eine Sammlung von Konfigurationsscripts für Standardhardware.
 
 Mit folgendem Befehl kann OpenOCD mit der passenden Konfiguration für das Zybo gestartet werden:\\
@@ -140,7 +140,7 @@ Zeile 7 definiert die \textit{Vendor} und \textit{Device-ID} des USB Devices.
 
 
 \subsubsection{Resetverhalten}
-Liest man aus einer unerlaubten Speicheradresse (\texttt{CLI: mdw 0x40000000}), dann hängt sich die Debug-Peripherie des Zynq auf.
+Wird aus einer unerlaubten Speicheradresse (\texttt{CLI: mdw 0x40000000}) gelesen, dann hängt sich die Debug-Peripherie des Zynq auf.
 Nach einem unerlaubten Speicherzugriff können auch keine erlaubten Speicherstellen mehr gelesen werden.
 Beim Versuch erscheint die Fehlermeldung:\\
 \texttt{Timeout waiting for cortex\_a\_exec\_optcode}.\\
@@ -184,7 +184,7 @@ Timeout waiting for dpm prepare\\
 Das erneute Timeout legt die Vermutung nahe, dass der Zynq nicht ordentlich zurückgesetzt wurde.
 
 Zeile 12 \texttt{''ftdi\_layout\_signal nSRST -data 0x3000 -oe 0x1000''} konfiguriert die I/O Pins des FT2232, welche für den System Reset verwendet werden.
-Im elektrischen Schema des Zybos (siehe Anhang \ref{anhang:schemaZybo}) könnte man überprüfen, welche I/Os des FT2232 tatsächlich für den Reset verwendet werden.
+Im elektrischen Schema des Zybos (siehe Anhang \ref{anhang:schemaZybo}) könnte überprüft werden, welche I/Os des FT2232 tatsächlich für den Reset verwendet werden.
 Die Seite mit dem Schema für den FT2232, Seite 7, ist aber als einzige Seite im Schema nicht veröffentlicht worden.
 Die korrekten I/O Pins lassen sich also nicht mit dem Schema ermitteln.
 Direkt aus dem PCB sind die Verbindungen auch nicht eindeutig ablesbar, da es sich beim Zybo um ein relativ dichtes PCD mit mehreren Lagen handelt.
@@ -228,7 +228,8 @@ Das Plugin kann von folgendem Repositorie geklont werden:\\
 
 \subsection{Aufbau des OpenOCDInterface}
 Wie das \textit{''AbatronInterface''} besteht dieses Interface auch nur aus einer Java-Datei.
-Es besteht aus einer einzigen Klasse (\texttt{ch.ntb.inf.openOCDInterface.OpenOCD}), welche die abstrakte Klasse \texttt{TargetConnection} von \textit{deep} erweitert.
+Es besteht aus einer einzigen Klasse (\texttt{ch.ntb.inf.openOCDInterface.OpenOCD}), welche die abstrakte Klasse\\
+	 \texttt{TargetConnection} von \textit{deep} erweitert.
 
 Da das BDI3000 ein sehr ähnliches CLI wie OpenOCD verwendet, musste oft nur die Syntax von einigen Befehlen angepasst werden.
 Die Kommunikation mit Telnet konnte übernommen werden.

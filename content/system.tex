@@ -7,7 +7,7 @@ Auf einzelne Komponenten und Toolchains wird in den folgenden Kapiteln genauer e
 In Abbildung \ref{fig:UebersichtDebuggerToolchain} ist das ganze System abgebildet.
 Das \textit{Zybo} beinhaltet neben dem FT2232-Chip auch noch diverse I/O-Peripherien, die in einer \textit{deep}-Applikation genutzt werden können.
 Der FT2232 auf dem \textit{Zybo} übernimmt zwei verschiedene Funktionen.
-Einerseits wird er als USB zu UART Brücke (schwarzer Pfeil) verwendet, damit man mit dem Windows PC einfach eine serielle Verbindung mit dem Prozessor aufbauen kann, andererseits fungiert er als Brücke zum blauen JTAG-Bus.
+Einerseits wird er als USB zu UART Brücke (schwarzer Pfeil) verwendet, damit der Windows PC einfach eine serielle Verbindung mit dem Prozessor aufbauen kann, andererseits fungiert er als Brücke zum blauen JTAG-Bus.
 Das bedeutet, er erhält Befehle von der OpenOCD-Software über USB und übersetzt diese elektrisch und auch logisch für das JTAG Interface.
 OpenOCD ist eine Software-Zwischenschicht die für den Debugger benötigt wird.
 

@@ -57,7 +57,7 @@ Ein Segment beinhaltet ein oder mehrere \textit{Sections}.
 % Die Segmente sind beim Ausführen der Datei relevant.
 
 Im \textit{Section Header} sind alle \textit{Sections} beschrieben.
-Mit \texttt{''readelf filename -WS''} kann man sehen, dass jede \textit{Section} unter anderem einen Namen, einen Typ, eine Adresse (absolut) und einen Offset (relativ, innerhalb der ELF-Datei) enthält.
+Mit \texttt{''readelf filename -WS''} wird deutlich, dass jede \textit{Section} unter anderem einen Namen, einen Typ, eine Adresse (absolut) und einen Offset (relativ, innerhalb der ELF-Datei) enthält.
 Jede \textit{Section} beinhaltet einen anderen Teil des Programms.
 Die folgende Liste gibt eine nicht vollständige Übersicht über die einzelnen \textit{Sections}:
 \begin{itemize}
@@ -313,7 +313,7 @@ Es fällt auf, dass die Sourcecode-Adresse von der Direktive 53 auf 54 nur um ei
 Im Gegensatz zur Zeilennummer, wird die Adresse im Maschinencode im hexadezimalen System angegeben.
 Da es sich um 32-Bit lange Maschinen-Instruktionen (also 4 Byte) handelt, steigt die Adresse um 4 nach jeder Instruktion.
 Es werden also drei Maschinen-Instruktionen ausgeführt, bevor die erste Zeile in der Methode \texttt{''c\_entry()''} ausgeführt wird.
-Im disassemblierten Maschinencode sieht man folgende Instruktionen:
+Im disassemblierten Maschinencode sind folgende Instruktionen zu sehen:
 \lstset{language=plain}
 \begin{lstlisting}
    0:	e92d0810 	push	{r4, fp}
