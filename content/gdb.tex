@@ -13,7 +13,7 @@ Anschliessend wird auch gezeigt, wie die Demo-Applikation mit dem \textit{gdb} d
 ARM stellt eine komplette \textit{''GNU Embedded Toolchain''} für ARM Prozessoren zur Verfügung.
 Sie enthält neben dem GCC-Compiler und dem \textit{gdb} auch noch diverse Hilfsprogramme wie \textit{''readelf''} und \textit{''objdump''}.
 Für diese Arbeit wird die zur zeit aktuellste \textit{''GNU Arm Embedded Toolchain: 7-2018-q2-update''} Toolchain verwendet.
-Sie kann von der ARM-Webseite\footnote{https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads} heruntergeladen werden kann.
+Sie kann von der ARM-Webseite\footnote{https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads} heruntergeladen werden.
 Sobald das Archiv auf der lokalen Festplatte entpackt wird, ist die Toolchain einsatzbereit.
 Bei den Build-Scripten in dieser Arbeit muss jeweils die \textit{''PATH''}-Variable mit dem Pfad zur Toolchain ergänzt werden, damit die Toolchain vom Script gefunden wird.
 
@@ -129,7 +129,7 @@ Seit der \textit{gdb}-Version 8 funktionieren Software-Breakpoints (z.B \texttt{
 Bei einem Software-Breakpoint wird eine Instruktion mit einer speziellen Instruktion ersetzt, die dann das Programm stoppt und den Debugger triggert.
 Das funktioniert bei allen \textit{gdb}-Versionen.
 Ab der \textit{gdb}-Version 8 wird diese Instruktion aber nicht mehr mit der alten, gültigen Instruktion ersetzt.
-Aus diesem Grund kann dann das Programm nicht mehr weiter ausgeführt werden.
+Aus diesem Grund kann dann das Programm nach einem Software-Breakpoint nicht mehr weiter ausgeführt werden.
 Die Hardware-Breakpoints funktionieren bei allen Versionen.
 
 

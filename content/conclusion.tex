@@ -3,12 +3,14 @@
 Für das Projekt \textit{deep} steht mit dem Zybo ein kostengünstiges Experimentierboard mit einem leistungsstarken Prozessor und FPGA zur Verfügung.
 
 Das \textit{''OpenOCDInterface''} kann mit dem Zybo gleich eingesetzt werden, wie das bestehende \textit{''AbatronInterface''} für PowerPCs.
-Damit kann die Entwicklung des \textit{deep}-Kernel mit dem neuen ARM-Prozessor gleich weiter geführt werden wie bisher.
+Damit kann die Entwicklung des \textit{deep}-Kernel mit dem neuen ARM-Prozessor gleich weitergeführt werden wie bisher.
 
 Die in dieser Arbeit entwickelte Toolchain ermöglicht es, ohne zusätzliche Hardware, ein von \textit{deep} kompiliertes Programm auf den Zynq des Zybos zu laden.
 
 Mit dieser Arbeit konnte auch aufgezeigt werden, dass der \textit{gdb} grundsätzlich genutzt werden kann, um eine \textit{deep}-Applikation direkt auf dem Prozessor zu debuggen.
-Dabei können auch \textit{gdb}-Features wie Sourcecode-Lookup verwendet werden, obwohl der \textit{gdb} Java nicht mehr direkt unterstützt.
+Dabei können auch \textit{gdb}-Features, wie Sourcecode-Lookup verwendet werden, obwohl der \textit{gdb} Java nicht mehr direkt unterstützt.
+Dafür mussten aber STABS-Informationen manuell zu einem Programm hinzugefügt werden.
+Der \textit{gdb} konnte nur mit dem Command Line Interface genutzt werden.
 
 Die Toolchain kann ebenfalls als Hardware-Debugger verwendet werden.
 Es ist möglich Prozessorregister und Speichersegmente zu lesen und zu schreiben und es können Hardware-Breakpoints gesetzt werden.
@@ -22,11 +24,13 @@ Damit der Debugger aber effizient genutzt werden kann, fehlen noch zwei Kernelem
 	\item Die Debug-Informationen müssen automatisch beim kompilieren der \textit{deep}-Applikation erzeugt werden.
 		  Dabei sollten nicht die veralteten STABS verwendet werden, wie in dieser Arbeit, sondern das modernere DWARF-Format.
 	\item Ein \textit{gdb}-Plugin für \textit{Eclipse} muss noch entwickelt werden.
-		  Das \textit{''GNU MCU Eclipse plug-ins for ARM \& RISC-V C/C++ developers''}\footnote{https://github.com/gnu-mcu-eclipse/eclipse-plugins} ist ein Plugin für Eclispe, dass genau dieses Problem löst.
-		  Allerdings muss es noch so angepasst werden, dass es in die OpenOCD-Toolchain von dieser Arbeit integrierte werden kann.
+		  Das \textit{''GNU MCU Eclipse plug-ins for ARM \& RISC-V C/C++ developers''}\footnote{https://github.com/gnu-mcu-eclipse/eclipse-plugins} ist ein Plugin für Eclipse, das genau dieses Problem löst.
+		  Allerdings muss es noch so angepasst werden, damit es in die OpenOCD-Toolchain dieser Arbeit integrierte werden kann.
 \end{enumerate}
 
 
+
+\section{Fazit}
 
 
 

@@ -1,12 +1,12 @@
 \chapter{Auswahl der Hardware}
 Die Auswahl von Hardware mit ARM-Prozessoren ist extrem gross.
-Ende September 2016 sind bereits über 86 Milliarden ARM basierte Prozessoren verkauft worden.\footnote{https://www.google.com/url?sa=t\&rct=j\&q=\&esrc=s\&source=web\&cd=1\&ved=2ahUKEwjag87kpNbcAhWCM-wKHeEiCkUQFjAAegQIABAC\&url=https\%3A\%2F\%2Fwww.arm.com\%2F-\%2Fmedia\%2Farm-com\%2Fnews\%2FARM-media-fact-sheet-2016.pdf}%3Fla%255Cu003den&usg=AOvVaw0espCUd47jPb5U2s59E8q4}
-Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM Prozessoren verbreitet sind.
+Ende September 2016 sind bereits über 86 Milliarden ARM-basierte Prozessoren verkauft worden.\footnote{https://www.google.com/url?sa=t\&rct=j\&q=\&esrc=s\&source=web\&cd=1\&ved=2ahUKEwjag87kpNbcAhWCM-wKHeEiCkUQFjAAegQIABAC\&url=https\%3A\%2F\%2Fwww.arm.com\%2F-\%2Fmedia\%2Farm-com\%2Fnews\%2FARM-media-fact-sheet-2016.pdf}%3Fla%255Cu003den&usg=AOvVaw0espCUd47jPb5U2s59E8q4}
+Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM-Prozessoren verbreitet sind.
 
 In diesem Kapitel soll aus dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
 % Die ausgewählte Hardware soll ein Experimentierboard mit einem ARM-Prozessor gefunden werden, dass im Robotik Unterricht verwendet werden kann.
 Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern später auch für den Robotik-Unterricht.
-Zusätzlich sollte der Prozessor auch leistungsstark und auch flexibel genug sein, um ihn, oder eine Variante aus der gleichen Familie, in anspruchsvollen Robotikprojekten verwenden zu können.
+Zusätzlich sollte der Prozessor auch leistungsstark und flexibel genug sein, um ihn, oder eine Variante aus der gleichen Familie, in anspruchsvollen Robotikprojekten verwenden zu können.
 %TODO extrem weit verbreitet
 %TODO gorosse auswahl von verschiedener hw
 %TODO warum muss hw in dieser arbeit gewählt werden
@@ -23,11 +23,11 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 	\begin{itemize}
 	\item FPGA: Der Prozessor muss mit einem FPGA kommunizieren können.
 	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger, wie beispielsweise das BDI3000\footnote{http://www.abatron.ch/fileadmin/user\_upload/news/BDI3000-Brochure.pdf}, von Abatron unterstützen. 
-	\item Günstiger Programmierer: Wenn zusätzliche Hardware benötigt wird um die \textit{deep}-Applikation auf das Target zu schreiben, dann muss diese möglichst günstig sein.
+	\item Günstiger Programmierer: Wenn zusätzliche Hardware benötigt wird, um die \textit{deep}-Applikation auf das Target zu schreiben, dann muss diese möglichst günstig sein.
 	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende Produkte oder Nischenprodukte sind nicht akzeptabel.
 	\item Als fertiges Modul erhältlich: Für den Unterricht ein eigenes PCB entwickeln und herstellen ist keine Option.
 	%TODO synonym einbettbar:
-	\item Einbettbar: Der Prozessor muss auch bei einem selbst entwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
+	\item Einbettbar: Der Prozessor muss auch bei einem selbstentwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
 	\item Die Hardware muss noch lange erhältlich bleiben.
 	\item FPU (\textit{Floating Point Unit}): Für Gleitzahlenarithmetik.
 	\item Netzwerkschnitstelle: RJ-45 inklusive MAC\footnote{Media Access Control} und \textit{Magnetics}.
@@ -48,8 +48,8 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 \item Systemebene
 	\begin{itemize}
 	%TODO synonym einbettbar:
-	\item Einfach einbettbar: Der Prozessor ist als Prozessormodul erhältlich, so dass das Design von einem selbst entwickelten PCB einfacher wird.
-	\item Günstiger Hardwaredebugger: Der Hardwaredebugger kann auch für Applikationsentwicklung mit \textit{deep} eingesetzt werden.
+	\item Einfach einbettbar: Der Prozessor ist als Prozessormodul erhältlich, sodass das Design von einem selbstentwickelten PCB einfacher wird.
+	\item Günstiger Hardwaredebugger: Der Hardwaredebugger kann auch für die Applikationsentwicklung mit \textit{deep} eingesetzt werden.
 	\item Möglichst schneller Download der Applikation.
 %TODO	\item Überdimensionierte HW
 	\end{itemize}
@@ -65,15 +65,15 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 
 \section{Hardware Debugger}
 Der Begriff \textit{Hardware Debugger} ist nicht eindeutig definiert.
-Im einfachsten Fall kann ein Hardware Debugger nur ein \textit{Boundary Scan} durchführen wie es ursprünglich für JTAG vorgesehen war.
+Im einfachsten Fall kann ein Hardware Debugger nur einen \textit{Boundary Scan} durchführen, wie es ursprünglich für JTAG vorgesehen war.
 Bei \textit{Boundary Scan} können die I/O Pins von einem Prozessor gelesen und auch gesetzt werden.
-Mit so einem Scan kann während der Produktion bei den bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und dabei keine Kurzschlüsse bilden.
-Für diesen Scan wird der Prozessor Kern nicht verwendet, sondern eine separate Peripherie im Prozessor.
-Über das JTAG Interface kann der Scan ausgeführt werden, ohne dass eine Applikation auf dem Prozessor ausgeführt werden muss.
+Mit solch einem Scan kann während der Produktion bei den bestückten PCBs überprüft werden, ob alle Lötstellen Kontakt herstellen und dabei keine Kurzschlüsse bilden.
+Für diesen Scan wird der Prozessor-Kern nicht verwendet, sondern eine separate Peripherie im Prozessor.
+Über das JTAG-Interface kann der Scan ausgeführt werden, ohne dass eine Applikation auf dem Prozessor ausgeführt werden muss.
 
-Moderne Prozessoren erweitern diese grundlegende Funktionen mit einigen sehr hilfreichen Features.
+Moderne Prozessoren erweitern diese grundlegendsten Funktionen mit einigen sehr hilfreichen Features.
 % Moderne Prozessoren haben noch viel mehr Funktionen.
-So bieten ARM Prozessoren mit der \textit{CoreSight} Technologie noch viel mehr als nur einen \textit{Boundary Scan}.
+So bieten ARM-Prozessoren mit der \textit{CoreSight}-Technologie noch viel mehr als nur einen \textit{Boundary Scan}.
 % TODO besserer Satz
 Die untenstehende Liste zeigt einige Funktionen dieser Technologie, aber nicht alle.
 Die für diese Arbeit relevanten Funktionen sind \textbf{fett} geschrieben.
@@ -103,13 +103,13 @@ Cortex-A Prozessoren bieten den umfangreichsten Support für externe Peripherien
 Sie sind auch die leistungsstärksten ARM-Cortex Prozessoren.
 
 \subsection{Cortex-R}
-Cortex-R Prozessoren werden entwickelt für Echtzeitanwendungen und sicherheitskritische Applikationen, wie Festplattenkontrolle und medizinische Geräte.
-Sie sind normalerweise nicht mit einer MMU \textit{Memory Management Unit} ausgerüstet.
+Cortex-R Prozessoren werden entwickelt für Echtzeitanwendungen und sicherheitskritische Applikationen, wie Festplattenkontroller und medizinische Geräte.
+Sie sind normalerweise nicht mit einer MMU (\textit{Memory Management Unit}) ausgerüstet.
 % und können deshalb nich mit einem Linux oder Windows verwendet werden.
 Mit einer Taktrate von über 1GHz und einem sehr schnellen Interruptverhalten eignen sich Prozessoren mit einem Cortex-R sehr gut, um auf externe Stimuli schnell zu reagieren.
 
 \subsection{Cortex-M}
-Die Prozessoren aus der Cortex-M Familien sind mit einer Taktrate um 200Mhz relativ langsam.
+Die Prozessoren aus der Cortex-M Familie sind mit einer Taktrate um 200Mhz relativ langsam.
 Sie sind sehr stromsparend und durch die kurze Pipeline haben sie eine deterministische und kurze Interruptverzögerung.
 Die Prozessoren aus der Cortex-M Reihe unterstützen aber nur die Thumb-Instruktionen und kommen deshalb nicht in Frage.
 
@@ -127,15 +127,15 @@ Aus diesen Gründen wird die Auswahl auf die Prozessoren aus der Cortex-A-Reihe 
 % TODO tabellen titel und referenz?
 \begin{table}[]
 \centering
-\caption{Übersicht ARM Mikroarchitekturen}
 \label{t-uebersichtARMMikroarchitekturen}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{}  & \textbf{Vorteile}                                                                                                                                                                                                                                    & \textbf{Nachteile}                                                                                                                                                                             \\ \hline
-\textbf{A} & \begin{tabular}[c]{@{}l@{}}* Sehr leistungsstark\\ * Support für vollwertige Betriebssysteme\\ * Grosse Variation erhältlich (energiesparend /\\  sehr leistungsstark)\\ * Reichhaltiger Funktionsumfang\\ * NEON und FPU Unterstützung\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Langsamer Context-Switch\\ * Relativ hoher Stromverbrauch\\ * Relativ teuer\\ * Mit GPU erhältlich\\ * Keine DSP Unterstützung\\ * Keine HW-Division\end{tabular} \\ \hline
-\textbf{R} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geeignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux-Unterstützung\end{tabular}                                                        \\ \hline
+\textbf{A} & \begin{tabular}[c]{@{}l@{}}* Sehr leistungsstark\\ * Support für vollwertige Betriebssysteme\\ * Grosse Variation erhältlich (energiesparend /\\  sehr leistungsstark)\\ * Reichhaltiger Funktionsumfang\\ * NEON und FPU-Unterstützung\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Langsamer Context-Switch\\ * Relativ hoher Stromverbrauch\\ * Relativ teuer\\ * Mit GPU erhältlich\\ * Keine DSP-Unterstützung\\ * Keine HW-Division\end{tabular} \\ \hline
+\textbf{R} & \begin{tabular}[c]{@{}l@{}}* Sehr gut geeignet für Echtzeitanwendungen\\ * Sehr schneller Context-Switch\\ * DSP-Unterstützung\end{tabular}                                                                                                           & \begin{tabular}[c]{@{}l@{}}* Kleiner Funktionsumfang\\ * Nicht so leistungstark wie Cortex A\\ * Keine Linux-Unterstützung\end{tabular}                                                        \\ \hline
 \textbf{M} & \begin{tabular}[c]{@{}l@{}}* Sehr schneller Context-Switch\\ * Sehr energiesparend\\ * DSP-Unterstützung\end{tabular}                                                                                                                                & \begin{tabular}[c]{@{}l@{}}* Geringe Rechenleistung\\ * Keine Linux-Unterstützung\\ * Unterstützt nur Thumb-Instruktionen\end{tabular}                                                         \\ \hline
 \end{tabular}
+\caption{Übersicht ARM Mikroarchitekturen}
 \end{table}
 
 
@@ -172,13 +172,13 @@ Bild \ref{fig:anbindungFPG} gibt eine schematische Übersicht über die verschie
 
 \subsection{FPGA als Zusatzplatine zum Prozessorboard - Bauweise ''Modular''}
 Das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}\footnote{https://www.element14.com/community/docs/DOC-69215/l/fpga-development-board-cape-for-the-beaglebone} ist eine Aufsteckplatine für den \textit{Beaglebone Black}.
-Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den ARM basierten Linux PC um einen \textit{''Spatran 6 LX9''} FPGA, inklusive einiger I/O-Peripherien und SDRAM.
+Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den ARM-basierten Linux PC um einen \textit{''Spatran 6 LX9''} FPGA, inklusive einiger I/O-Peripherien und SDRAM.
 
 \textit{Vorteile:}
 \begin{itemize}
 	\item Relativ günstig.
 	\item Funktioniert ''Out of the Box''
-	\item Schnelles GPMC (General-Purpose Memory Controller) Interface (bis zu 70 MB/s) zwischen Prozessor und FPGA.
+	\item Schnelles GPMC-Interface (General-Purpose Memory Controller) zwischen Prozessor und FPGA.
 \end{itemize}
 
 \textit{Nachteile:}
@@ -195,13 +195,13 @@ So ein kleines Angebot disqualifiziert diese Bauweise.
 
 
 \subsection{FPGA auf dem gleichen Modul wie der Prozessor (System On Module) - Bauweise ''SOM''}
-Bei einem SOM (System On Module) ist die CPU und auch der FPGA auf dem gleichen PCB-Modul verbaut verbaut.
+Bei einem SOM (System On Module) ist die CPU und auch der FPGA auf dem gleichen PCB-Modul verbaut.
 Dadurch kann der Hersteller auf dem Modul ein Bus mit kontrollierter Impedanz implementieren.
-Dies ermöglicht sehr hohe Bandbreite bei der Kommunikation zwischen der CPU und dem FGPA möglich.
+Dies ermöglicht eine sehr hohe Bandbreite bei der Kommunikation zwischen der CPU und dem FGPA.
 Das Modul benötigt ein zusätzliches PCB, ein Basisboard, in dem es eingebettet werden kann.
-Oft existieren Experimentierboards mit einer grossen Zahl an unterschiedlichen I/O-Möglichkeiten die gebrauchsfertig gekauft werden können.
-Für eine spezifische Anwendung muss so ein Basisboard für das SOM selbst designed werden, weil ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
-Da neben dem FPGA auch High-Speed-Peripherie wie z.B. RAM auf dem Modul verbaut ist, kann beim Basisboard oft auf die aufwändige Entwicklung von High-Speed-PCB-Traces verzichtet werden.
+Oft existieren Experimentierboards mit einer grossen Zahl an unterschiedlichen I/O-Möglichkeiten, die gebrauchsfertig gekauft werden können.
+Für eine spezifische Anwendung muss ein solches Basisboard für das SOM selbst designed werden, weil ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
+Da neben dem FPGA auch High-Speed-Peripherie, wie z.B. RAM auf dem Modul verbaut ist, kann beim Basisboard oft auf die aufwändige Entwicklung von High-Speed-PCB-Traces verzichtet werden.
 
 Es hat sich gezeigt, dass es nur zwei Anbieter SOM mit FPGA produzieren.
 Nur die beiden Anbieter \textit{solectrix}\footnote{https://www.solectrix.de/de/sxom-module} und \textit{OposSom}\footnote{https://www.solectrix.de/de/sxom-module} scheinen solche Module zu verkaufen.
@@ -209,7 +209,7 @@ Nur die beiden Anbieter \textit{solectrix}\footnote{https://www.solectrix.de/de/
 Weil die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter verfolgt.
 
  
-\subsection{FPGA im gleichen Gehäuse wie der Prozessor (System On Chip - Bauweise ''SOC''}
+\subsection{FPGA im gleichen Gehäuse wie der Prozessor (System On Chip) - Bauweise ''SOC''}
 Seit einigen Jahren werden Produkte verkauft, die eine programmierbare Logik (FPGA) und auch eine dedizierte CPU in einem Chip-Gehäuse verbaut haben.
 Da der FPGA und auch die CPU im selben Gehäuse verbaut sind, ist eine sehr schnelle, integrierte Kommunikation zwischen CPU und FPGA möglich.
 
@@ -218,7 +218,7 @@ Die Produkte von Altera sind aber deutlich teurer als die Chips von Xilinx.
 Besonders die Evaluierungsboards von Altera sind sehr teuer.
 
 Bei der Produktfamilie Zynq von Xilynx gibt es ein breites Angebot von SOCs und auch von Experimentierboards.
-Das Experimentierboard \textit{''Zyb''} wird sogar schon im Unterricht der NTB für die Entwicklung von VHDL genutzt.
+Das Experimentierboard \textit{''Zybo''} wird sogar schon im Unterricht der NTB für die Entwicklung von VHDL genutzt.
 
 
 \subsection{ARM als Softcore in FPGA - Bauweise ''FPGA''}
@@ -226,20 +226,18 @@ Das Experimentierboard \textit{''Zyb''} wird sogar schon im Unterricht der NTB f
 In FPGAs können Prozessoren als sogenannte \textit{Softcores} implementiert werden.
 Dabei wird ein Teil der FPGA-Gates so konfiguriert, dass sie wie ein Mikroprozessor verwendet werden können.
 
-Es existieren aber nur Designs für einfachere Mikroprozessoren, da komplexe Prozessoren viel zu viele Gates benötigen um ökonomisch sinnvoll zu sein.
-ARM Prozessoren der Cortex-A Familie sind sehr komplex und nicht als FPGA-Softcores erhältlich.
-Von der ARM Cortex-Familie sind nur Cortex-M0 und Cortex-M1 erhältlich.
+Es existieren aber nur Designs für einfachere Mikroprozessoren, da komplexe Prozessoren viel zu viele Gates benötigen, um ökonomisch sinnvoll zu sein.
+ARM-Prozessoren der Cortex-A-Familie sind sehr komplex und nicht als FPGA-Softcores erhältlich.
+Von der ARM-Cortex-Familie sind nur Cortex-M0 und Cortex-M1 erhältlich.
 Diese Cores sind aber kostenpflichtig und nicht Open Source.
 
-Weil keine Cortex-A Cores erhältlich sind und alle anderen ARM-Cores kostenpflichtig sind, wird diese Bauweise nicht mehr weiter verfolgt.
+Weil keine Cortex-A-Cores erhältlich sind und alle anderen ARM-Cores kostenpflichtig sind, wird diese Bauweise nicht mehr weiter verfolgt.
 
 
 
 % \subsubsection{Übersicht Bauformen}
 \begin{table}[]
 \centering
-\caption{Übersicht Bauformen}
-\label{t-uebersichtBauformen}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Bauweise} & \textbf{Vorteile}                                                                                                                      & \textbf{Nachteile}                                                       \\ \hline
@@ -248,6 +246,8 @@ Weil keine Cortex-A Cores erhältlich sind und alle anderen ARM-Cores kostenpfli
 \textbf{SOC}      & \begin{tabular}[c]{@{}l@{}}* Potenziell sehr schnelle Datenverbindung\\ \ \ \ zwischen FPGA und Prozessor\\ * Sauberes, abgeschlossenes System\end{tabular}                       & \begin{tabular}[c]{@{}l@{}}* FPGA ist fix\\ * Relativ teuer\end{tabular} \\ \hline
 \textbf{FPGA}     & * Flexibel                                                                                                                             & * Sehr teuer                                                             \\ \hline
 \end{tabular}
+\label{t-uebersichtBauformen}
+\caption{Übersicht Bauformen}
 \end{table}
 
 %\section{Cortex-M}
@@ -272,9 +272,9 @@ Weil keine Cortex-A Cores erhältlich sind und alle anderen ARM-Cores kostenpfli
 
 
 \subsection{Wahl der Bauweise}
-Es hat sich gezeigt, dass es nicht sehr viele Produkte gibt, die einen Cortex-A Prozessor in Kombination mit einem FPGA bieten.
-Einige Produkte zielen mehr auf den Hobby-Bereich wie zum Beispiel das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}.
-Für professionellere Lösungen scheinen selbst entwickelte PCBs der Standard zu sein.
+Es hat sich gezeigt, dass es nicht sehr viele Produkte gibt, die einen Cortex-A-Prozessor in Kombination mit einem FPGA bieten.
+Einige Produkte zielen mehr auf den Hobby-Bereich, wie zum Beispiel das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}.
+Für professionellere Lösungen scheinen selbstentwickelte PCBs der Standard zu sein.
 Alle anderen Ansätze sind oft nur Nischenprodukte für spezielle Anwendungen oder mit geringer Verfügbarkeit.
 
 Seit einigen Jahren ist aber eine signifikante Auswahl von SOCs auf dem Markt.
@@ -293,8 +293,8 @@ Das Zybo-Experimentierboard ist eine sehr naheliegende Wahl, da es bereits für 
 Der Preis des Boards ist auch tief genug, dass eine ganze Klasse für den Unterricht damit ausgerüstet werden kann.
 Eine grosszügige Auswahl an I/Os bieten eine sehr hohe Flexibilität zum experimentieren und auch für den Unterricht.
 
-Das Zybo ist mit Zynq-7000 bestückt.
-Der Zynq-7000 ist ein Modell mit einem Dual-Core Cortex-A9 Prozessor mit 667 MHz.
+Das Zybo ist mit einem Zynq-7000 bestückt.
+Der Zynq-7000 ist ein Modell mit einem Dual-Core-Cortex-A9-Prozessor mit 667 MHz.
 Es existieren aber auch noch günstigere Zynqs mit weniger Leistung und sehr viel teurere Varianten mit einem leistungsstärkeren Prozessor und grösseren FPGA.
 Zusätzlich sind die Zynqs als standalone Chip oder als Modul inklusive RAM erhältlich.
 

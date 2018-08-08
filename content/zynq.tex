@@ -6,7 +6,7 @@ Der Prozessor und dessen Peripherie befindet sich im \textit{Processing System} 
 Der FPGA-Teil des Zynq wird oft PL oder \textit{Programmable Logic} genannt.
 Über den internen AMBA-Bus kann der Prozessor und auch die PL auf die Peripherie, wie z.B. SPI, GPIO, Ethernet oder auch DDR3, zugreifen.
 Das Block Diagramm in der Abbildung \ref{fig:BlockDiagrammZynq} gibt einen guten Überblick über das ganze SoC.
-Das restliche Kapitel beschreibt relevante Komponente und Eigenarten des Zynq.
+Das restliche Kapitel beschreibt relevante Komponenten und Eigenarten des Zynq.
 
 \begin{figure}[htbp]
 	\centering
@@ -22,17 +22,17 @@ MIOs sind \textit{Multiplexed Input Output Pins}, welche direkt vom Prozessor an
 Die EMIOs sind \textit{\textbf{Extended} Multiplexed Input Output Pins}, welche nur über die PL angesprochen werden können.
 Aus diesem Grund können die EMIOs nur verwendet werden, wenn die PL entsprechend programmiert wurde.
 Diese Arbeit beschränkt sich nur auf die MIOs und das PS.
-Im TRM\footnote{Technical Reference Manual} des Zynq\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''2.5.4 MIO-at-a-Glance Table''} ist eine sehr gute Übersicht über alle möglichen Funktionen der MIOs gegeben.
+Im \textit{TRM}\footnote{Technical Reference Manual} des Zynq\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''2.5.4 MIO-at-a-Glance Table''} ist eine sehr gute Übersicht über alle möglichen Funktionen der MIOs gegeben.
 
 % TODO MIO config des zybos
 
 \section{Standard Zybo Workflow}
 Im \textit{Getting Started with Zynq\footnote{https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1}} Tutorial von Digilent ist beschrieben, wie man ein einfaches Design für die PL und ein einfaches Programm für das PS erstellt.
 Das Tutorial deckt den ganzen Workflow ab.
-Dabei werden, z.B. für LED1, LED2 und LED3, auch die EMIOs verwendet.
+Dabei werden, z.B. für LED1, LED2 und LED3 auch die EMIOs verwendet.
 In Schritt 1 bis 7 wird mit Vivado das Design für die PL erstellt und exportiert.
 
-\textbf{Hinweis1:} Die Zybo Toolchain benötigt den standard USB-Treiber. Im Kapitel \ref{kapitel:usbTreiber} ist beschrieben, wie der standard USB-Treiber wieder installiert werden kann.
+\textbf{Hinweis1:} Die Zybo-Toolchain benötigt den standard USB-Treiber. Im Kapitel \ref{kapitel:usbTreiber} ist beschrieben, wie der standard USB-Treiber wieder installiert werden kann.
 
 \textbf{Hinweis2:} Vivado und die Xilinx SDK müssen für dieses Tutorial installiert sein.
 
@@ -43,7 +43,7 @@ Das XSDK verwendet im Hintergrund das XSCT\footnote{https://www.xilinx.com/html\
 Das XSDK kann interaktiv, oder mit Scripts verwendet werden.
 % Die Scriptsprache basiert, wie auch Jim-TCL, auf der Sprache TCL.
 Wie Jim-TCL basiert auch die verwendete Scriptsprache auf der Sprache TCL.
-Wird das ''Hello World'' Programm im XSDK gestartet, erscheint im \textit{SDK Log} Fenster ein detailliertes Log des ausgeführten Scripts.
+Wird das ''Hello World'' Programm im XSDK gestartet, erscheint im \textit{SDK Log}-Fenster ein detailliertes Log des ausgeführten Scripts.
 In diesem Log kann nachvollzogen werden, was das Script beim Download und Start des Programms alles ausgeführt hat.
 
 % TODO was auch immer
@@ -66,7 +66,7 @@ Die Initialisierungs-Methoden werden in der Methode \textit{ps7\_init} aufgerufe
 In Zeile 9 vom \textit{...elf\_on\_local.tcl} wird auch die Methode \textit{ps7\_post\_config} von \textit{ps7\_init.tcl} aufgerufen, welche im Anschluss \textit{ps7\_post\_config\_3\_0} aufruft.
 
 Alle Konfigurationsregister sind im Anhang B vom \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} beschrieben.
-Bevor die Register aber verändert werden können, müssen sie \textit{''unlocked''} werden, in dem der Wert \textit{0x0000DF0D} in die Adresse \textit{0xF8000008} geschrieben wird.
+Bevor die Register aber verändert werden können, müssen sie \textit{''unlocked''} werden, indem der Wert \textit{0x0000DF0D} in die Adresse \textit{0xF8000008} geschrieben wird.
 
 
 \subsection{Grundlegende Methoden}
@@ -98,7 +98,7 @@ Zusätzlich werden auch, falls vorhanden, folgende elektrischen Charakteristiken
 \begin{itemize}
 \item \textbf{Pullup:} Pullup Widerstand aktivieren / deaktivieren.
 \item \textbf{IO\_Type:} Buffer Type: LVCMOS 1.8V, LVCMOS 2.5V, LVCMOS 3.3V,  oder HSTL.
-\item \textbf{Speed:} Slow oder fast CMOS edge.
+\item \textbf{Speed:} Slow / fast CMOS edge.
 \item \textbf{Tristate:} Enalbe / disable Tristate.
 \end{itemize} 
 
@@ -132,7 +132,7 @@ Konfiguriert folgende Peripherien:
 
 Die oben genannten Initialisierungsfunktionen werden vom Xilinx Debugger jedesmal ausgeführt, wenn die Applikation im XSDK mit \textit{''Launch on Hardware (System Debuger)''} gestartet wird.
 Es ist aber auch möglich, die Initialisierung direkt mit der C-Applikation und nicht mit dem Debugger durchzuführen.
-Wird die Initialisierung in der Applikation durchgeführt, und die Applikation auf dem Flash Speicher des Zynq gespeichert, dann Initialisiert sich der Zynq bei jedem Start selber.
+Wird die Initialisierung in der Applikation durchgeführt, und die Applikation auf dem Flash Speicher des Zynq gespeichert, dann initialisiert sich der Zynq bei jedem Start selber.
 Im Beispielprogramm \textit{''helloworld.c''} ist die Methode \textit{''init\_platform()''} enthalten, welche in \textit{''platform.c''} deklariert ist.
 Standardmässig ist die darin enthaltene Methode \textit{''ps7\_init()''} aber auskommentiert.
 \textit{''platform.c''} befindet sich im \textit{''design\_wrapper\_hw\_platform''}, welcher in Vivado erzeugt wurde.
@@ -299,17 +299,17 @@ proc get_number_of_cycles_for_delay { delay } {
 \label{MemoryMapping}
 Im Kapitel 4.1 des \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} ist der Aufbau des Speichers beschrieben.
 Die Abbildung \ref{fig:AddressMapZynq} zeigt einen guten Überblick über die ganzen 4 GB des Adressraumes.
-Bei der Map fällt auf, dass nur ca. 1 GB für DDR RAM verwendet werden kann.
+Bei der Map fällt auf, dass nur ca. 1 GB für den DDR RAM verwendet werden kann.
 
 Der OCM (\textit{On Chip Memory}) ist ein kleiner Speicher im Zynq der ohne Initialisierung verwendet werden kann. 
-Ideal für ein Bootloader.
+Das ist ideal für einen Bootloader.
 Für den OCM stehen ganz am Anfang des Speicherbereichs (\textit{0x0000\_0000}) und ganz am Ende (\textit{0xFFFC\_0000}) 256 kB zur Verfügung.
 Der OCM besteht aus 4 x 64 kB grossen Teilbereichen, die dem Register \textit{0xF8000910} wahlweise im oberen oder im unteren Bereich zugewiesen werden können.
 Beim Bootvorgang werden die ersten drei Teile in den unteren Bereich (\textit{0x0000\_0000 - 0x0002\_FFFF}) und der vierte Teil in den obersten Bereich (\textit{0xFFFF\_0000 - 0xFFFF\_FFFF}) gemapt.
 Das geschieht noch bevor die erste Instruktion aus dem User-Code ausgeführt wird, also auch vor dem selbstgeschriebenen Bootloader.
 Der oben beschriebene Bootvorgang kann nicht geändert werden.
 Mit Pull-Up-Widerständen kann aber beeinflusst werden, ob der ARM im \textit{Secure-Mode} oder im \textit{Non-Secure-Mode} booten soll und wo der Bootloader gesucht werden soll.
-Mehr dazu im Zynq TRM\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''Kapitel 4.4: Boot and Configuration''}.
+Mehr dazu im Zynq \textit{TRM}\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''Kapitel 4.4: Boot and Configuration''}.
 
 Der Speicherbereich für den RAM ist erst nutzbar, wenn der RAM initialisiert wurde.
 Die Initialisierungsmethode wird im Kapitel \ref{Initialisierungsmethoden}.
@@ -337,11 +337,11 @@ Da OpenOCD diese Instruktion unterstützt, können die \textit{Access Control Re
 Das NSACR (\textit{Non-secure Access Control Register}) kontrolliert, ob die FPU auch im \textit{non-secure mode} genutzt werden kann.
 Das CPACR (\textit{Coprocessor Access Control Register)} kontrolliert den Zugang zu allen Coprozessoren (CP10 und CP11 sind die FPU).
 
-Zusätzlich muss auch noch das FPEXC EN Bit im FPEXC Register (\textit{Floating-Point Satus and Control Register}) gesetzt werden.
-Das FPEXC Register kann aber nicht mit dem Debugger direkt gesetzt werden, da eine spezielle ARM Instruktion dafür verwendet werden muss.
-Im Kapitel \textit{''2.4.2 Accessing the FPU registers} des FPU-TRM\cite{bib:FPUTechnicalReferenceManual} sind die Details beschrieben, welche Register genau gesetzt werden müssen.
+Zusätzlich muss auch noch das FPEXC\_EN-Bit im FPEXC-Register (\textit{Floating-Point Satus and Control Register}) gesetzt werden.
+Das FPEXC-Register kann aber nicht mit dem Debugger direkt gesetzt werden, da eine spezielle ARM-Instruktion dafür verwendet werden muss.
+Im Kapitel \textit{''2.4.2 Accessing the FPU registers} des \textit{FPU-TRM}\cite{bib:FPUTechnicalReferenceManual} ist detailliert beschrieben, welche Register genau gesetzt werden müssen.
 
-Mit dem folgenden ARM Code kann die FPU z.B. beim Booten des Kernels initialisiert werden:
+Mit dem folgenden ARM-Code kann die FPU z.B. beim Booten des Kernels initialisiert werden:
 
 \lstset{language=[x86masm]Assembler}
 \begin{lstlisting}[frame=single]
@@ -371,8 +371,8 @@ Der folgende Ablauf ermöglicht es aber trotzdem, diese Register auszulesen:
 \item \texttt{mww 0x4 0xEEF61A10}\ \ \ \ \ \textcolor{darkgreen}{// Speichert die Instruktion \texttt{''VMRS R1, MVFR1''} in den OCM.}
 \item \texttt{bp 0x8 1 hw}\ \ \ \ \ \textcolor{darkgreen}{// Breakpoint nach der Instruktion (32 Bit Instruktion = 4 Byte)}
 \item \texttt{resume 0x0}\ \ \ \ \ \textcolor{darkgreen}{// Führt die Instruktion bei der Adresse 0 aus}
-\item \texttt{reg 0}\ \ \ \ \ \textcolor{darkgreen}{// Liest dass Register 0 aus, welches eine Kopie des MVFR0 enthält.}
-\item \texttt{reg 1}\ \ \ \ \ \textcolor{darkgreen}{// Liest dass Register 1 aus, welches eine Kopie des MVFR1 enthält.}
+\item \texttt{reg 0}\ \ \ \ \ \textcolor{darkgreen}{// Liest das Register 0 aus, welches eine Kopie des MVFR0 enthält.}
+\item \texttt{reg 1}\ \ \ \ \ \textcolor{darkgreen}{// Liest das Register 1 aus, welches eine Kopie des MVFR1 enthält.}
 \end{enumerate}
 
 Die Inhalte der Register sind:

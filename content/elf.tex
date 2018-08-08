@@ -27,7 +27,7 @@ Im Kapitel \ref{section:installationGDB} wird beschrieben, wie die Toolchain ins
 	\centering
 		% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/JTAGAdapter.jpg}
 		\includegraphics[width=7cm,keepaspectratio]{graphs/elf.png}
-	\caption[Der Aufbau von einer ELF Datei]{Der Aufbau von einer ELF Datei\footnotemark}
+	\caption[Der Aufbau einer ELF Datei]{Der Aufbau einer ELF Datei\footnotemark}
 	\label{fig:ELFStructure}
 \end{figure}
 \footnotetext{https://slideplayer.com/slide/6444592/}
@@ -51,7 +51,7 @@ Darin ist enthalten, welchen Offset die einzelnen Segmente innerhalb der Datei h
 Zusätzlich ist auch definiert, zu welcher Speicheradresse (im RAM) die Segmente kopiert werden, wenn das Programm gestartet wird und was für Rechte (ausführbar, lesen und schreiben) jedes Speichersegment hat.
 Wird, z.B. wegen eines nicht initialisierten Pointers, in einer Speicherstelle im Memory gelesen, die kein \textit{''read flag''} hat, wird ein \textit{Segmentation Fault} ausgelöst.
 % TODO: welches segment wird beim gdb geschrieben?
-Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binären Daten mit dem Befehl \texttt{''load''} an welchen Speicherort der Programmcode, die Variablen und die Konstanten kopiert werden sollen.
+Der \textit{gdb} nutzt Informationen aus diesem Header um zu bestimmen, welche binären Daten mit dem Befehl \texttt{''load''} an welchen Speicherort die verschiedenen Segmente kopiert werden sollen.
 Ein Segment beinhaltet ein oder mehrere \textit{Sections}.
 % TODO: satz sollte klarer sein
 % Die Segmente sind beim Ausführen der Datei relevant.
@@ -218,7 +218,7 @@ Da Low-Level-Operationen, wie die Initialisierung des Stackpointers, mit Java no
 
 
 \subsection{Beispiel-Programm ''loopExample''}
-Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:loopExample.c} ist fast identisch mit dem Code des Java Demoprogramms.
+Der Code in \textit{''loopExample.c''} im Anhang \ref{anhang:loopExample.c} ist fast identisch mit dem Code des Java-Demoprogramms.
 Es wurden nur einige Änderungen vorgenommen, damit der Code als C-Programm kompiliert werden kann.
 \texttt{c\_entry()} ist der Eintrittspunkt des Programms und erfüllt im embedded Bereich eine ähnliche Aufgabe wie die  \texttt{main()}-Methode in einem generischen C-Programm.
 
@@ -310,7 +310,7 @@ Die Direktiven 53 bis 71 sind vom Typ SLINE.
 Sie werden für die \textit{Sourcecode-Lookup}-Funktion verwendet.
 \textit{n\_desc} beschreibt die Zeile im Sourcecode und \textit{n\_value} die entsprechende Adresse im Maschinencode.
 Es fällt auf, dass die Sourcecode-Adresse von der Direktive 53 auf 54 nur um eine Zeile steigt, die Maschinencode-Adresse aber von 00000000 auf 0000000c.
-Im Gegensatz zur Zeilennummer, wird die Adresse im Maschinencode im Hexadezimalen System angegeben.
+Im Gegensatz zur Zeilennummer, wird die Adresse im Maschinencode im hexadezimalen System angegeben.
 Da es sich um 32-Bit lange Maschinen-Instruktionen (also 4 Byte) handelt, steigt die Adresse um 4 nach jeder Instruktion.
 Es werden also drei Maschinen-Instruktionen ausgeführt, bevor die erste Zeile in der Methode \texttt{''c\_entry()''} ausgeführt wird.
 Im disassemblierten Maschinencode sieht man folgende Instruktionen:
@@ -332,7 +332,7 @@ Der Typ ''(0,1)'' wurde mit der Direktive 2 als Integer definiert.
 
 Die Direktive 75 definiert eine Variable, die nicht auf dem Stack gespeichert wird.
 Dieser Typ wird verwendet, wenn die Variable nur in einem Prozessor-Register gespeichert und nicht auf dem Stack abgelegt wird.
-Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack wenn sie erzeugt oder verändert werden und lädt sie jedesmal neu vom Stack, wenn sie wieder gelesen werden.
+Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack, wenn sie erzeugt oder verändert werden und lädt sie jedesmal neu vom Stack, wenn sie wieder gelesen werden.
 Wird beim Kompilieren eine Code-Optimierung verwendet, kann dieses Verhalten ändern.
 Mit der Zeile \texttt{{''register int s=1;''}} im C-Code wird der Compiler gezwungen, die Variable in den Registern zu behalten und nicht auf dem Stack abzulegen.
 Aus diesem Grund wird für die Variable \textit{''s''} eine Direktive des Typs RSYM verwendet, die nur den Namen der Variable und die Registernummer beschreibt, in der die Variable gespeichert wird.

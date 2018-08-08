@@ -12,8 +12,8 @@ Das bedeutet, er erhält Befehle von der OpenOCD-Software über USB und überset
 OpenOCD ist eine Software-Zwischenschicht die für den Debugger benötigt wird.
 
 Auf dem \textit{Windows PC} wird die \textit{deep}-Applikation in Eclipse geschrieben, kompiliert und debuggt.
-Plugins erweitern Eclipse um die notwendige Funktionen, die für die Entwicklung von \textit{deep}-Applikationen notwendig sind.
-Es sind beide Debug Toolchains, die ''klassische'' Abatron-Toolchain und die neue OpenOCD-Toolchain, in dieser Übersicht abgebildet.
+Plugins erweitern Eclipse um die notwendigen Funktionen, die für die Entwicklung von \textit{deep}-Applikationen notwendig sind.
+In dieser Übersicht sind beide Debug Toolchains, die ''klassische'' Abatron-Toolchain und die neue OpenOCD-Toolchain, abgebildet.
 
 Bei der \textit{Abatron-Toolchain} wird das \textit{Abatron BDI3000} mit dem \textit{abatronInterface}-Plugin über die rote TCP/IP-Verbindung angesprochen.
 Das BDI kommuniziert dann über die blaue JTAG-Verbindung direkt mit dem Zynq-Chip.
@@ -24,7 +24,7 @@ Die OpenOCD-Software stellt einen \textit{gdb}-Server und auch ein CLI (\textit{
 % referenz zu openOCDInterface
 Das neue Eclipse-Plugin \textit{''OpenOCDInterface''} verwendet das CLI über den TCP/IP-Port 4444 (grüner Pfeil) und bildet so die \textit{CLI-OpenOCD-Toolchain}.
 OpenOCD verwendet dann den \textit{WinUSB}-Treiber um mit dem FT2232-Chip über USB zu kommunizieren.
-Der FT2232-Chip verwendet den selben, blauen JTAG-Bus wie das BDI3000 zur Kommunikation mit dem Zynq.
+Der FT2232-Chip verwendet denselben blauen JTAG-Bus wie das BDI3000 zur Kommunikation mit dem Zynq.
 
 Die \textit{gdb-OpenOCD-Toolchain} kann mit einem allein lauffähigen \textit{gdb} verwendet werden (orange, gestrichelter Pfeil), wie in Kapitel \ref{chapter:Der-gdb-Debugger} beschrieben.
 Eine weitere Möglichkeit wäre ein \textit{gdb}-Plugin für Eclipse, damit der \textit{gdb} direkt aus Eclipse heraus verwendet werden kann.
@@ -47,7 +47,7 @@ Im Folgenden werden die drei verschiedenen Toolchains genauer erklärt.
 \subsection{Abatron-Toolchain}
 Die \textit{Abatron-Toolchain} (Abbildung \ref{fig:AbatronToolchain}) benötigt weder die OpenOCD-Software noch den FT2232-Chip, dafür aber den teuren BDI3000-Debugger.
 Diese ''klassische'' Toolchain nutzt das bestehende \textit{deep}-Plugin \textit{abatronInterface} und wird für die Entwicklung von \textit{deep} für den PowerPC verwendet.
-In dieser Arbeit wird die \ref{fig:AbatronToolchain} nicht verwendet.
+In dieser Arbeit wird die \textit{Abatron-Toolchain} nicht verwendet.
 
 \begin{figure}[htbp]
 	\centering
@@ -60,14 +60,14 @@ In dieser Arbeit wird die \ref{fig:AbatronToolchain} nicht verwendet.
 
 \FloatBarrier
 \subsection{CLI-OpenOCD-Toolchain}
-Wie in der Abbildung \ref{fig:CLIOpenOCDToolchain} zu sehen ist, wird das teure BDI wird für diese Toolchain nicht  benötigt.
+Wie in Abbildung \ref{fig:CLIOpenOCDToolchain} zu sehen ist, wird das teure BDI wird für diese Toolchain nicht  benötigt.
 % verbessern: satzbau
 Da das CLI (Command Line Interface) von OpenOCD aber sehr ähnlich ist wie das CLI des BDI, ist eine Portierung der bestehenden \textit{Abatron-Toolchain} in die neue \textit{CLI-OpenOCD-Toolchain} relativ einfach.
 Die \textit{CLI-OpenOCD-Toolchain} lehnt sich deshalb sehr stark an die bestehende \textit{Abatron-Toolchain} an.
 % Die bestehende Toolchain für den PPC ist nicht auf der offiziellen \textit{deep}-Homepage dokumentiert.
 
 Mit dieser Toolchain ist \textit{Sourcecode-Debugging} aber nicht möglich.
-Das bedeutet, es ist nicht möglich im Sourcecode Breakpoints zu setzten oder durch einzelne Zeilen im Sourcecode zu steppen wie man es von Debuggern, wie dem \textit{gdb}, gewohnt ist.
+Das bedeutet, es ist nicht möglich im Sourcecode Breakpoints zu setzten oder durch einzelne Zeilen im Sourcecode zu steppen.
 % TODO wirklich target commands?
 Bestehende Möglichkeiten aus der alten \textit{Abatron-Toolchain}, wie \textit{Target Commands}, bleiben aber erhalten.
 % TODO: Schema
@@ -87,16 +87,19 @@ Im Kapitel \ref{section:CLI-OpenOCD-Toolchain} wird die Implementation dieser To
 \FloatBarrier
 \subsection{\textit{gdb}-OpenOCD-Toolchain}
 In der \textit{gdb-OpenOCD-Toolchain} wird, wie bei der obigen Toolchain, ebenfalls die OpenOCD-Software und der FT2232-Chip verwendet.
-Es wird aber nicht mehr ein Interface bestehend auf der ''klassischen'' Abatron Toolchain verwendet, sondern es wird direkt der \textit{gdb}-Debugger.
-In der schematische Übersicht der Toolchain in Abbildung \ref{fig:gdbOpenOCDToolchain} wird deutlich, dass sie fast die gleichen Komponenten nutzt wie die \textit{CLI-OpenOCD-Toolchain}.
+Es wird aber nicht mehr ein Interface bestehend auf der ''klassischen'' Abatron Toolchain verwendet, sondern es wird direkt das CLI des \textit{gdb}-Debugger genutzt.
+In der schematischen Übersicht der Toolchain in Abbildung \ref{fig:gdbOpenOCDToolchain} wird deutlich, dass sie fast die gleichen Komponenten nutzt wie die \textit{CLI-OpenOCD-Toolchain}.
 % Dadurch kann \textit{Sourcecode-Debugging} direkt in Eclipse eingesetzt werden.
 Mit dem \textit{gdb} können auch erweiterte Debugging-Featurers wie \textit{Sourcecode-Lookup} und \textit{Breakpoints} verwendet werden.
 % günstige hardware
 
 % TODO besserer text:
 In dieser Arbeit wird nur die vereinfachte Toolchain mit dem standalone \textit{gdb}-Debugger implementiert.
-Mit der vereinfachten Toolchain kann der \textit{gdb} im Zusammenhang mit der \textit{OpenOCD-Toolchain}.
+Mit der vereinfachten Toolchain kann das CLI des \textit{gdb} in Kombination mit der \textit{OpenOCD-Toolchain} für zum Debuggen genutzt werden.
+
 Die komplette \textit{gdb-OpenOCD-Toolchain} kann auf dieser Toolchain aufbauen.
+Bei der kompletten \textit{gdb-OpenOCD-Toolchain} soll der \textit{gdb} im Eclipse integriert werden.
+Dadurch kann in Eclipse die Applikation entwickelt und auch debuggt werden.
 
 Im Kapitel \ref{chapter:Der-gdb-Debugger} wird diese Toolchain detailliert beschrieben.
 

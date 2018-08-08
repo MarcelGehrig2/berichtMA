@@ -12,7 +12,7 @@ Zusammen mit einem Hardware-Adapter bildet OpenOCD einen vollständigen Debugger
 Der Adapter bildet dabei das elektrische Interface zum Prozessor und muss auch auf den Prozessor abgestimmt sein.
 Relevant sind dabei unter anderem der Transport Layer (JTAG/SWD), das elektrische Potential und natürlich auch der physikalische Stecker.
 In vielen Fällen basieren solche Adapter, wenn sie zusammen mit OpenOCD verwendet werden, auf dem FT2232-Chip von FTDI.
-Solch ein generischer Adapter ist in der Abbildung \ref{fig:GenerischerFT2232Adapter} zu sehen.
+Ein solcher generischer Adapter ist in Abbildung \ref{fig:GenerischerFT2232Adapter} zu sehen.
 
 \begin{figure}[htbp]
 	\centering
@@ -26,7 +26,7 @@ Solch ein generischer Adapter ist in der Abbildung \ref{fig:GenerischerFT2232Ada
 Bei Experimentierboards ist der FT2232 oft auch direkt auf das Board aufgelötet.
 So kann eine einfache USB-Verbindung genutzt werden, um den Prozessor zu debuggen.
 Beim Zybo wurde ebenfalls dieser Ansatz verfolgt.
-Aus diesem Grund reicht ein einfaches USB Kabel um den Prozessor des Zybos auf einer Hardwareebene debuggen zu können.
+Aus diesem Grund reicht ein einfaches USB-Kabel um den Prozessor des Zybos auf einer Hardwareebene debuggen zu können.
 
 
 
@@ -60,7 +60,7 @@ Das Device mit der \textit{Vendor ID=0403}, der \textit{Device ID=6010} und dem 
 Mit einem Rechtsklick kann \textit{Install WinUSB} ausgewählt und der Treiber installiert werden.
 Abbildung \ref{fig:InstallWinUSBDriver} zeigt die Liste mit allen USB Devices und das Kontextmenü für die Installation des richtigen Treibers.
 Um den Standardtreiber wieder zu installieren, kann einfach \textit{''Restore default driver''} ausgewählt werden.
-Nachdem das Zybo einmal aus- und wieder einschaltet wird, ist der Treiber einsatzbereit.
+Nachdem das Zybo einmal aus- und wieder eingeschaltet worden ist, ist der Treiber einsatzbereit.
 
 Das Device mit der \textit{Vendor ID=0403, Device ID=6010} und \textit{Interface \textbf{1}} ist die UART-Verbindung zum Prozessor.
 Dieser Treiber darf \textbf{nicht} ersetzt werden.
@@ -106,10 +106,10 @@ Die beiden Scripts werden in den folgenden Kapitel genauer beschrieben.
 Die Interfacekonfiguration beschreibt hauptsächlich den verwendeten Adapter.
 Da beim Zybo kein Adapter verwendet wird, sondern der aufgelötete FT2232, wird mit diesem Script der FTDI-Chip und dessen Anbindung an den Zynq konfiguriert.
 
-Da ein FTDI-Chip als Interface verwendet wird, sollte ein passender Script unter \textit{openocd-0.10.0/scripts/ interface/ftdi/} zu finden sein.
-Keiner der Scripts passt vom Namen her auf \textit{Zybo} oder \textit{FT2232}.
+Da ein FTDI-Chip als Interface verwendet wird, sollte ein passendes Script unter \textit{openocd-0.10.0/scripts/ interface/ftdi/} zu finden sein.
+Keiner der Scripts passte vom Namen her auf \textit{Zybo} oder \textit{FT2232}.
 Eine Google Suche nach einem passenden Script war erfolgreicher.
-Ein Github User mit dem Namen \textit{emard} hat folgenden Script in einem von seinen Repositories\footnote{https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram\_bram\_hdmi\_ise/zybo.ocd} gespeichert:
+Ein Github User mit dem Namen \textit{emard} hat folgendes Script in einem seiner Repositories\footnote{https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram\_bram\_hdmi\_ise/zybo.ocd} gespeichert:
 
 \textit{zybo-ftdi.ocd:}
 \lstset{language=tcl}
@@ -228,11 +228,11 @@ Das Plugin kann von folgendem Repositorie geklont werden:\\
 
 \subsection{Aufbau des OpenOCDInterface}
 Wie das \textit{''AbatronInterface''} besteht dieses Interface auch nur aus einer Java-Datei.
-Es besteht aus einer einzigen Klasse (\texttt{ch.ntb.inf.openOCDInterface.OpenOCD}) welche die abstrakte Klasse \texttt{TargetConnection} von \textit{deep} erweitert.
+Es besteht aus einer einzigen Klasse (\texttt{ch.ntb.inf.openOCDInterface.OpenOCD}), welche die abstrakte Klasse \texttt{TargetConnection} von \textit{deep} erweitert.
 
 Da das BDI3000 ein sehr ähnliches CLI wie OpenOCD verwendet, musste oft nur die Syntax von einigen Befehlen angepasst werden.
 Die Kommunikation mit Telnet konnte übernommen werden.
-Ein sehr einfaches Beispiel für so einen ähnlichen Befehl ist die \texttt{wirteWord()}-Methode:
+Ein sehr einfaches Beispiel für solch einen ähnlichen Befehl ist die \texttt{wirteWord()}-Methode:
 
 \lstset{language=java}
 \begin{lstlisting}
@@ -247,7 +247,7 @@ Bei OpenOCD wird nicht nur der Wert der Speicherstelle zurückgesendet, sondern 
 Eine Antwort wird in folgender Form zurückgegeben:\\
 \texttt{0x00000100: e41010004}
 
-Deshalb musste für einige Methode die Antwort geparsed werden.
+Deshalb musste für einige Methoden die Antwort geparsed werden.
 
 Alle Debugging-Views sind bereits im \textit{deep}-Plugin selbst implementiert und müssen nicht erneut implementiert werden. 
 
