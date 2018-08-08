@@ -51,7 +51,7 @@ Im Anhang \ref{anhang:SDKLog} ist eine Kopie eines solchen Logs zu finden.
 % \textit{D:/Vivado/01\_gettingStarted/01\_gettingStarted.sdk/.sdk/launch\_scripts/xilinx\_c-c++\_application\_(system\_debugger)/system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
 % \textit{D:/Vivado\01\_gettingStarted\01\_gettingStarted.sdk\.sdk\launch\_scripts\xilinx\_c-c++\_application\_(system\_debugger)\system\_debugger\_using\_debug\_01\_gettingstarted\_applicationproject.elf\_on\_local.tcl}
 
-Das Script \textit{ps7\_init.tcl} definiert unter anderem die fünf Initialisierungs-Methoden:
+Das Script \textit{ps7\_init.tcl} definiert unter anderem die fünf Initialisierungs-Methoden, welche im Kapitel \ref{Initialisierungsmethoden} genauer beschrieben werden:
 \begin{itemize}
 %\begin{itemize}
 \item \textit{ps7\_mio\_init\_data\_3\_0}
@@ -62,7 +62,34 @@ Das Script \textit{ps7\_init.tcl} definiert unter anderem die fünf Initialisier
 \end{itemize}
 Die Initialisierungs-Methoden werden in der Methode \textit{ps7\_init} aufgerufen.
 \textit{ps7\_init} wiederum wird in Zeile 8 des \textit{...elf\_on\_local.tcl} Scripts aufgerufen, welches beim Start des ''Hello World'' Programms im XSDK ausgeführt wird.
-In Zeile 9 vom \textit{...elf\_on\_local.tcl} wird auch die Methode \textit{ps7\_post\_config} von \textit{ps7\_init.tcl} aufgerufen, welche im Anschluss \textit{ps7\_post\_config\_3\_0} aufruft.
+\textit{...elf\_on\_local.tcl} \textit{''sourced''} zu Beginn \textit{ps7\_init.tcl}, damit dessen Methoden zur Verfügung stehen.
+In Zeile 9 vom \textit{...elf\_on\_local.tcl} wird dann die Methode \textit{ps7\_post\_config} von \textit{ps7\_init.tcl} aufgerufen, welche im Anschluss \textit{ps7\_post\_config\_3\_0} aufruft.
+
+\textit{Auszug aus ''system\_debugger\_using\_debug\_01\_gettingstarted.elf\_on\_local.tcl'' (Komplettes Programm im Anhang \ref{anhang:elf_on_local.tcl}):}
+\lstset{language=tcl}
+\begin{lstlisting}[frame=single]
+connect -url tcp:127.0.0.1:3121
+source D:/Vivado/01_gettingStarted/01_gettingStarted.sdk/design_1_wrapper_hw_platform_0/ps7_init.tcl
+...
+stop
+ps7_init
+ps7_post_config
+targets -set -nocase -filter {name =~ "ARM*#0" && jtag_cable_name =~ "Digilent Zybo 210279573773A"} -index 0
+...
+\end{lstlisting}
+
+\textit{Auszug aus ''ps7\_init.tcl'' (Komplettes Programm im Anhang \ref{anhang:ps7initmodified.tcl}):}
+\lstset{language=tcl}
+\begin{lstlisting}[frame=single]
+...
+proc ps7_post_config {} {
+...
+        ps7_post_config_3_0   
+}
+...
+proc ps7_post_config_3_0 {} {
+...
+\end{lstlisting}
 
 Alle Konfigurationsregister sind im Anhang B vom \textit{Zynq TRM} (\textit{bib:ZynqTechnicalReferenceManual}) beschrieben.
 Bevor die Register aber verändert werden können, müssen sie \textit{''unlocked''} werden, indem der Wert \textit{0x0000DF0D} in die Adresse \textit{0xF8000008} geschrieben wird.
