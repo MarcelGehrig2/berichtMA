@@ -2,6 +2,47 @@
 \chapter*{Abstract}
 
 
+% Das \textit{deep}-Projekt ermöglicht es schon jetzt, eine Java-Applikation direkt für PowerPC-Prozessoren zu entwickeln.
+% Dadurch ist es möglich, eine echtzeitfähige Regelung oder Robotersteuerung in Java zu entwickeln.
+The compiler from the project \textit{deep} can be used to compile Java code directly for an embedded PowerPC processor.
+It is possible to develop a simple motor controller or a complex robot controller with real-time capability in plain Java.
+
+
+% Prozessoren auf der Basis der PowerPC-Architektur sind aber nicht mehr weit verbreitet und zu einem Nischenprodukt geworden.
+% Aus diesem Grund wird \textit{deep} zurzeit für die ARM-Architektur weiterentwickelt.
+PowerPC processors are no longer in widespread use.
+They are now used only for some special applications.
+For this reason, \textit{deep} is being developed for the use with ARM processors.
+
+% \textit{deep} wird für den Unterricht der NTB verwendet und soll auch nach der Umstellung zur ARM-Architektur weiterhin für die Lehre verwendet werden können.
+\textit{deep} is currently used for education at the NTB and it should remain usable after the switch to the ARM micro-architecture.
+
+% Um die Laufzeitumgebung von \textit{deep} entwickeln zu können, wird ein Hardware-Debugger benötigt, der den Speicher und die Register von einem ARM-Prozessor lesen und schreiben kann.
+For the development of the \textit{deep} runtime environment, a hardware debugger is needed to read and write memory and processor registers.
+
+% Der \textit{gdb}-Debugger ist ein weit verbreiteter Software-Debugger, der besonders für Sprachen wie C und C++ verwendet wird.
+% Er bietet Features wie Sourcecode-Lookup, Single-Stepping und Breakpoints.
+% Diese Features sind sehr nützlich und sollen auch für die Entwicklung von \textit{deep}-Applikationen zur Verfügung stehen.
+\textit{gdb} is a software debugger, which is popular for programming languages like C and C++.
+It has features like source code lookup, single stepping and breakpoints.
+These are really helpful features and should also be provided for the development of \textit{deep} applications.
+
+% In dieser Arbeit wird ein ARM-Prozessor inklusive Experimentierboard gesucht, der günstig genug für den Unterricht ist und eine sehr gute Anbindung an ein FPGA hat, damit auch anspruchsvolle Robotik-Projekte damit realisiert werden zu können.
+In this paper an ARM processor and a matching development board will be evaluated.
+The development board should be cheap enough for the NTB lessons.
+The processor has to have very good connectivity for an FPGA so that demanding robotic projects can be implemented with the same processor.
+
+% Für diese Hardware wird dann eine Toolchain entwickelt, mit der ein vom \textit{deep} kompiliertes Programm in den Speicher des Prozessor geladen und gestartet werden kann.
+A toolchain is then designed, which can be used, to write a \textit{deep} application to the memory of the processor.
+
+% Das bestehende Software-Interface für den Hardware-Debugger wird so angepasst, dass es mit der neuen Toolchain kompatibel ist.
+The existing software interface for the hardware debugger will be adapted, so it can be used with the new toolchain.
+
+% Es wird gezeigt, dass der \textit{gdb}-Debugger, inklusive der oben genannten Features, genutzt werden kann, um eine \textit{deep}-Applikation zu debuggen, die auf dem ARM-Prozessor läuft.
+% Dafür wird eine \textit{deep}-Applikation mit STABS-Debuginformationen erweitert.
+A \textit{deep} application will be supplemented with STABS debug information.
+The supplemented application can than be compiled and executed on the ARM processor.
+\textit{gdb} can then be used on a host computer to debug the \textit{deep} application on the ARM processor using features like source lookup and single stepping.
 
 
 
