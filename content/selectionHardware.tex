@@ -1,6 +1,6 @@
 \chapter{Auswahl der Hardware}
 Die Auswahl von Hardware mit ARM-Prozessoren ist extrem gross.
-Ende September 2016 sind bereits über 86 Milliarden ARM-basierte Prozessoren verkauft worden.\footnote{https://www.google.com/url?sa=t\&rct=j\&q=\&esrc=s\&source=web\&cd=1\&ved=2ahUKEwjag87kpNbcAhWCM-wKHeEiCkUQFjAAegQIABAC\&url=https\%3A\%2F\%2Fwww.arm.com\%2F-\%2Fmedia\%2Farm-com\%2Fnews\%2FARM-media-fact-sheet-2016.pdf}%3Fla%255Cu003den&usg=AOvVaw0espCUd47jPb5U2s59E8q4}
+Ende September 2016 sind bereits über 86 Milliarden ARM-basierte Prozessoren verkauft worden.\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.arm.com/-/media/arm-com/news/ARM-media-fact-sheet-2016.pdf\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180808122231/https://www.arm.com/-/media/arm-com/news/ARM-media-fact-sheet-2016.pdf}
 Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM-Prozessoren verbreitet sind.
 
 In diesem Kapitel soll aus dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
@@ -17,12 +17,13 @@ Zusätzlich sollte der Prozessor auch leistungsstark und flexibel genug sein, um
 \section{Soll-Kriterien und Muss-Kriterien bei der Auswahl der Hardware}
 Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt worden.
 
+
 \subsection{Muss-Kriterien}
 \begin{itemize}
 \item Systemebene
 	\begin{itemize}
 	\item FPGA: Der Prozessor muss mit einem FPGA kommunizieren können.
-	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger, wie beispielsweise das BDI3000\footnote{http://www.abatron.ch/fileadmin/user\_upload/news/BDI3000-Brochure.pdf}, von Abatron unterstützen. 
+	\item Hardware Debugger: Der Prozessor muss für die Entwicklung von \textit{deep} einen Hardware Debugger, wie beispielsweise das BDI3000, von Abatron unterstützen. 
 	\item Günstiger Programmierer: Wenn zusätzliche Hardware benötigt wird, um die \textit{deep}-Applikation auf das Target zu schreiben, dann muss diese möglichst günstig sein.
 	\item Grosses Ökosystem: Das ausgewählte Produkt muss von einem grossen Ökosystem unterstützt werden. Aussterbende Produkte oder Nischenprodukte sind nicht akzeptabel.
 	\item Als fertiges Modul erhältlich: Für den Unterricht ein eigenes PCB entwickeln und herstellen ist keine Option.
@@ -30,7 +31,7 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 	\item Einbettbar: Der Prozessor muss auch bei einem selbstentwickelten PCB verwendet werden können. Wahlweise als SOM (\textit{System On Module}) oder direkt als Prozessor im eigenen Package.
 	\item Die Hardware muss noch lange erhältlich bleiben.
 	\item FPU (\textit{Floating Point Unit}): Für Gleitzahlenarithmetik.
-	\item Netzwerkschnitstelle: RJ-45 inklusive MAC\footnote{Media Access Control} und \textit{Magnetics}.
+	\item Netzwerkschnitstelle: RJ-45 inklusive MAC (\textit{Media Access Control}) und \textit{Magnetics}.
 	\item USB: USB Schnittstelle als Host und als Slave.
 	\item Flash: Mehr als 50kByte Flash.
 	\item RAM: Mehr als 100kByte RAM.
@@ -169,9 +170,8 @@ Bild \ref{fig:anbindungFPG} gibt eine schematische Übersicht über die verschie
 \end{figure}
 % \FloatBarrier
 
-
 \subsection{FPGA als Zusatzplatine zum Prozessorboard - Bauweise ''Modular''}
-Das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}\footnote{https://www.element14.com/community/docs/DOC-69215/l/fpga-development-board-cape-for-the-beaglebone} ist eine Aufsteckplatine für den \textit{Beaglebone Black}.
+Das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.element14.com/community/docs/DOC-69215/l/fpga-development-board-cape-for-the-beaglebone\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://www.element14.com/community/docs/DOC-69215/l/fpga-development-board-cape-for-the-beaglebone}  ist eine Aufsteckplatine für den \textit{Beaglebone Black}.
 Wenn sie auf den \textit{Beaglebone Black} aufgesteckt wird, erweitert sie den ARM-basierten Linux PC um einen \textit{''Spatran 6 LX9''} FPGA, inklusive einiger I/O-Peripherien und SDRAM.
 
 \textit{Vorteile:}
@@ -203,8 +203,9 @@ Oft existieren Experimentierboards mit einer grossen Zahl an unterschiedlichen I
 Für eine spezifische Anwendung muss ein solches Basisboard für das SOM selbst designed werden, weil ein Experimentierboard oft zu gross ist, oder nicht die benötigte Peripherie enthält.
 Da neben dem FPGA auch High-Speed-Peripherie, wie z.B. RAM auf dem Modul verbaut ist, kann beim Basisboard oft auf die aufwändige Entwicklung von High-Speed-PCB-Traces verzichtet werden.
 
+
 Es hat sich gezeigt, dass es nur zwei Anbieter SOM mit FPGA produzieren.
-Nur die beiden Anbieter \textit{solectrix}\footnote{https://www.solectrix.de/de/sxom-module} und \textit{OposSom}\footnote{https://www.solectrix.de/de/sxom-module} scheinen solche Module zu verkaufen.
+Nur die beiden Anbieter \textit{solectrix}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.solectrix.de/de/sxom-module\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://www.solectrix.de/de/sxom-module} und \textit{OposSom}\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ http://www.opossom.com/english/products-processor\_boards-apf6\_sp.html\\ Archivierter Link: \ \ \ https://web.archive.org/save/http://www.opossom.com/english/products-processor\_boards-apf6\_sp.html} scheinen solche Module zu verkaufen.
 
 Weil die Auswahl für SOMs sehr klein ist wurde diese Bauform nicht mehr weiter verfolgt.
 

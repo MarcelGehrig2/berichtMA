@@ -109,7 +109,7 @@ Da beim Zybo kein Adapter verwendet wird, sondern der aufgelötete FT2232, wird 
 Da ein FTDI-Chip als Interface verwendet wird, sollte ein passendes Script unter \textit{openocd-0.10.0/scripts/ interface/ftdi/} zu finden sein.
 Keiner der Scripts passte vom Namen her auf \textit{Zybo} oder \textit{FT2232}.
 Eine Google Suche nach einem passenden Script war erfolgreicher.
-Ein Github User mit dem Namen \textit{emard} hat folgendes Script in einem seiner Repositories\footnote{https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram\_bram\_hdmi\_ise/zybo.ocd} gespeichert:
+Ein Github User mit dem Namen \textit{emard} hat folgendes Script in einem seiner Repositories\footnote{\ \ https://github.com/f32c/f32c/blob/master/rtl/proj/xilinx/zybo/xram\_bram\_hdmi\_ise/zybo.ocd} gespeichert:
 
 \textit{zybo-ftdi.ocd:}
 \lstset{language=tcl}
@@ -148,7 +148,7 @@ Wahrscheinlich ist die \textit{CoreSight} Debug-Peripherie abgestürzt oder in e
 Aus diesem Grund bekommt OpenOCD keine Antwort vom Zynq, wenn versucht wird, eine Speicheradresse zu lesen.
 Mit einem manuellen Powercycle des Zybos kann die Hardware wieder zurückgesetzt werden.
 
-Im Supportbereich der Xilinx Homepage\footnote{https://www.xilinx.com/support/answers/63871.html} ist eine mögliche Erklärung für dieses Verhalten zu finden.
+Im Supportbereich der Xilinx Homepage\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.xilinx.com/support/answers/63871.html\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://www.xilinx.com/support/answers/63871.html} ist eine mögliche Erklärung für dieses Verhalten zu finden.
 In diesem Artikel wird beschrieben, dass die Fehlermeldung ''\textit{Invalid address - it can hang PS interconnect}'' erscheint, wenn mit dem XSDB (\textit{Xilinx System Debugger}) auf bestimmte Adressbereiche zugegriffen wird.
 Die Vermutung liegt nahe, dass der XSDB merkt, wenn auf eine \textit{''Invalid address''} zugegriffen werden soll.
 Dieser Befehl wird abgefangen und stattdessen wird die Fehlermeldung angezeigt, so dass der \textit{''PS interconnect''}, also der Bus innerhalb des Zynq, nicht abstürzen kann.
@@ -223,7 +223,7 @@ Das Kernelement der \textit{CLI-OpenOCD-Toolchain} ist das \textit{deep}-Plugin 
 Es basiert auf dem bestehenden Plugin \textit{''AbatronInterface''} und erfüllt die gleichen Funktionen.
 
 Das Plugin kann von folgendem Repositorie geklont werden:\\
-\texttt{https://github.com/MarcelGehrig/openOCDInterface.git}
+\texttt{\ \ https://github.com/MarcelGehrig/openOCDInterface.git}
 
 
 \subsection{Aufbau des OpenOCDInterface}

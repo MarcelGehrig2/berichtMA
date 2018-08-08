@@ -14,20 +14,19 @@ Das restliche Kapitel beschreibt relevante Komponenten und Eigenarten des Zynq.
 	\caption[Block Diagramm Zynq\-7000]{Block Diagramm Zynq\-7000\footnotemark}
 	\label{fig:BlockDiagrammZynq}
 \end{figure}
-\footnotetext{https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html}
-
+\footnotetext{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://www.xilinx.com/products/silicon-devices/soc/zynq-7000.html}
 
 \section{MIO und EMIO}
 MIOs sind \textit{Multiplexed Input Output Pins}, welche direkt vom Prozessor angesprochen werden können, ohne dass die PL programmiert werden muss.
 Die EMIOs sind \textit{\textbf{Extended} Multiplexed Input Output Pins}, welche nur über die PL angesprochen werden können.
 Aus diesem Grund können die EMIOs nur verwendet werden, wenn die PL entsprechend programmiert wurde.
 Diese Arbeit beschränkt sich nur auf die MIOs und das PS.
-Im \textit{TRM}\footnote{Technical Reference Manual} des Zynq\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''2.5.4 MIO-at-a-Glance Table''} ist eine sehr gute Übersicht über alle möglichen Funktionen der MIOs gegeben.
+Im \textit{TRM} (\textit{Technical Reference Manual}) des Zynq\cite{bib:ZynqTechnicalReferenceManual} im Kapitel \textit{''2.5.4 MIO-at-a-Glance Table''} ist eine sehr gute Übersicht über alle möglichen Funktionen der MIOs gegeben.
 
 % TODO MIO config des zybos
 
 \section{Standard Zybo Workflow}
-Im \textit{Getting Started with Zynq\footnote{https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1}} Tutorial von Digilent ist beschrieben, wie ein einfaches Design für die PL und ein einfaches Programm für das PS erstellt werden kann.
+Im \textit{Getting Started with Zynq\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://reference.digilentinc.com/learn/programmable-logic/tutorials/zybo-getting-started-with-zynq/start?redirect=1}} Tutorial von Digilent ist beschrieben, wie ein einfaches Design für die PL und ein einfaches Programm für das PS erstellt werden kann.
 Das Tutorial deckt den ganzen Workflow ab.
 Dabei werden, z.B. für LED1, LED2 und LED3 auch die EMIOs verwendet.
 In Schritt 1 bis 7 wird mit Vivado das Design für die PL erstellt und exportiert.
@@ -39,7 +38,7 @@ In Schritt 1 bis 7 wird mit Vivado das Design für die PL erstellt und exportier
 Ab Schritt 8 wird beschrieben, wie im XSDK (\textit{Xilinx Standard Development Kit}) ein einfaches ''Hello World'' Programm in C für den Prozessor geschrieben werden kann.
 % Das XSDK ist Eclipse mit einem Xilinx Plug-In.
 
-Das XSDK verwendet im Hintergrund das XSCT\footnote{https://www.xilinx.com/html\_docs/xilinx2018\_1/SDK\_Doc/xsct/intro/xsct\_introduction.html} (\textit{Xilinx Software Command-Line Tool}).
+Das XSDK verwendet im Hintergrund das XSCT\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ hhttps://www.xilinx.com/html\_docs/xilinx2018\_1/SDK\_Doc/xsct/intro/xsct\_introduction.html\\ Archivierter Link: \ \ \ https://web.archive.org/save/http://www.xilinx.com/products/design-tools/embedded-software/sdk.html} (\textit{Xilinx Software Command-Line Tool}).
 Das XSDK kann interaktiv, oder mit Scripts verwendet werden.
 % Die Scriptsprache basiert, wie auch Jim-TCL, auf der Sprache TCL.
 Wie Jim-TCL basiert auch die verwendete Scriptsprache auf der Sprache TCL.
@@ -65,7 +64,7 @@ Die Initialisierungs-Methoden werden in der Methode \textit{ps7\_init} aufgerufe
 \textit{ps7\_init} wiederum wird in Zeile 8 des \textit{...elf\_on\_local.tcl} Scripts aufgerufen, welches beim Start des ''Hello World'' Programms im XSDK ausgeführt wird.
 In Zeile 9 vom \textit{...elf\_on\_local.tcl} wird auch die Methode \textit{ps7\_post\_config} von \textit{ps7\_init.tcl} aufgerufen, welche im Anschluss \textit{ps7\_post\_config\_3\_0} aufruft.
 
-Alle Konfigurationsregister sind im Anhang B vom \textit{Zynq TRM}\cite{bib:ZynqTechnicalReferenceManual} beschrieben.
+Alle Konfigurationsregister sind im Anhang B vom \textit{Zynq TRM} (\textit{bib:ZynqTechnicalReferenceManual}) beschrieben.
 Bevor die Register aber verändert werden können, müssen sie \textit{''unlocked''} werden, indem der Wert \textit{0x0000DF0D} in die Adresse \textit{0xF8000008} geschrieben wird.
 
 
@@ -104,7 +103,7 @@ Zusätzlich werden auch, falls vorhanden, folgende elektrischen Charakteristiken
 
 
 \textbf{ps7\_pll\_init\_data\_3\_0}\\
-Initialisiert die drei PLLs\footnote{Phase Locked Loop} ARM, DDR und IO.
+Initialisiert die drei PLLs (\textit{Phase Locked Loop}) ARM, DDR und IO.
 Bei jeder PLL-Initialisierung wird darauf gewartet, bis der PLL betriebsbereit (locked) ist.
 Die Dauer dieser Wartezeit ist unbekannt.
 
@@ -130,7 +129,7 @@ Konfiguriert folgende Peripherien:
 
 
 
-Die oben genannten Initialisierungsfunktionen werden vom Xilinx Debugger jedesmal ausgeführt, wenn die Applikation im XSDK mit \textit{''Launch on Hardware (System Debuger)''} gestartet wird.
+Die oben genannten Initialisierungsfunktionen werden vom Xilinx Debugger jedes Mal ausgeführt, wenn die Applikation im XSDK mit \textit{''Launch on Hardware (System Debuger)''} gestartet wird.
 Es ist aber auch möglich, die Initialisierung direkt mit der C-Applikation und nicht mit dem Debugger durchzuführen.
 Wird die Initialisierung in der Applikation durchgeführt, und die Applikation auf dem Flash Speicher des Zynq gespeichert, dann initialisiert sich der Zynq bei jedem Start selber.
 Im Beispielprogramm \textit{''helloworld.c''} ist die Methode \textit{''init\_platform()''} enthalten, welche in \textit{''platform.c''} deklariert ist.

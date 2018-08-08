@@ -30,7 +30,8 @@ Im Kapitel \ref{section:installationGDB} wird beschrieben, wie die Toolchain ins
 	\caption[Der Aufbau einer ELF Datei]{Der Aufbau einer ELF Datei\footnotemark}
 	\label{fig:ELFStructure}
 \end{figure}
-\footnotetext{https://slideplayer.com/slide/6444592/}
+\footnotetext{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://slideplayer.com/slide/6444592/\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180808115752/https://slideplayer.com/slide/6444592/}
+% \footnotetext{https://slideplayer.com/slide/6444592/}
 
 % Auf Wikipedia\footnote{https://en.wikipedia.org/wiki/Executable\_and\_Linkable\_Format} ist der Aufbau sehr gut beschrieben.
 
@@ -123,13 +124,17 @@ Die STABS werden mit folgender Syntax im Assembler-Code definiert:\\
 
 
 
-\subsection{DWARF}
+\subsection{Das DWARF-Format}
+DWARF ist ein sehr weit verbreitetes und standardisiertes Dateiformat für Debugging-Informationen.
+Es hat das veraltete STABS-Format in den meisten modernen Anwendungen abgelöst.
+Im Gegensatz zum STABS-Format wird das DWARF-Format immer noch weiterentwickelt.
+Der Blog-Eintrag\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.ibm.com/developerworks/library/os-debugging/\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180808115504/https://www.ibm.com/developerworks/library/os-debugging/} von Adarsh Thampan und Suchitra Venugopal zeigt sehr gut die Unterschiede zwischen den beiden Formaten auf.
+% https://www.ibm.com/developerworks/library/os-debugging/
 % TODO: DWARF erklären
 
 
 \section{Demoprogramm mit STABS}
 \label{section:demoprogrammSTABS}
-% TODO alle files im Anhang
 In diesem Kapitel wird beschrieben wie ein Demoprogramm mit STABS-Informationen erstellt werden kann.
 Das Demoprogramm soll dann mit dem \textit{gdb} direkt auf den Zynq geladen werden.
 Zusätzlich sollen folgende \textit{gdb}-Features getestet werden:\\
@@ -332,7 +337,7 @@ Der Typ ''(0,1)'' wurde mit der Direktive 2 als Integer definiert.
 
 Die Direktive 75 definiert eine Variable, die nicht auf dem Stack gespeichert wird.
 Dieser Typ wird verwendet, wenn die Variable nur in einem Prozessor-Register gespeichert und nicht auf dem Stack abgelegt wird.
-Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack, wenn sie erzeugt oder verändert werden und lädt sie jedesmal neu vom Stack, wenn sie wieder gelesen werden.
+Der \textit{gcc} speichert grundsätzlich alle Variablen direkt auf dem Stack, wenn sie erzeugt oder verändert werden und lädt sie jedes Mal neu vom Stack, wenn sie wieder gelesen werden.
 Wird beim Kompilieren eine Code-Optimierung verwendet, kann dieses Verhalten ändern.
 Mit der Zeile \texttt{{''register int s=1;''}} im C-Code wird der Compiler gezwungen, die Variable in den Registern zu behalten und nicht auf dem Stack abzulegen.
 Aus diesem Grund wird für die Variable \textit{''s''} eine Direktive des Typs RSYM verwendet, die nur den Namen der Variable und die Registernummer beschreibt, in der die Variable gespeichert wird.
@@ -425,7 +430,9 @@ Als Ziel für diese Instruktionen wurden die beiden Assembler-Direktiven \texttt
 Um das Assemblerprogramm mit STABS zu ergänzen wurden drei verschiedene Quellen genutzt.
 Das fertige Assemblerprogramm mit STABS ist im Anhang \ref{anhang:loopWithAssembler.S} angehängt.
 
-Die NTB-Wiki-Dokumentation\footnote{https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs} wurde als Ausgangslage genutzt.
+{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs}
+
+Die NTB-Wiki-Dokumentation\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs\\ Archivierter Link: \ \ \ https://web.archive.org/save/https://wiki.ntb.ch/infoportal/software/gdb/start?s[]=stabs} wurde als Ausgangslage genutzt.
 Die Datei \textit{''stabs.include''} (siehe Anhang \ref{anhang:stabs.include}) konnte direkt genutzt werden.
 Die Definition des Sourcecods (N\_SO) und die Definitionen der Zeilennummern (N\_SLINE) konnten ebenfalls übernommen werden.
 
