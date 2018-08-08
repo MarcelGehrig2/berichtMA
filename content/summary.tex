@@ -1,0 +1,88 @@
+
+\chapter*{Abstract}
+
+
+
+
+
+\chapter*{Zusammenfassung}
+Das \textit{deep}-Projekt ermöglicht es schon jetzt, eine Java-Applikation direkt für PowerPC-Prozessoren zu entwickeln.
+Dadurch ist es möglich, eine echtzeitfähige Regelung oder Robotersteuerung in Java zu entwickeln.
+
+Prozessoren auf der Basis der PowerPC-Architektur sind aber nicht mehr weit verbreitet und zu einem Nischenprodukt geworden.
+Aus diesem Grund wird \textit{deep} zurzeit für die ARM-Architektur weiterentwickelt.
+
+\textit{deep} wird für den Unterricht der NTB verwendet und soll auch nach der Umstellung zur ARM-Architektur weiterhin für die Lehre verwendet werden können.
+
+Um die Laufzeitumgebung von \textit{deep} entwickeln zu können, wird ein Hardware-Debugger benötigt, der den Speicher und die Register von einem ARM-Prozessor lesen und schreiben kann.
+
+Der \textit{gdb}-Debugger ist ein weit verbreiteter Software-Debugger, der besonders für Sprachen wie C und C++ verwendet wird.
+Er bietet Features wie Sourcecode-Lookup, Single-Stepping und Breakpoints.
+Diese Features sind sehr nützlich und sollen auch für die Entwicklung von \textit{deep}-Applikationen zur Verfügung stehen.
+
+In dieser Arbeit wird ein ARM-Prozessor inklusive Experimentierboard gesucht, der günstig genug für den Unterricht ist und eine sehr gute Anbindung an ein FPGA hat, damit auch anspruchsvolle Robotik-Projekte damit realisiert werden zu können.
+
+Für diese Hardware wird dann eine Toolchain entwickelt, mit der ein vom \textit{deep} kompiliertes Programm in den Speicher des Prozessor geladen und gestartet werden kann.
+
+Das bestehende Software-Interface für den Hardware-Debugger wird so angepasst, dass es mit der neuen Toolchain kompatibel ist.
+
+Es wird gezeigt, dass der \textit{gdb}-Debugger, inklusive der oben genannten Features, genutzt werden kann, um eine \textit{deep}-Applikation zu debuggen, die auf dem ARM-Prozessor läuft.
+Dafür wird eine \textit{deep}-Applikation mit STABS-Debuginformationen erweitert.
+
+% \section{Stand der Technik}
+% % deep
+% Das Projekt \textit{deep}\footnote{http://www.deepjava.org/start} ist eine Cross Development Plattform, die es erlaubt, ein Java Programm direkt auf einem Prozessor auszuführen.
+% Es ermöglicht einem Entwickler ein Java Programm zu schreiben, welches direkt auf einem Prozessor läuft und Echtzeitfähig ist.
+% Zur Zeit wird dieses Projekt an der NTB für die Ausbildung von Systemtechnik-Studenten verwendet.
+% Es erlaubt einfach und schnell Robotersteuerungen und Regelungen zu implementieren, ohne dass sich der Entwickler mit den Eigenarten von C und C++ Programmen auseinandersetzen muss.
+
+% % debuging
+% \textit{deep} unterstützt einige grundlegende Debuging-Funktionen.
+% Mit einer mehreren tausend Franken teuren Abatronsonde kann der Speicher und die Register des Prozessors ausgelesen und auch geschrieben werden.
+% Der aktuelle Debugger unterstützt keine Features wie \textit{Breakpoints} oder \textit{Sourcecode-Navigation}, die aus Debuggern wie dem \textit{gdb}\footnote{https://www.gnu.org/software/gdb/} bekannt sind.
+
+% % TODO3: JTAG
+
+
+% \section{Motivation}
+% Aktuell ist \textit{deep} nur mit der PowerPC-Architektur kompatibel.
+% PowerPC Prozessoren sind aber nicht mehr weit verbreitet und sehr teuer.
+% Die an der NTB verwendeten PowerPC-Prozessoren sind zwar leistungsstark, aber veraltet und teuer.
+
+% Aus diesem Grund wird \textit{deep} zurzeit für die ARM-Architektur erweitert.
+% Da die ARM-Architektur bei eingebetteten Prozessoren am weitesten verbreitet ist, ist auch die Auswahl an günstiger und leistungsstarker Hardware sehr gross.
+% Dank der grossen Auswahl von ARM-Prozessoren können sehr günstige oder auch sehr leistungsstarke Prozessoren ausgewählt werden.
+
+% % debugging
+% \textit{deep} ist ein Open-Source-Projekt, welches auch für den Unterricht verwendet wird.
+% Damit nicht für jeden Studenten teure Debugging-Hardware gekauft werden muss, ist eine kostengünstige Alternative wünschenswert.
+
+% % TODO2: ersatz für zielorientiert
+% Java ist im Gegensatz zu C und C++ eine sehr zielorientierte Sprache.
+% % TODO1 man ersetzen
+% Beim Java muss man sich nicht so detailliert um Ressourcen, wie Speicher und Hardwareschnittstellen kümmern, wie in C-orientierten Sprachen.
+% Dieser Aspekt der Einfachheit soll auch beim Debugger beibehalten werden.
+% Zusätzlich zum direkten Speicherauslesen sollen auch Variablen gelesen und geschrieben werden können.
+% Eine native \textit{Sourcecode-Navigation} in Eclipse vereinfacht die Entwicklung einer \textit{deep}-Applikation sehr.
+
+
+
+% \section{Zielsetzung}
+% % Hardware
+% Bei dieser Arbeit werden mehrere Ziele verfolgt, die aufeinander aufbauen.
+
+
+% \begin{enumerate}
+% \item Passende Hardware (Experimentierboard) finden, welche auch im Unterricht verwendet werden kann.
+% \item Das grundlegende Debug-Interface, welches bereits für PowerPC existiert, für die ausgewählte Hardware anpassen. Dieses Interface soll für die Entwicklung von \textit{deep} möglichst bald einsatzbereit sein.
+% \item Den GNU-Debugger (\textit{gdb}) mit einem Programm verwenden, das vom \textit{deep}-Compiler übersetzt wurde. Dazu soll vorerst das Command-Line-Interface (CLI) des \textit{gdb} genutzt werden.
+% \item Den \textit{gdb} in das Eclipse-Plugin von \textit{deep} integrieren, damit der Debugger direkt aus Eclipse verwendet werden kann.
+% \end{enumerate}
+
+% Im Auftrag des Industriepartner Variosystems wurde ein kostengünstiger, auf dem BeagleBone Black basierter Platinencomputer entwickelt. Der BeagleBone Black, im weiteren Text als BBB bezeichnet, ist ein vollständiger Computer für Linux-basierte Betriebssysteme. Standardmässig wird es mit dem Betriebssystem Debian ausgeliefert, welches für diese BA ebenfalls benutzt wird. Im Verlauf dieser Arbeit wurden insgesamt 5 Exemplare hergestellt, die alle bei Variosystems bestückt wurden. Mit einem Cape, einer aufsteckbaren Platine für den BBB, wurde der Computer mit WLAN, Bluetooth Low-Energy, GSM/GPRS und einem Touchscreen ergänzt. Dieses Cape ist nicht nur mit dem von uns gebauten BBB-Derivat kompatibel, sondern auch mit dem kommerziell erhältlichen, originalen BBB. Die Kombination des BBB mit dem Cape wird im Folgenden Communication-Bone, oder kurz ComBone genant. Der Name ist eine Wortkombination des englischen Wortes "Communication" \ für die Kommunikationsfähigkeit des Capes über verschiedene Kanäle, sowie dem Wort "Bone", welches bereits im Namen des originalen BBB genutzt wird.
+
+% Bei der Entwicklung der Hard- und Software ist darauf geachtet worden, dass die einzelnen Funktionen möglichst modular sind. Wenn bestimmte Funktionen nicht benötigt werden, wie zum Beispiel der HDMI Anschluss des BBB oder die WLAN-Funktion des Capes, können die entsprechenden Bauteile bei der Produktion einfach nicht bestückt werden. Dies kann, besonders bei grösseren Stückzahlen, viel Geld sparen. Des Weiteren können auch einige Module, beziehungsweise Funktionen, einfach kopiert und in anderen Projekten verwendet werden.
+
+% Ein möglicher Einsatzbereich dieses Computers mit dem Cape ist die Verbindung von einem Gerät, wie etwa ein Sensor oder ein abgelegener Stromgenerator, mit dem Internet. Der ComBone kann sich mit einer LAN-Verbindung, mit WLAN oder über das mobile GSM Netz, wie es auch ein Mobiltelefon verwendet, ins Internet einwählen. Dies macht den ComBone zu einem  hochflexibles Gerät, welches diverse Einsatzmöglichkeiten hat.
+
+
