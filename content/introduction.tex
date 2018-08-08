@@ -13,28 +13,27 @@ Es erlaubt einfach und schnell Robotersteuerungen und Regelungen zu implementier
 Mit einer mehreren tausend Franken teuren Abatronsonde kann der Speicher und die Register des Prozessors ausgelesen und auch geschrieben werden.
 Der aktuelle Debugger unterstützt keine Features wie \textit{Breakpoints} oder \textit{Sourcecode-Navigation}, die aus Debuggern wie dem \textit{gdb}\footnote{https://www.gnu.org/software/gdb/} bekannt sind.
 
-% TODO: JTAG
+% TODO3: JTAG
 
 
 \section{Motivation}
-% TODO: ARM
 Aktuell ist \textit{deep} nur mit der PowerPC-Architektur kompatibel.
 PowerPC Prozessoren sind aber nicht mehr weit verbreitet und sehr teuer.
 Die an der NTB verwendeten PowerPC-Prozessoren sind zwar leistungsstark, aber veraltet und teuer.
 
-Aus diesem Grund wird \textit{deep} für die ARM-Architektur erweitert.
+Aus diesem Grund wird \textit{deep} zurzeit für die ARM-Architektur erweitert.
 Da die ARM-Architektur bei eingebetteten Prozessoren am weitesten verbreitet ist, ist auch die Auswahl an günstiger und leistungsstarker Hardware sehr gross.
-Mit grosser Flexibilität bei der Auswahl von ARM-Prozessoren können sehr günstige oder auch sehr leistungsstarke Prozessoren verwendet werden.
+Dank der grossen Auswahl von ARM-Prozessoren können sehr günstige oder auch sehr leistungsstarke Prozessoren ausgewählt werden.
 
 % debugging
 \textit{deep} ist ein Open-Source-Projekt, welches auch für den Unterricht verwendet wird.
 Damit nicht für jeden Studenten teure Debugging-Hardware gekauft werden muss, ist eine kostengünstige Alternative wünschenswert.
 
-% TODO: ersatz für zielorientiert
+% TODO2: ersatz für zielorientiert
 Java ist im Gegensatz zu C und C++ eine sehr zielorientierte Sprache.
-% TODO man ersetzen
+% TODO1 man ersetzen
 Beim Java muss man sich nicht so detailliert um Ressourcen, wie Speicher und Hardwareschnittstellen kümmern, wie in C-orientierten Sprachen.
-Dieser Aspekt soll auch beim Debugger beibehalten werden.
+Dieser Aspekt der Einfachheit soll auch beim Debugger beibehalten werden.
 Zusätzlich zum direkten Speicherauslesen sollen auch Variablen gelesen und geschrieben werden können.
 Eine native \textit{Sourcecode-Navigation} in Eclipse vereinfacht die Entwicklung einer \textit{deep}-Applikation sehr.
 

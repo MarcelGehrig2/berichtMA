@@ -1,4 +1,4 @@
-\chapter{System}
+\chapter{Überblick über das ganze System}
 Dieses Kapitel bietet eine grobe Übersicht über das ganze System, um die Zusammenhänge zwischen einzelnen Komponenten aufzuzeigen.
 Auf einzelne Komponenten und Toolchains wird in den folgenden Kapiteln genauer eingegangen.
 
@@ -68,9 +68,7 @@ Die \textit{CLI-OpenOCD-Toolchain} lehnt sich deshalb sehr stark an die bestehen
 
 Mit dieser Toolchain ist \textit{Sourcecode-Debugging} aber nicht möglich.
 Das bedeutet, es ist nicht möglich im Sourcecode Breakpoints zu setzten oder durch einzelne Zeilen im Sourcecode zu steppen.
-% TODO wirklich target commands?
-Bestehende Möglichkeiten aus der alten \textit{Abatron-Toolchain}, wie \textit{Target Commands}, bleiben aber erhalten.
-% TODO: Schema
+Bestehende Möglichkeiten aus der alten \textit{Abatron-Toolchain}, wie \textit{''TargetOperations''}, bleiben aber erhalten.
 
 Im Kapitel \ref{section:CLI-OpenOCD-Toolchain} wird die Implementation dieser Toolchain genauer beschrieben.
 
@@ -93,8 +91,7 @@ In der schematischen Übersicht der Toolchain in Abbildung \ref{fig:gdbOpenOCDTo
 Mit dem \textit{gdb} können auch erweiterte Debugging-Featurers wie \textit{Sourcecode-Lookup} und \textit{Breakpoints} verwendet werden.
 % günstige hardware
 
-% TODO besserer text:
-In dieser Arbeit wird nur die vereinfachte Toolchain mit dem standalone \textit{gdb}-Debugger implementiert.
+In dieser Arbeit wird nur die vereinfachte Toolchain mit dem Standalone-\textit{gdb}-Debugger implementiert.
 Mit der vereinfachten Toolchain kann das CLI des \textit{gdb} in Kombination mit der \textit{OpenOCD-Toolchain} für zum Debuggen genutzt werden.
 
 Die komplette \textit{gdb-OpenOCD-Toolchain} kann auf dieser Toolchain aufbauen.

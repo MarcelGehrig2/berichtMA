@@ -4,11 +4,9 @@ Ende September 2016 sind bereits über 86 Milliarden ARM-basierte Prozessoren ve
 Diese Zahl reflektiert zwar nicht direkt die Diversität der verschiedenen Prozessoren, aber sie zeigt recht gut wie enorm weit ARM-Prozessoren verbreitet sind.
 
 In diesem Kapitel soll aus dem riesigen Angebotsdschungel die richtige Hardware ausgewählt werden, auf der diese Arbeit aufbauen kann.
-% Die ausgewählte Hardware soll ein Experimentierboard mit einem ARM-Prozessor gefunden werden, dass im Robotik Unterricht verwendet werden kann.
 Die ausgewählte Hardware soll nicht nur für diese Arbeit genutzt werden, sondern später auch für den Robotik-Unterricht.
 Zusätzlich sollte der Prozessor auch leistungsstark und flexibel genug sein, um ihn, oder eine Variante aus der gleichen Familie, in anspruchsvollen Robotikprojekten verwenden zu können.
 %TODO extrem weit verbreitet
-%TODO gorosse auswahl von verschiedener hw
 %TODO warum muss hw in dieser arbeit gewählt werden
 
 %TODO prozeossor und board muss ausgewählt werden
@@ -50,7 +48,7 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 	\begin{itemize}
 	%TODO synonym einbettbar:
 	\item Einfach einbettbar: Der Prozessor ist als Prozessormodul erhältlich, sodass das Design von einem selbstentwickelten PCB einfacher wird.
-	\item Günstiger Hardwaredebugger: Der Hardwaredebugger kann auch für die Applikationsentwicklung mit \textit{deep} eingesetzt werden.
+	\item Günstiger Hardware Debugger: Der Hardware Debugger kann auch für die Applikationsentwicklung mit \textit{deep} eingesetzt werden.
 	\item Möglichst schneller Download der Applikation.
 %TODO	\item Überdimensionierte HW
 	\end{itemize}
@@ -64,7 +62,7 @@ Für die Hardware sind folgende Soll-Kriterien und Muss-Kriterien ermittelt word
 \end{itemize}
 
 
-\section{Hardware Debugger}
+\section{Was ist ein Hardware Debugger}
 Der Begriff \textit{Hardware Debugger} ist nicht eindeutig definiert.
 Im einfachsten Fall kann ein Hardware Debugger nur einen \textit{Boundary Scan} durchführen, wie es ursprünglich für JTAG vorgesehen war.
 Bei \textit{Boundary Scan} können die I/O Pins von einem Prozessor gelesen und auch gesetzt werden.
@@ -119,13 +117,12 @@ Seit 2004 werden die meisten Kerne in eine der Cortex-Familien eingeteilt.
 Ältere Kerne, sogenannte \textit{''Classic cores''}, haben Namen wie z.b. ARM7 oder ARM1156T2F-S.
 Da solche Designs meist aus einer Zeit vor 2004 stammen, gilt das Design als veraltet und wird bei dieser Arbeit nicht berücksichtigt.
 
-\subsection{Fazit über die ARM-Mikroarchitekturen}
+\subsection{Fazit über die Wahl der ARM-Mikroarchitekturen}
 Die Prozessoren, die auf der Cortex-A Mikroarchitektur basieren, bieten die grösste Flexibilität.
 Zusätzlich ist das Angebot bei den Cortex-A-Prozessoren am grössten.
 Die anderen Cortex-Reihen bieten keine Vorteile, die für dieses Projekt von Nutzen sind.
 Aus diesen Gründen wird die Auswahl auf die Prozessoren aus der Cortex-A-Reihe begrenzt.
 
-% TODO tabellen titel und referenz?
 \begin{table}[]
 \centering
 \label{t-uebersichtARMMikroarchitekturen}
@@ -141,7 +138,7 @@ Aus diesen Gründen wird die Auswahl auf die Prozessoren aus der Cortex-A-Reihe 
 
 
 
-\section{Anbindung des FPGAs}
+\section{Anbindung des FPGAs an den Prozessor}
 FPGAs haben typischerweise einen sehr hohen \textit{Pin-Count} und werden in \textit{BGA-Packages} ausgeliefert.
 
 Es gibt verschiedene Möglichkeiten, wie ein FPGA mit einem Prozessor verbunden werden kann.
@@ -151,7 +148,6 @@ Bild \ref{fig:anbindungFPG} gibt eine schematische Übersicht über die verschie
 % Um ein FPGA an einen Prozessor anzubinden kann eine serielle und auch parallele Kommunikation verwendet werden.
 
 
-% % TODO zwei mal z.b.
 % Ein moderner Prozessor ist ein sehr komplexes elektronisches Bauteil welches zusätzliche Peripherie für beispielsweise Stromversorgung und auch diverse I/Os.
 % Die Ethernet Schnittstelle braucht neben der RJ-45 Buchse auch noch Signaltransformatoren, sogenannte Magneticts.
 % % % TODO doofer satz
@@ -222,8 +218,8 @@ Bei der Produktfamilie Zynq von Xilynx gibt es ein breites Angebot von SOCs und 
 Das Experimentierboard \textit{''Zybo''} wird sogar schon im Unterricht der NTB für die Entwicklung von VHDL genutzt.
 
 
+
 \subsection{ARM als Softcore in FPGA - Bauweise ''FPGA''}
-% TODO0: softcore FPGA
 In FPGAs können Prozessoren als sogenannte \textit{Softcores} implementiert werden.
 Dabei wird ein Teil der FPGA-Gates so konfiguriert, dass sie wie ein Mikroprozessor verwendet werden können.
 
@@ -235,9 +231,7 @@ Diese Cores sind aber kostenpflichtig und nicht Open Source.
 Weil keine Cortex-A-Cores erhältlich sind und alle anderen ARM-Cores kostenpflichtig sind, wird diese Bauweise nicht mehr weiter verfolgt.
 
 
-
-% \subsubsection{Übersicht Bauformen}
-\begin{table}[]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{|l|l|l|}
 \hline
@@ -272,7 +266,7 @@ Weil keine Cortex-A-Cores erhältlich sind und alle anderen ARM-Cores kostenpfli
 
 
 
-\subsection{Wahl der Bauweise}
+\subsection{Fazit über die Wahl der Bauweise}
 Es hat sich gezeigt, dass es nicht sehr viele Produkte gibt, die einen Cortex-A-Prozessor in Kombination mit einem FPGA bieten.
 Einige Produkte zielen mehr auf den Hobby-Bereich, wie zum Beispiel das \textit{''FPGA Development Board CAPE for the BEAGLEBONE''}.
 Für professionellere Lösungen scheinen selbstentwickelte PCBs der Standard zu sein.
@@ -281,9 +275,6 @@ Alle anderen Ansätze sind oft nur Nischenprodukte für spezielle Anwendungen od
 Seit einigen Jahren ist aber eine signifikante Auswahl von SOCs auf dem Markt.
 Diese werden aber nur von den beiden Herstellern Altera und Xilinx angeboten.
 Beide Hersteller bieten aber ein sehr umfangreiches Angebot.
-
-% Die SOCs bieten d
-
 
 
 \section{Fazit - Auswahl der Hardware}
@@ -299,7 +290,13 @@ Der Zynq-7000 ist ein Modell mit einem Dual-Core-Cortex-A9-Prozessor mit 667 MHz
 Es existieren aber auch noch günstigere Zynqs mit weniger Leistung und sehr viel teurere Varianten mit einem leistungsstärkeren Prozessor und grösseren FPGA.
 Zusätzlich sind die Zynqs als standalone Chip oder als Modul inklusive RAM erhältlich.
 
-All diese Eigenschaften machen das Zybo mit dem Zynq-7000 zum klaren Favorit.
+All diese Eigenschaften machen das Zybo (Abbildung \ref{fig:zybo}) mit dem Zynq-7000 zum klaren Favorit.
 
+\begin{figure}[htbp]
+	\centering
+		% \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/zybo.png}
+		\includegraphics[width=8cm,height=\textheight,keepaspectratio]{images/zybo.png}
+	\caption[]{Das Zybo mit dem Zynq-7000 SOC}
+	\label{fig:zybo}
+\end{figure}
 
-% TODO bild zybo

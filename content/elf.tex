@@ -1,11 +1,11 @@
-\chapter{Das ELF-Dateiformat}
+\chapter{Das ELF-Dateiformat mit STABS Debuginformationen}
 ELF (\textit{Executable and Linking Format}) ist das Standard-Binärformat von vielen UNIX-ähnlichen Betriebssystemen.
 Es wird für ausführbare Dateien und auch für Libraries verwendet.
 Es können auch notwendige Informationen für den Debugger in dieses Format gepackt werden.
 
 % TODO: besser embeddet anwendung beschreiben
 Das ELF-Format wird auch für Embedded-Anwendungen verwendet.
-Das Cross-Kompilierte Programm kann zusammen mit Debug-Informationen in eine ELF-Datei gepackt werden.
+Das Cross-Kompilierte Programm kann zusammen mit Debuginformationen in eine ELF-Datei gepackt werden.
 Der \textit{gdb} kann dann genutzt werden, um die Applikation auf das Target zu laden.
 Im Anschluss kann der \textit{gdb} gleich als Debugger für die Applikation genutzt werden, da alle Notwendigen Informationen in der ELF-Datei vorhanden sind.
 
@@ -69,7 +69,6 @@ Die folgende Liste gibt eine nicht vollständige Übersicht über die einzelnen 
 	\item \texttt{.stabstr}\ \ \ Enthält die STABS Debuginformationen. Mehr dazu im Kapitel \ref{label:stabs} 
 \end{itemize}
 Der Compiler nutzt die \textit{Secitons}, um das Programm in logische Einheiten zu unterteilen.
-% Eine \textit{Seciton} ist eine Logische Einheit eines Programms, deren Einteilung besonders für den Compiler Vorteile bringt.
 
 
 \subsection{Informationen für den Debugger}
@@ -81,17 +80,14 @@ DWARF ist flexibler und hat einen besseren funktionalen Umfang als das STABS-For
 
 
 
-\section{STABS}
+\section{STABS Debuginformationen}
 \label{label:stabs}
-% TODO: Debugging-Informationen oder Debugginginformationen.
-STABS ist ein Datenformat für Debug-Informationen.
+STABS ist ein Datenformat für Debuginformationen.
 Die Informationen sind als Strings in \textit{\textbf{S}ymbol \textbf{TA}ble \textbf{S}trings} gespeichert.
-% Obwohl dieses Format veraltet ist, wird dieses Format in dieser Arbeit verwendet, weil es am einfachsten manuell zu implementieren ist.
-% Bei moderneren Systemen wurde das STABS-Format durch das neuere DWARF-Format abgelöst.
 
 \subsection{Zielsetzung}
 Es soll getestet werden, ob es möglich ist, eine \textit{deep}-Applikation mit dem \textit{gdb} zu debuggen.
-Dazu benötigt der \textit{gdb}, neben dem ausführbaren Maschinencode, zusätzliche Debug-Informationen in der Form von STABS oder im DWARF-Format.
+Dazu benötigt der \textit{gdb}, neben dem ausführbaren Maschinencode, zusätzliche Debuginformationen in der Form von STABS oder im DWARF-Format.
 In beiden Fällen werden die Informationen im ELF-Format eingebettet.
 
 In dieser Arbeit wird ein Demoprogramm mit STABS implementiert, da STABS-Informationen einfacher manuell zu implementieren sind als DWARF-Informationen.
@@ -129,8 +125,6 @@ DWARF ist ein sehr weit verbreitetes und standardisiertes Dateiformat für Debug
 Es hat das veraltete STABS-Format in den meisten modernen Anwendungen abgelöst.
 Im Gegensatz zum STABS-Format wird das DWARF-Format immer noch weiterentwickelt.
 Der Blog-Eintrag\footnote{\ \ Direkter Link: \ \ \ \ \ \ \ \ \ https://www.ibm.com/developerworks/library/os-debugging/\\ Archivierter Link: \ \ \ https://web.archive.org/web/20180808115504/https://www.ibm.com/developerworks/library/os-debugging/} von Adarsh Thampan und Suchitra Venugopal zeigt sehr gut die Unterschiede zwischen den beiden Formaten auf.
-% https://www.ibm.com/developerworks/library/os-debugging/
-% TODO: DWARF erklären
 
 
 \section{Demoprogramm mit STABS}
@@ -349,7 +343,6 @@ Die Direktiven 78 und 80 (LBRAC) markieren einen Start und die Direktiven 81 und
 
 \subsection{Assemblerprogramm mit \textit{deep} erzeugen}
 Um das Java-Programm möglichst einfach mit \textit{deep} übersetzen zu können, wird die \texttt{''reset()''}-Methode des Objekts \textit{''Reset.java''} aus dem Package \textit{''zynq7000''} überschrieben.
-% TODO satzbau:
 Diese Methode wird beim Starten einer \textit{deep}-Applikation immer als erstes ausgeführt und ist somit mit einem Debugger gleich ab der ersten Instruktion der Applikation kontrollierbar.
 
 Die untenstehenden Zeilen entsprechen den Zeilen 39-42 von \textit{''Reset.java} aus dem Anhang \ref{anhang:reset.java}.
@@ -413,8 +406,7 @@ END:
 b END
 \end{lstlisting}
 
-% TODO aufgeräumt gut?
-\textit{''loop.S''} im Anhang \ref{anhang:loop.S} enthält den ''aufgeräumten'' Assemblercode.
+\textit{''loop.S''} im Anhang \ref{anhang:loop.S} enthält den bereinigten Assemblercode.
 Der Code wurde mit zusätzlichen Assembler-Direktiven ergänzt.
 \texttt{''c\_entry''} beschreibt den Start des Programms.
 \texttt{''START\_LOOP\_BODY''} und \texttt{''CHECK\_LOOP\_EXIT''} sind Punkte, welche für die \textit{For-Loop} benötigt werden.

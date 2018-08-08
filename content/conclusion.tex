@@ -1,6 +1,6 @@
 \chapter{Kundennutzen, Fazit und Ausblick}
 \section{Rückblick und Kundennutzen}
-Für das Projekt \textit{deep} steht mit dem Zybo ein kostengünstiges Experimentierboard mit einem leistungsstarken Prozessor und FPGA zur Verfügung.
+Für das Projekt \textit{deep} und den Robotik-Unterricht steht mit dem Zybo ein kostengünstiges Experimentierboard mit einem leistungsstarken Prozessor und FPGA zur Verfügung.
 
 Das \textit{''OpenOCDInterface''} kann mit dem Zybo gleich eingesetzt werden, wie das bestehende \textit{''AbatronInterface''} für PowerPCs.
 Damit kann die Entwicklung des \textit{deep}-Kernel mit dem neuen ARM-Prozessor gleich weitergeführt werden wie bisher.
@@ -8,9 +8,9 @@ Damit kann die Entwicklung des \textit{deep}-Kernel mit dem neuen ARM-Prozessor 
 Die in dieser Arbeit entwickelte Toolchain ermöglicht es, ohne zusätzliche Hardware, ein von \textit{deep} kompiliertes Programm auf den Zynq des Zybos zu laden.
 
 Mit dieser Arbeit konnte auch aufgezeigt werden, dass der \textit{gdb} grundsätzlich genutzt werden kann, um eine \textit{deep}-Applikation direkt auf dem Prozessor zu debuggen.
-Dabei können auch \textit{gdb}-Features, wie Sourcecode-Lookup verwendet werden, obwohl der \textit{gdb} Java nicht mehr direkt unterstützt.
-Dafür mussten aber STABS-Informationen manuell zu einem Programm hinzugefügt werden.
-Der \textit{gdb} konnte nur mit dem Command Line Interface genutzt werden.
+Dabei können auch \textit{gdb}-Features, wie Sourcecode-Lookup verwendet werden, obwohl der \textit{gdb}-Debugger Java nicht mehr direkt unterstützt.
+Für diese Funktion mussten aber STABS-Informationen manuell zu einem Programm hinzugefügt werden.
+Der \textit{gdb} kann bis jetzt nur mit dem Command Line Interface genutzt werden.
 
 Die Toolchain kann ebenfalls als Hardware-Debugger verwendet werden.
 Es ist möglich Prozessorregister und Speichersegmente zu lesen und zu schreiben und es können Hardware-Breakpoints gesetzt werden.
@@ -18,10 +18,10 @@ Es ist möglich Prozessorregister und Speichersegmente zu lesen und zu schreiben
 
 
 \section{Ausblick}
-Die entwickelte Toolchain bietet eine gute Ausgangslage für die weitere Entwicklung von \textit{deep}.
+Die entwickelte Toolchain bietet eine gute Ausgangslage für die weitere Entwicklung vom Projekt \textit{deep}.
 Damit der Debugger aber effizient genutzt werden kann, fehlen noch zwei Kernelemente:
 \begin{enumerate}
-	\item Die Debug-Informationen müssen automatisch beim kompilieren der \textit{deep}-Applikation erzeugt werden.
+	\item Die Debuginformationen müssen automatisch beim kompilieren der \textit{deep}-Applikation erzeugt werden.
 		  Dabei sollten nicht die veralteten STABS verwendet werden, wie in dieser Arbeit, sondern das modernere DWARF-Format.
 	\item Ein \textit{gdb}-Plugin für \textit{Eclipse} muss noch entwickelt werden.
 		  Das \textit{''GNU MCU Eclipse plug-ins for ARM \& RISC-V C/C++ developers''}\footnote{https://github.com/gnu-mcu-eclipse/eclipse-plugins} ist ein Plugin für Eclipse, das genau dieses Problem löst.
@@ -31,12 +31,27 @@ Damit der Debugger aber effizient genutzt werden kann, fehlen noch zwei Kernelem
 
 
 \section{Fazit}
+Die meisten Ziele konnten in dieser Arbeit sehr gut erfüllt werden.
+Diese Arbeit kann gut als Grundlage für die weiter Entwicklung der \textit{gdb}-Unterstützung verwendet werden.
+
+Mit dem Experimentierboard Zybo Wurde eine sehr geeignete Hardware für Weiterentwicklung von \textit{deep} selber als auch für den zukünftigen Unterricht gefunden.
+Der FT2232-Chip ermöglicht in Kombination mit OpenOCD eine sehr günstige Toolchain um eine \textit{deep}-Applikation auf auf die Hardware zu laden.
+Trotz dem geringen Preis ist es aber trotzdem möglich, den ARM-Prozessor auf der Hardwareebene mit dem bestehenden Debuggerinterface von \textit{deep} zu debuggen.
+
+Es konnte auch erfolgreich gezeigt werden, dass es möglich ist, mit \textit{gdb}-Debugger eine \textit{deep}-Applikation zu debuggen.
 
 
+% \section{Zielsetzung}
+% % Hardware
+% Bei dieser Arbeit werden mehrere Ziele verfolgt, die aufeinander aufbauen.
 
 
-
-
+% \begin{enumerate}
+% \item Passende Hardware (Experimentierboard) finden, welche auch im Unterricht verwendet werden kann.
+% \item Das grundlegende Debug-Interface, welches bereits für PowerPC existiert, für die ausgewählte Hardware anpassen. Dieses Interface soll für die Entwicklung von \textit{deep} möglichst bald einsatzbereit sein.
+% \item Den GNU-Debugger (\textit{gdb}) mit einem Programm verwenden, das vom \textit{deep}-Compiler übersetzt wurde. Dazu soll vorerst das Command-Line-Interface (CLI) des \textit{gdb} genutzt werden.
+% \item Den \textit{gdb} in das Eclipse-Plugin von \textit{deep} integrieren, damit der Debugger direkt aus Eclipse verwendet werden kann.
+% \end{enumerate}
 
 
 
